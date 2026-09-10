@@ -1,0 +1,1637 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D12 Cuesports Score Board V9.0 • Secure Access</title><style>
+:root{--bg:#f4f5f8;--card:#fffef0;--tx:#101114;--mut:#6c7078;--ln:#d9dde4;--blue:#0a84ff;--orange:#ff9f0a;--purple:#af52de;--green:#34c759;--red:#ff453a;--teal:#00a6a6;--sn:#9b2448}body.dark{--bg:#050608;--card:#181a1f;--tx:#f6f7fa;--mut:#a0a5ad;--ln:#353940}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif}button,input,select{font:inherit}button{border:0;cursor:pointer;touch-action:manipulation}.head{padding:14px 16px;position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--ln)}h1{margin:0;font-size:25px}.sub{color:var(--mut);font-size:12px}.tabs{display:flex;gap:8px;overflow:auto;padding:10px;background:var(--bg);position:sticky;top:75px;z-index:4;border-bottom:1px solid var(--ln)}.tab{white-space:nowrap;padding:11px 16px;border-radius:17px;background:var(--card);color:var(--tx);border:1px solid var(--ln);font-weight:800}.tab.active{color:white}.tab[data-g='8-Ball'].active{background:var(--blue)}.tab[data-g='9-Ball'].active{background:var(--orange)}.tab[data-g='10-Ball'].active{background:var(--purple)}.tab[data-g='Heyball'].active{background:var(--green)}.tab[data-g='Blackball'].active{background:var(--red)}.tab[data-g='Duya Legends'].active{background:var(--teal)}.tab[data-g='Snooker'].active{background:var(--sn)}.tab[data-g='Players'].active{background:#5856d6}.tab[data-g='Settings'].active{background:#636366}main{max-width:1150px;margin:auto;padding:16px}.hero{height:230px;border-radius:28px;background:center/cover no-repeat;position:relative;overflow:hidden;color:white;display:flex;align-items:end;padding:24px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#000b,transparent 70%)}.hero div{position:relative}.hero h2{font-size:42px;margin:0}.hero p{margin:6px 0 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.card{background:var(--card);border:1px solid var(--ln);border-radius:24px;padding:18px;margin-top:16px}.player{text-align:center}.score{font-size:100px;font-weight:900}.name,select,input{width:100%;padding:11px;border-radius:14px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);text-align:center}.name{font-size:20px;font-weight:800;margin:7px 0}.row{display:flex;gap:9px;flex-wrap:wrap}.btn{flex:1;min-height:52px;padding:12px;border-radius:16px;background:var(--blue);color:white;font-weight:800}.gray{background:#6e6e73}.red{background:var(--red)}.orange{background:var(--orange)}.green{background:#248a4a}.purple{background:#5856d6}.clock{text-align:center}.time{font-size:120px;font-weight:900}.warn{color:var(--orange)}.critical{color:var(--red)}.note{color:var(--mut);font-size:13px}.balls{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.balls button{min-height:60px;border-radius:16px;color:#fff;font-weight:800}.r{background:#d92831}.y{background:#d6a400}.g{background:#13824a}.br{background:#805034}.b{background:#1877c9}.p{background:#db638f}.k{background:#171717}.item{display:flex;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--ln);border-radius:15px;margin-top:8px}.drop{padding:16px;border:2px dashed var(--ln);border-radius:18px;text-align:center;color:var(--blue);font-weight:800}.drop input{display:none}@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{height:185px}.balls{grid-template-columns:repeat(4,1fr)}.time{font-size:88px}}
+
+/* Version 4 crystal / glossy interface */
+body{background:radial-gradient(circle at 15% 0%,#ffffff 0%,var(--bg) 42%,#e8edf6 100%)}
+body.dark{background:radial-gradient(circle at 20% 0%,#172237 0%,#050608 55%,#080b12 100%)}
+.head{backdrop-filter:blur(22px) saturate(150%);background:color-mix(in srgb,var(--bg) 82%,transparent);box-shadow:0 8px 30px rgba(20,40,80,.10)}
+.brand{display:flex;align-items:center;gap:12px}.club-logo{width:58px;height:58px;object-fit:contain;border-radius:16px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35));background:rgba(255,255,255,.08)}
+.tab,.card,.btn,.name,select,input{box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 10px 25px rgba(15,35,70,.08)}
+.card{background:linear-gradient(135deg,color-mix(in srgb,var(--card) 92%,#fff 8%),color-mix(in srgb,var(--card) 88%,#dbeaff 12%));backdrop-filter:blur(18px) saturate(145%);border-color:color-mix(in srgb,var(--ln) 65%,#fff 35%)}
+.btn{position:relative;overflow:hidden;background:linear-gradient(135deg,#5eb7ff,#0a84ff 55%,#006fe6);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -10px 20px rgba(0,50,120,.12),0 8px 18px rgba(10,132,255,.22);transition:transform .15s ease,filter .15s ease}
+.btn:active{transform:scale(.97);filter:brightness(.94)}.btn:before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.38),transparent 34%,transparent 70%,rgba(255,255,255,.16));pointer-events:none}
+.gray{background:linear-gradient(135deg,#a1a5ad,#63666c 55%,#484b50)}.red{background:linear-gradient(135deg,#ff8b83,#ff453a 58%,#cf1c24)}.orange{background:linear-gradient(135deg,#ffd27a,#ff9f0a 58%,#d87900)}.green{background:linear-gradient(135deg,#67df8a,#34c759 58%,#168a36)}.purple{background:linear-gradient(135deg,#a99dff,#5856d6 58%,#3934a8)}
+.tab{background:linear-gradient(145deg,color-mix(in srgb,var(--card) 88%,#fff 12%),color-mix(in srgb,var(--card) 92%,#dce9ff 8%));backdrop-filter:blur(12px)}
+.hero{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 18px 38px rgba(8,25,55,.22)}
+.player.active-player{outline:2px solid var(--blue);box-shadow:0 0 0 5px rgba(10,132,255,.12),inset 0 1px 0 rgba(255,255,255,.75),0 16px 32px rgba(10,132,255,.18)}
+.active-tag{display:inline-block;margin-bottom:8px;padding:6px 12px;border-radius:999px;background:rgba(10,132,255,.13);color:var(--blue);font-size:12px;font-weight:900;letter-spacing:.06em}
+.player-select{width:100%;margin-top:9px}.player-select.active{background:linear-gradient(135deg,#8fd0ff,#0a84ff);color:#fff}
+
+/* Version 5 premium theme engine */
+:root{--accent:#0a84ff;--accent2:#5e5ce6;--sheen:rgba(255,255,255,.55);--glass:rgba(255,255,255,.72)}
+body{transition:background .35s ease,color .25s ease}.style-golden{--accent:#d79b17;--accent2:#ffe18a;--card:#fff8e6;--bg:#f6edd8}.style-silver{--accent:#87929f;--accent2:#dfe6ed;--card:#f8fafc;--bg:#e9edf2}.style-bronze{--accent:#a66738;--accent2:#e5b987;--card:#fff6ee;--bg:#efe1d5}.style-metallic{--accent:#56616b;--accent2:#aeb8c2;--card:#f0f2f4;--bg:#d8dde2}.style-plastic{--accent:#00a6a6;--accent2:#ff5a5f;--card:#fff;--bg:#edf3f6}.style-crystal{--accent:#0a84ff;--accent2:#a78bfa;--card:rgba(255,255,255,.76);--bg:#e8eff8}.style-monochrome{--accent:#222;--accent2:#888;--card:#fff;--bg:#e7e7e7}.style-vivid{--accent:#ff2d55;--accent2:#00c7be;--card:#fff8ff;--bg:#eef7ff}.style-classic{--accent:#315f72;--accent2:#b48a4b;--card:#fffdf7;--bg:#ece5d8}.style-opulent{--accent:#c49a26;--accent2:#3c1d55;--card:#fffaf0;--bg:#181116}.style-neutrals{--accent:#7c6f64;--accent2:#c9c0b8;--card:#fbfaf8;--bg:#e8e4df}.style-byd{--accent:#e60012;--accent2:#f3f4f6;--card:#fff;--bg:#f0f2f5}.style-apple{--accent:#0a84ff;--accent2:#5e5ce6;--card:rgba(255,255,255,.82);--bg:#f5f5f7}.style-bmw{--accent:#0066b3;--accent2:#d7e9f7;--card:#f6f8fb;--bg:#e9eef4}.style-mercedes{--accent:#111827;--accent2:#c6ccd2;--card:#f8f9fa;--bg:#e7eaed}.style-ferrari{--accent:#e10600;--accent2:#f6c445;--card:#fff7f6;--bg:#f3e7e6}.style-porsche{--accent:#b08d57;--accent2:#222;--card:#fbfaf8;--bg:#e8e5df}.style-tesla{--accent:#e82127;--accent2:#171717;--card:#fff;--bg:#f2f2f2}.style-lamborghini{--accent:#c6a400;--accent2:#171717;--card:#fffdf0;--bg:#202020}.style-nike{--accent:#111;--accent2:#f97316;--card:#fff;--bg:#efefef}.style-samsung{--accent:#1428a0;--accent2:#8ab4f8;--card:#f8faff;--bg:#edf2fb}
+.btn{background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:inset 0 1px 0 var(--sheen),0 8px 20px rgba(20,30,50,.16)}.tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2))!important}.card,.tab,.head{backdrop-filter:blur(18px);box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 10px 28px rgba(40,50,70,.08)}.player-select.active,.active-player{outline:2px solid var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 15%,transparent),inset 0 1px 0 #fff}.active-tag{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em;margin-bottom:10px}.style-opulent{color:#f5e6bd}.style-opulent .card,.style-opulent .head{background:rgba(35,23,38,.88);border-color:#806b38}.style-lamborghini{color:#f6f1d0}.style-lamborghini .card,.style-lamborghini .head{background:rgba(24,24,24,.92);border-color:#6f5d14}.dark.style-golden,.dark.style-opulent{--bg:#100c06;--card:#1b1408}.dark.style-crystal{--bg:#07111f;--card:rgba(14,28,45,.86)}
+
+/* Version 5.4 — synchronized active-player controls across all scoring tabs */
+.grid{align-items:stretch;grid-auto-rows:1fr}
+.player{display:flex;flex-direction:column;align-items:stretch;min-height:100%;position:relative}
+.player .active-tag{height:32px;display:flex;align-items:center;justify-content:center;margin:0 0 8px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.08em;box-sizing:border-box}
+.player .active-tag.is-idle{visibility:hidden}
+.player .active-tag.is-active{visibility:visible;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);text-shadow:0 0 10px color-mix(in srgb,var(--accent) 65%,transparent)}
+.player .score{margin-top:10px;min-height:122px;display:flex;align-items:center;justify-content:center;line-height:1}
+.player .row{margin-top:auto}
+.player.active-player{outline:4px solid color-mix(in srgb,var(--accent) 88%,white 12%);outline-offset:3px;border-color:color-mix(in srgb,var(--accent) 60%,white 40%);animation:activePlayerBreath 2s ease-in-out infinite;z-index:1}
+.player.active-player::after{content:'';position:absolute;inset:-10px;border-radius:30px;pointer-events:none;border:2px solid color-mix(in srgb,var(--accent) 65%,transparent);box-shadow:0 0 18px color-mix(in srgb,var(--accent) 60%,transparent),0 0 44px color-mix(in srgb,var(--accent) 30%,transparent);animation:activeRingPulse 2s ease-in-out infinite}
+.player-select.active{background:linear-gradient(135deg,color-mix(in srgb,var(--accent2) 55%,white 45%),var(--accent) 58%,color-mix(in srgb,var(--accent) 75%,black 25%));box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 0 18px color-mix(in srgb,var(--accent) 45%,transparent),0 10px 24px color-mix(in srgb,var(--accent) 30%,transparent)}
+@keyframes activePlayerBreath{0%,100%{box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 12%,transparent),0 0 22px color-mix(in srgb,var(--accent) 35%,transparent),inset 0 1px 0 rgba(255,255,255,.75)}50%{box-shadow:0 0 0 11px color-mix(in srgb,var(--accent) 22%,transparent),0 0 40px color-mix(in srgb,var(--accent) 65%,transparent),0 0 72px color-mix(in srgb,var(--accent) 28%,transparent),inset 0 1px 0 rgba(255,255,255,.9)}}
+@keyframes activeRingPulse{0%,100%{opacity:.42;transform:scale(.985)}50%{opacity:1;transform:scale(1.015)}}
+@media(max-width:700px){.player .score{min-height:104px}.player.active-player::after{inset:-7px}}
+@media(prefers-reduced-motion:reduce){.player.active-player,.player.active-player::after{animation:none}}
+
+/* Version 5.4 — export tools + mobile/tablet stability */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+main,.grid,.card,.player,.row{min-width:0}
+select,input,.player-select{min-width:0;max-width:100%;width:100%}
+.player-select{flex:0 0 auto;white-space:normal;overflow-wrap:anywhere}
+.tabs{max-width:100vw;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.tab{flex:0 0 auto;touch-action:pan-x manipulation}
+@media(max-width:900px){
+  main{padding:12px;max-width:100%;overflow:hidden}
+  .grid{width:100%;max-width:100%}
+  .card{max-width:100%;overflow:hidden}
+  .row{width:100%;max-width:100%}
+  .row>*{min-width:0}
+}
+.export-card{margin-top:16px}
+.export-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.export-btn{min-height:58px;display:flex;align-items:center;justify-content:center;gap:8px}
+.export-status{min-height:20px;margin-top:10px;text-align:center}
+@media(max-width:520px){.export-grid{grid-template-columns:1fr}.export-btn{width:100%}}
+
+/* Version 5.4 winner export enhancements */
+.winner-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;font-weight:900}
+.winner-glow{animation:winnerPulse 1.8s ease-in-out infinite}
+@keyframes winnerPulse{0%,100%{box-shadow:0 0 0 rgba(255,205,66,0),0 0 14px rgba(255,205,66,.35)}50%{box-shadow:0 0 0 5px rgba(255,205,66,.08),0 0 30px rgba(255,205,66,.8)}}
+
+
+/* Version 6.2 loading-safe aggregate and logo improvements */
+.brand img,#clubLogo{
+  width:92px !important;
+  height:92px !important;
+  max-width:92px !important;
+  max-height:92px !important;
+  object-fit:contain !important;
+  aspect-ratio:1/1 !important;
+  flex:0 0 92px !important;
+}
+@media(max-width:700px){
+  .brand img,#clubLogo{width:72px !important;height:72px !important;max-width:72px !important;max-height:72px !important;flex-basis:72px !important}
+}
+
+
+/* ===== Version 6.2 ===== */
+.end-match-btn{
+  background:linear-gradient(135deg,#ff453a,#ff9f0a)!important;
+  color:#fff!important;
+  font-weight:800!important;
+  border:1px solid rgba(255,255,255,.55)!important;
+  box-shadow:0 10px 28px rgba(255,69,58,.28), inset 0 1px 0 rgba(255,255,255,.45)!important;
+}
+.end-match-btn:active{transform:scale(.98)}
+.print-card-logo,.score-print-logo{
+  width:150px!important;
+  height:auto!important;
+  max-width:42vw!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  display:block!important;
+  margin:0 auto 14px!important;
+}
+@media(max-width:600px){
+  .print-card-logo,.score-print-logo{width:118px!important;max-width:52vw!important}
+}
+
+
+.aggregate-card{text-align:center;overflow:hidden;position:relative}
+.aggregate-card:before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 42%);pointer-events:none}
+.aggregate-title{font-size:12px;font-weight:900;letter-spacing:.18em;color:var(--mut);margin-bottom:10px}
+.aggregate-matchup{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:14px;font-weight:900;font-size:18px}
+.aggregate-matchup span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.aggregate-matchup b{font-size:30px;line-height:1;padding:10px 18px;border-radius:18px;background:linear-gradient(135deg,var(--accent,#0a84ff),var(--accent2,#5eb7ff));color:#fff;box-shadow:0 10px 28px rgba(10,132,255,.28),inset 0 1px 0 rgba(255,255,255,.45)}
+.end-match-btn:disabled{opacity:.58;cursor:not-allowed;filter:saturate(.45)}
+@media(max-width:560px){.aggregate-matchup{grid-template-columns:1fr;gap:8px}.aggregate-matchup b{justify-self:center}.aggregate-matchup span{max-width:100%}}
+
+
+/* Version 8.2 – New Match control */
+.new-match-btn{
+  background:linear-gradient(135deg,#0a84ff,#64d2ff)!important;
+  color:#fff!important;
+  font-weight:900!important;
+  border:1px solid rgba(255,255,255,.6)!important;
+  box-shadow:0 10px 28px rgba(10,132,255,.28), inset 0 1px 0 rgba(255,255,255,.45)!important;
+}
+.new-match-btn:active{transform:scale(.98)}
+
+
+/* ===== D12 PHASE 4 — AUTH / ROLE WORKSPACE ===== */
+.auth-gate{min-height:calc(100vh - 118px);display:flex;align-items:center;justify-content:center;padding:24px}.auth-card{width:min(560px,100%);padding:28px;border:1px solid var(--ln);border-radius:30px;background:var(--card);box-shadow:0 24px 60px rgba(20,35,70,.18);backdrop-filter:blur(22px)}.auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:20px}.auth-brand img{width:72px;height:72px;object-fit:contain;border-radius:18px}.auth-card h2{margin:0 0 8px;font-size:30px}.auth-card .note{margin:6px 0 18px}.auth-error{display:none;margin:12px 0;padding:12px 14px;border-radius:14px;background:rgba(255,69,58,.12);color:var(--red);font-weight:800}.auth-actions{display:flex;gap:10px;flex-wrap:wrap}.auth-actions>*{flex:1;min-width:160px}.workspace-bar{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;margin-top:10px}.workspace-chip{padding:8px 12px;border-radius:999px;background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 25%,var(--ln));font-size:12px;font-weight:900}.workspace-chip.table{background:color-mix(in srgb,var(--green) 12%,transparent);border-color:color-mix(in srgb,var(--green) 25%,var(--ln))}.workspace-chip.role{background:color-mix(in srgb,var(--purple) 12%,transparent);border-color:color-mix(in srgb,var(--purple) 25%,var(--ln))}.workspace-logout{min-height:42px;padding:9px 14px;border-radius:14px;font-weight:900;background:linear-gradient(135deg,#ff8b83,#ff453a);color:#fff}.admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.admin-stat{padding:18px;border-radius:22px;background:var(--card);border:1px solid var(--ln);text-align:center}.admin-stat b{display:block;font-size:34px}.admin-stat span{font-size:12px;color:var(--mut);font-weight:800}.admin-section{margin-top:16px}.admin-list{display:grid;gap:10px}.admin-row{display:grid;grid-template-columns:1.2fr 1fr auto;gap:10px;align-items:center;padding:12px;border:1px solid var(--ln);border-radius:18px;background:color-mix(in srgb,var(--card) 90%,transparent)}.admin-row .muted{color:var(--mut);font-size:12px}.admin-row .actions{display:flex;gap:8px;flex-wrap:wrap}.admin-mini{min-height:42px;padding:9px 12px;border-radius:13px;font-weight:800}.admin-mini.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}.admin-mini.gray{background:#6e6e73;color:#fff}.admin-mini.red{background:var(--red);color:#fff}.admin-mini.green{background:var(--green);color:#fff}.admin-form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center}.admin-empty{padding:18px;text-align:center;color:var(--mut);border:1px dashed var(--ln);border-radius:18px}.pending-card{padding:24px;text-align:center}.pending-card h2{margin-top:0}.security-note{padding:12px 14px;border-radius:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 18%,var(--ln));font-size:13px;color:var(--mut)}.role-home-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.role-home-head h2{margin:0}.admin-table-select{min-width:240px;flex:1}.operator-only-note{margin-top:14px}@media(max-width:800px){.admin-grid{grid-template-columns:1fr}.admin-form{grid-template-columns:1fr}.admin-row{grid-template-columns:1fr}.admin-row .actions{width:100%}.workspace-bar{justify-content:flex-start}}
+body.auth-lock .tabs{display:none}body.auth-lock main{min-height:calc(100vh - 118px)}
+.cloud-status{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:12px 0;padding:10px 14px;border:1px solid var(--ln);border-radius:16px;background:color-mix(in srgb,var(--card) 92%,transparent);font-size:12px;font-weight:800}.cloud-status .dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px;background:#8e8e93;box-shadow:0 0 0 3px rgba(142,142,147,.12)}.cloud-status.ok .dot{background:#34c759;box-shadow:0 0 0 3px rgba(52,199,89,.16),0 0 12px rgba(52,199,89,.45)}.cloud-status.warn .dot{background:#ff9f0a;box-shadow:0 0 0 3px rgba(255,159,10,.16)}.cloud-status.bad .dot{background:#ff453a;box-shadow:0 0 0 3px rgba(255,69,58,.16)}
+
+
+/* ===== D12 AUTH UI ===== */
+.workspace-bar{margin-top:6px;min-height:24px}.workspace-chip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--mut)}.workspace-chip b{color:var(--tx)}.workspace-chip span{padding:4px 8px;border-radius:999px;background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);font-weight:800}.workspace-logout{padding:6px 10px;border-radius:10px;background:var(--card);color:var(--tx);border:1px solid var(--ln);font-weight:800}.auth-gate{min-height:62vh;display:grid;place-items:center;padding:22px}.auth-card{width:min(560px,100%);background:var(--card);border:1px solid var(--ln);border-radius:28px;padding:24px;box-shadow:0 20px 50px rgba(20,40,80,.15)}.auth-brand{display:flex;align-items:center;gap:14px}.auth-brand img{width:72px;height:72px;object-fit:contain;border-radius:18px}.auth-error{min-height:22px;margin:10px 0;color:var(--red);font-weight:800}.security-note{padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 18%,transparent);font-size:12px;color:var(--mut)}.pending-card{max-width:760px;margin:30px auto;text-align:center}.cloud-status{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:10px 14px;border-radius:14px;background:var(--card);border:1px solid var(--ln);font-size:12px;font-weight:800}.cloud-status .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--mut);margin-right:7px}.cloud-status.ok .dot{background:var(--green);box-shadow:0 0 10px var(--green)}.cloud-status.warn .dot{background:var(--orange);box-shadow:0 0 10px var(--orange)}.cloud-status.bad .dot{background:var(--red);box-shadow:0 0 10px var(--red)}.admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.admin-stat{padding:18px;border:1px solid var(--ln);border-radius:20px;background:var(--card);text-align:center}.admin-stat b{display:block;font-size:32px}.admin-stat span{display:block;color:var(--mut);font-size:12px;font-weight:800}.admin-form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px}.operator-create-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.operator-create-grid .full{grid-column:1/-1}
+.operator-create-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.operator-create-actions .btn{flex:1;min-width:180px}
+.operator-create-status{min-height:22px;margin-top:10px;font-size:13px;font-weight:800}
+.operator-create-status.ok{color:var(--green)}
+.operator-create-status.err{color:var(--red)}
+@media(max-width:700px){.operator-create-grid{grid-template-columns:1fr}.operator-create-grid .full{grid-column:auto}}
+.admin-row{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid var(--ln);border-radius:16px;margin-top:8px}.admin-mini{padding:10px 12px;border-radius:12px;font-weight:800;background:var(--card);border:1px solid var(--ln);color:var(--tx)}.admin-mini.primary{background:var(--accent);color:#fff;border-color:transparent}.admin-mini.red{background:var(--red);color:#fff;border-color:transparent}.admin-empty{padding:18px;text-align:center;color:var(--mut)}.muted{color:var(--mut);font-size:12px}.actions{display:flex;gap:8px;justify-content:flex-end}@media(max-width:700px){.admin-grid{grid-template-columns:1fr}.admin-form,.admin-row{grid-template-columns:1fr}.actions{justify-content:stretch}.actions>*{flex:1}.workspace-chip{font-size:11px}}
+
+/* ===== D12 PHASE 6 — REALTIME UI ===== */
+.realtime-pill{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em;border:1px solid var(--ln);background:rgba(255,255,255,.12)}
+.realtime-dot{width:8px;height:8px;border-radius:50%;background:#8e8e93;box-shadow:0 0 0 3px rgba(142,142,147,.12)}
+.realtime-pill.ok .realtime-dot{background:#34c759;box-shadow:0 0 0 3px rgba(52,199,89,.15),0 0 12px rgba(52,199,89,.55)}
+.realtime-pill.warn .realtime-dot{background:#ff9f0a;box-shadow:0 0 0 3px rgba(255,159,10,.14),0 0 12px rgba(255,159,10,.5)}
+.realtime-pill.bad .realtime-dot{background:#ff453a;box-shadow:0 0 0 3px rgba(255,69,58,.14),0 0 12px rgba(255,69,58,.5)}
+.realtime-pill b{font-weight:900}
+
+/* ===== VERSION 8 — SNOOKER / MANAGEMENT UI ===== */
+.snooker-reds-control{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+.snooker-reds-control input[type=range]{width:100%;accent-color:#d92831}
+.snooker-reds-count{min-width:58px;text-align:center;padding:10px 14px;border-radius:14px;background:#d92831;color:#fff;font-weight:900}
+.snooker-red-rack{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:12px;padding:14px;border:1px solid var(--ln);border-radius:18px;background:rgba(0,0,0,.04)}
+.snooker-red-ball{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ff8a8f 0 8%,#d92831 30%,#7e1018 100%);box-shadow:inset -3px -4px 7px rgba(0,0,0,.35),0 3px 8px rgba(0,0,0,.18);transition:.22s ease}
+.snooker-red-ball.potted{opacity:.12;transform:scale(.55);filter:grayscale(1)}
+.snooker-next{text-align:center;padding:18px;border-radius:22px;border:2px solid var(--ln);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(0,0,0,.04));margin-top:16px}
+.snooker-next-label{font-size:12px;font-weight:900;letter-spacing:.08em;color:var(--mut)}
+.snooker-target-red{width:82px;height:82px;border-radius:50%;margin:12px auto;background:radial-gradient(circle at 30% 25%,#ff969b 0 8%,#d92831 35%,#7d1018 100%);box-shadow:inset -7px -8px 13px rgba(0,0,0,.3),0 8px 22px rgba(217,40,49,.35);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;text-align:center}
+.snooker-any-color-image{display:block;width:min(170px,48vw);height:auto;aspect-ratio:1/1;object-fit:contain;margin:10px auto;border-radius:50%;filter:drop-shadow(0 8px 18px rgba(0,0,0,.22));}
+.player-remove-panel{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-top:14px;padding:14px;border:1px solid var(--ln);border-radius:18px;background:rgba(255,69,58,.05)}
+.player-remove-btn{min-height:48px;padding:12px 18px;border-radius:14px;background:var(--red);color:#fff;font-weight:900;white-space:nowrap}
+.player-row-actions{display:flex;align-items:center;gap:10px}
+@media(max-width:700px){.player-remove-panel{grid-template-columns:1fr}.player-remove-btn{width:100%}}
+.snooker-wheel{width:116px;height:116px;border-radius:50%;margin:12px auto;position:relative;background:conic-gradient(#d6a400 0 16.66%,#13824a 16.66% 33.32%,#805034 33.32% 49.98%,#1877c9 49.98% 66.64%,#db638f 66.64% 83.3%,#171717 83.3% 100%);box-shadow:inset 0 0 0 7px rgba(255,255,255,.18),inset -8px -10px 16px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center}
+.snooker-wheel:after{content:'ANY\A COLOR';white-space:pre;text-align:center;width:54px;height:54px;border-radius:50%;background:var(--card);color:var(--tx);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;line-height:1.15}
+.snooker-final-order{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.snooker-order-ball{min-width:82px;padding:10px 8px;border-radius:14px;color:#fff;font-weight:900;text-align:center;border:2px solid transparent;opacity:.58}
+.snooker-order-ball.current{opacity:1;border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.12),0 6px 18px rgba(0,0,0,.2);transform:translateY(-2px)}
+.snooker-order-ball.done{opacity:.28;filter:grayscale(.7)}
+.snooker-performance{margin-top:14px;padding:12px;border:1px solid var(--ln);border-radius:16px;background:rgba(255,255,255,.06)}
+.snooker-performance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.snooker-stat{padding:10px 8px;border-radius:13px;background:rgba(0,0,0,.06);text-align:center}
+.snooker-stat b{display:block;font-size:20px;margin-top:3px}
+.snooker-stat span{font-size:10px;font-weight:900;letter-spacing:.04em;color:var(--mut)}
+.snooker-winner-icon{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:8px 12px;border-radius:999px;background:#f2c94c;color:#16120a;font-weight:900;box-shadow:0 0 24px rgba(242,201,76,.55)}.snooker-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.snooker-reward{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;font-size:11px;font-weight:950;letter-spacing:.03em;white-space:nowrap}.snooker-reward.century{background:#dff7e8;color:#0b6334;border:1px solid #9cddb7}.snooker-reward.maximum{background:#fff3c4;color:#6b4b00;border:1px solid #e7c85b;box-shadow:0 0 18px rgba(242,201,76,.35)}.snooker-name-row .name{flex:1}.snooker-lag-badge{flex:0 0 auto;min-width:58px;padding:8px 10px;border-radius:999px;background:#ff453a;color:#fff;font-weight:900;font-size:12px}.snooker-lag-badge.level{background:#6e6e73}.snooker-lag-score{font-size:.34em;vertical-align:middle;color:#ff453a;font-weight:900}
+.snooker-frame-reference{text-align:center;margin-top:10px;font-weight:800;color:var(--mut)}
+@media(max-width:520px){.snooker-performance-grid{grid-template-columns:1fr}.snooker-stat{display:flex;justify-content:space-between;align-items:center;text-align:left}.snooker-stat b{margin:0;font-size:18px}}
+.v8-history-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.v8-history-actions .btn{flex:0 1 150px}
+.v8-disabled{opacity:.45!important;cursor:not-allowed!important;filter:grayscale(.35)}
+.table-count-grid{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.table-count-value{font-size:28px;font-weight:900;min-width:76px;text-align:center}
+@media(max-width:700px){.snooker-reds-control{grid-template-columns:1fr}.table-count-grid{grid-template-columns:1fr}.snooker-order-ball{min-width:68px}}
+
+/* ===== VERSION 8.3 — DEVICE MODE HOME + RESPONSIVE TOUCH LAYOUTS ===== */
+.device-home{min-height:calc(100vh - 135px);display:grid;place-items:center;padding:22px}.device-home-card{width:min(980px,100%);background:var(--card);border:1px solid var(--ln);border-radius:30px;padding:28px;box-shadow:0 20px 55px rgba(20,40,80,.14)}.device-home-card h2{margin:0 0 8px;font-size:32px}.device-home-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}.device-home-tab{min-height:150px;border-radius:24px;border:2px solid var(--ln);background:var(--bg);color:var(--tx);padding:18px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:.18s ease}.device-home-tab:hover,.device-home-tab:focus-visible{transform:translateY(-2px);border-color:var(--blue);box-shadow:0 10px 26px rgba(10,132,255,.14)}.device-home-tab b{font-size:22px}.device-home-tab span{font-size:13px;color:var(--mut);line-height:1.45}.device-home-icon{font-size:38px}.device-switch{padding:6px 10px;border-radius:10px;background:var(--card);color:var(--tx);border:1px solid var(--ln);font-weight:800}
+body.device-mobile main{max-width:540px;padding:8px}body.device-mobile .head{padding:9px 10px}body.device-mobile h1{font-size:19px}body.device-mobile .sub{font-size:10px}body.device-mobile .club-logo{width:48px;height:48px}body.device-mobile .tabs{top:66px;padding:7px;gap:6px}body.device-mobile .tab{padding:12px 13px;border-radius:14px;font-size:13px}body.device-mobile .hero{height:145px;border-radius:18px;padding:16px}body.device-mobile .hero h2{font-size:30px}body.device-mobile .grid{grid-template-columns:1fr;gap:8px;margin-top:8px}body.device-mobile .card{border-radius:18px;padding:12px;margin-top:9px}body.device-mobile .score{font-size:68px}body.device-mobile .name{font-size:17px}body.device-mobile .btn,body.device-mobile .end-match-btn,body.device-mobile .new-match-btn{min-height:58px;font-size:15px;border-radius:15px}body.device-mobile .row{gap:7px}body.device-mobile .balls{grid-template-columns:repeat(2,1fr);gap:8px}body.device-mobile .balls button{min-height:68px;font-size:14px}body.device-mobile .time{font-size:78px}body.device-mobile .snooker-target-red{width:72px;height:72px}body.device-mobile .snooker-any-color-image{width:min(150px,62vw)}body.device-mobile .snooker-red-ball{width:29px;height:29px}body.device-mobile .snooker-final-order{display:grid;grid-template-columns:repeat(2,1fr)}body.device-mobile .snooker-order-ball{min-width:0}body.device-mobile .workspace-bar{gap:6px}body.device-mobile .workspace-chip{font-size:10px;padding:6px 8px}body.device-mobile .cloud-status{font-size:10px;padding:8px 10px}body.device-mobile .admin-form,body.device-mobile .operator-create-grid{grid-template-columns:1fr}body.device-mobile .admin-row{grid-template-columns:1fr}body.device-mobile .item{flex-direction:column;align-items:stretch}
+body.device-tablet main{max-width:1024px;padding:14px}body.device-tablet .head{padding:12px 14px}body.device-tablet .tabs{padding:9px;gap:8px}body.device-tablet .tab{min-height:50px;padding:13px 16px}body.device-tablet .hero{height:200px;border-radius:24px}body.device-tablet .score{font-size:86px}body.device-tablet .btn,body.device-tablet .end-match-btn,body.device-tablet .new-match-btn{min-height:60px;font-size:15px}body.device-tablet .balls{grid-template-columns:repeat(4,1fr)}body.device-tablet .balls button{min-height:70px}body.device-tablet .time{font-size:100px}body.device-tablet .card{padding:16px;border-radius:22px}body.device-tablet .snooker-red-ball{width:32px;height:32px}
+body.device-pc{} /* PC retains the original Version 8.2 desktop layout. */
+@media(max-width:760px){.device-home-tabs{grid-template-columns:1fr}.device-home-tab{min-height:112px}.device-home-card{padding:18px;border-radius:22px}.device-home-card h2{font-size:26px}}
+
+
+/* ===== VERSION 9.0 — FULL-SCREEN TOUCH FIT / NO VERTICAL SCROLL ===== */
+html,body{width:100%;height:100%;height:100dvh;overflow:hidden}
+body{display:flex;flex-direction:column;min-height:0}
+.head{position:relative;top:auto;flex:0 0 auto;z-index:5}
+.tabs{position:relative;top:auto;flex:0 0 auto;z-index:4;overflow:visible;display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));align-items:stretch}
+.tab{min-width:0;white-space:normal;text-align:center;line-height:1.05;display:flex;align-items:center;justify-content:center}
+main#app{flex:1 1 auto;min-height:0;overflow:hidden;margin:0 auto;transform-origin:top center;will-change:transform}
+body.d12-fit-active main#app{overflow:visible}
+
+/* Group related touch controls tightly while preserving visual separation. */
+body.device-mobile .head{padding:4px 7px}
+body.device-mobile .brand{gap:6px}
+body.device-mobile .club-logo{width:30px;height:30px;border-radius:8px}
+body.device-mobile h1{font-size:14px;line-height:1.05}
+body.device-mobile .sub{display:none}
+body.device-mobile .workspace-bar{margin-top:2px;gap:3px}
+body.device-mobile .workspace-chip{font-size:8px;padding:2px 5px;gap:3px}
+body.device-mobile .workspace-logout,body.device-mobile .device-switch{min-height:25px;padding:3px 6px;font-size:9px;border-radius:7px}
+body.device-mobile .tabs{padding:3px;gap:3px;grid-template-columns:repeat(5,minmax(0,1fr))}
+body.device-mobile .tab{min-height:28px;padding:3px 2px;border-radius:7px;font-size:8.5px}
+body.device-mobile main#app{max-width:100%;width:100%;padding:3px 5px}
+body.device-mobile .hero{height:34px;border-radius:9px;padding:5px 8px;margin:0}
+body.device-mobile .hero h2{font-size:15px}
+body.device-mobile .hero p{display:none}
+body.device-mobile .cloud-status{margin-top:3px;padding:3px 6px;font-size:8px;border-radius:7px;gap:4px}
+body.device-mobile .grid{grid-template-columns:1fr 1fr;gap:4px;margin-top:4px}
+body.device-mobile .card{padding:5px 6px;margin-top:4px;border-radius:9px}
+body.device-mobile .card h3{font-size:11px;margin:2px 0 4px}
+body.device-mobile .card h4{font-size:10px;margin:2px 0 4px}
+body.device-mobile .player{min-width:0}
+body.device-mobile .score{font-size:34px;line-height:.95}
+body.device-mobile .name,body.device-mobile select,body.device-mobile input{padding:4px 5px;border-radius:7px;font-size:10px;min-height:26px}
+body.device-mobile .name{font-size:11px;margin:2px 0}
+body.device-mobile .row{gap:3px;flex-wrap:nowrap}
+body.device-mobile .btn,body.device-mobile .end-match-btn,body.device-mobile .new-match-btn,body.device-mobile .admin-mini{min-height:30px;padding:4px 5px;font-size:9px;border-radius:7px;line-height:1.05}
+body.device-mobile .balls{grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+body.device-mobile .balls button{min-height:31px;padding:2px;font-size:8px;border-radius:7px}
+body.device-mobile .time{font-size:42px;line-height:.95}
+body.device-mobile .note{font-size:8px;line-height:1.1;margin:3px 0}
+body.device-mobile .item{padding:5px;margin-top:3px;border-radius:7px;gap:3px}
+body.device-mobile .snooker-reds-control{gap:4px}
+body.device-mobile .snooker-target-red{width:38px;height:38px}
+body.device-mobile .snooker-any-color-image{width:min(86px,25vw)}
+body.device-mobile .snooker-red-ball{width:15px;height:15px}
+body.device-mobile .snooker-reds-visual{gap:2px}
+body.device-mobile .snooker-final-order{grid-template-columns:repeat(6,minmax(0,1fr));gap:2px}
+body.device-mobile .snooker-order-ball{min-width:0;padding:3px 1px;font-size:7px}
+body.device-mobile .v8-history-actions{gap:3px;margin-top:3px;flex-wrap:nowrap}
+body.device-mobile .v8-history-actions .btn{flex:1 1 0;min-width:0}
+body.device-mobile .export-actions,body.device-mobile .export-row{gap:3px}
+body.device-mobile .admin-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+body.device-mobile .admin-stat{padding:5px;border-radius:8px}
+body.device-mobile .admin-stat b{font-size:16px}
+body.device-mobile .admin-stat span{font-size:7px}
+body.device-mobile .admin-section{margin-top:4px}
+body.device-mobile .admin-form,body.device-mobile .operator-create-grid{grid-template-columns:1fr 1fr auto;gap:3px}
+body.device-mobile .admin-row{grid-template-columns:1fr 1fr auto;gap:3px;padding:4px;margin-top:3px;border-radius:7px}
+body.device-mobile .admin-row .actions{gap:3px;flex-wrap:nowrap}
+body.device-mobile .security-note{padding:4px 5px;font-size:8px}
+body.device-mobile .device-home{min-height:0;height:100%;padding:5px}
+body.device-mobile .device-home-card{padding:8px;border-radius:12px;box-shadow:none}
+body.device-mobile .device-home-card h2{font-size:17px}
+body.device-mobile .device-home-tabs{grid-template-columns:repeat(3,1fr);gap:5px;margin-top:7px}
+body.device-mobile .device-home-tab{min-height:80px;padding:7px;border-radius:10px;gap:3px}
+body.device-mobile .device-home-tab b{font-size:11px}
+body.device-mobile .device-home-tab span{font-size:7.5px;line-height:1.15}
+body.device-mobile .device-home-icon{font-size:20px}
+
+body.device-tablet .head{padding:6px 10px}
+body.device-tablet .brand{gap:8px}
+body.device-tablet .club-logo{width:38px;height:38px}
+body.device-tablet h1{font-size:18px}
+body.device-tablet .sub{font-size:8px}
+body.device-tablet .workspace-bar{margin-top:2px;gap:4px}
+body.device-tablet .workspace-chip{font-size:9px;padding:3px 6px}
+body.device-tablet .workspace-logout,body.device-tablet .device-switch{min-height:29px;padding:4px 7px;font-size:10px}
+body.device-tablet .tabs{padding:4px;gap:4px;grid-template-columns:repeat(10,minmax(0,1fr))}
+body.device-tablet .tab{min-height:34px;padding:4px 2px;border-radius:8px;font-size:9px}
+body.device-tablet main#app{max-width:100%;width:100%;padding:5px 8px}
+body.device-tablet .hero{height:48px;padding:7px 10px;border-radius:11px}
+body.device-tablet .hero h2{font-size:20px}
+body.device-tablet .hero p{font-size:8px;margin:1px 0 0}
+body.device-tablet .cloud-status{margin-top:4px;padding:4px 8px;font-size:9px}
+body.device-tablet .grid{grid-template-columns:1fr 1fr;gap:6px;margin-top:5px}
+body.device-tablet .card{padding:7px 8px;margin-top:5px;border-radius:11px}
+body.device-tablet .card h3{font-size:13px;margin:3px 0 5px}
+body.device-tablet .score{font-size:46px;line-height:.95}
+body.device-tablet .name,body.device-tablet select,body.device-tablet input{padding:5px 7px;min-height:30px;font-size:11px;border-radius:8px}
+body.device-tablet .name{font-size:13px;margin:3px 0}
+body.device-tablet .row{gap:4px;flex-wrap:nowrap}
+body.device-tablet .btn,body.device-tablet .end-match-btn,body.device-tablet .new-match-btn,body.device-tablet .admin-mini{min-height:34px;padding:5px 7px;font-size:10px;border-radius:8px}
+body.device-tablet .balls{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+body.device-tablet .balls button{min-height:36px;padding:3px;font-size:9px;border-radius:8px}
+body.device-tablet .time{font-size:54px;line-height:.95}
+body.device-tablet .note{font-size:9px;margin:3px 0}
+body.device-tablet .snooker-target-red{width:46px;height:46px}
+body.device-tablet .snooker-any-color-image{width:min(105px,20vw)}
+body.device-tablet .snooker-red-ball{width:19px;height:19px}
+body.device-tablet .snooker-final-order{grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
+body.device-tablet .snooker-order-ball{min-width:0;padding:4px 2px;font-size:8px}
+body.device-tablet .v8-history-actions{gap:4px;margin-top:4px;flex-wrap:nowrap}
+body.device-tablet .v8-history-actions .btn{flex:1 1 0;min-width:0}
+body.device-tablet .admin-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+body.device-tablet .admin-stat{padding:8px;border-radius:10px}
+body.device-tablet .admin-stat b{font-size:20px}
+body.device-tablet .admin-stat span{font-size:8px}
+body.device-tablet .admin-form,body.device-tablet .operator-create-grid{grid-template-columns:1fr 1fr auto;gap:5px}
+body.device-tablet .admin-row{grid-template-columns:1fr 1fr auto;gap:5px;padding:6px;margin-top:4px}
+
+body.device-pc .head{padding:7px 12px}
+body.device-pc .club-logo{width:42px;height:42px}
+body.device-pc h1{font-size:20px}
+body.device-pc .sub{font-size:9px}
+body.device-pc .workspace-bar{margin-top:2px}
+body.device-pc .tabs{padding:4px 8px;gap:5px;grid-template-columns:repeat(10,minmax(0,1fr))}
+body.device-pc .tab{min-height:34px;padding:5px 4px;border-radius:9px;font-size:10px}
+body.device-pc main#app{max-width:1440px;width:100%;padding:6px 10px}
+body.device-pc .hero{height:55px;padding:8px 12px;border-radius:13px}
+body.device-pc .hero h2{font-size:23px}
+body.device-pc .hero p{font-size:9px;margin:2px 0 0}
+body.device-pc .cloud-status{margin-top:5px;padding:5px 9px;font-size:10px}
+body.device-pc .grid{gap:8px;margin-top:6px}
+body.device-pc .card{padding:9px 10px;margin-top:6px;border-radius:13px}
+body.device-pc .card h3{font-size:14px;margin:3px 0 6px}
+body.device-pc .score{font-size:54px;line-height:.95}
+body.device-pc .name,body.device-pc select,body.device-pc input{padding:6px 8px;min-height:32px;font-size:12px;border-radius:9px}
+body.device-pc .name{font-size:14px;margin:3px 0}
+body.device-pc .row{gap:5px;flex-wrap:nowrap}
+body.device-pc .btn,body.device-pc .end-match-btn,body.device-pc .new-match-btn,body.device-pc .admin-mini{min-height:36px;padding:6px 8px;font-size:11px;border-radius:9px}
+body.device-pc .balls{grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+body.device-pc .balls button{min-height:40px;padding:4px;font-size:10px;border-radius:9px}
+body.device-pc .time{font-size:60px;line-height:.95}
+body.device-pc .note{font-size:10px;margin:4px 0}
+body.device-pc .snooker-target-red{width:50px;height:50px}
+body.device-pc .snooker-any-color-image{width:112px}
+body.device-pc .snooker-red-ball{width:20px;height:20px}
+body.device-pc .snooker-final-order{grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+body.device-pc .snooker-order-ball{min-width:0;padding:4px 2px;font-size:9px}
+body.device-pc .v8-history-actions{gap:5px;margin-top:5px;flex-wrap:nowrap}
+body.device-pc .v8-history-actions .btn{flex:1 1 0;min-width:0}
+
+/* Very short landscape displays get an extra compact pass before scale-to-fit. */
+@media(max-height:650px){
+  .head{padding-top:3px!important;padding-bottom:3px!important}.sub{display:none!important}
+  .tabs{padding-top:2px!important;padding-bottom:2px!important}.tab{min-height:25px!important}
+  .hero{height:28px!important;padding:3px 7px!important}.hero p{display:none!important}.hero h2{font-size:14px!important}
+  .card{margin-top:3px!important;padding-top:4px!important;padding-bottom:4px!important}
+  .cloud-status{margin-top:2px!important;padding-top:2px!important;padding-bottom:2px!important}
+}
+
+
+
+/* ===== VERSION 9.0 — MOBILE LOGIN / VIRTUAL KEYBOARD FIX ===== */
+body.d12-auth-mode{overflow:auto!important;min-height:100dvh;height:auto!important}
+body.d12-auth-mode .tabs{display:none!important}
+body.d12-auth-mode main#app{flex:1 0 auto!important;min-height:calc(100dvh - 72px)!important;height:auto!important;overflow:auto!important;transform:none!important;zoom:1!important;padding:10px!important;display:block}
+body.d12-auth-mode .auth-gate{min-height:calc(100dvh - 92px)!important;height:auto!important;padding:10px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+body.d12-auth-mode .auth-card{width:min(520px,100%)!important;max-height:none!important;padding:20px!important;border-radius:22px!important;overflow:visible!important}
+body.d12-auth-mode .auth-brand{gap:10px!important;margin-bottom:10px!important}
+body.d12-auth-mode .auth-brand img{width:52px!important;height:52px!important;border-radius:13px!important}
+body.d12-auth-mode .auth-card h2{font-size:24px!important;margin:0!important}
+body.d12-auth-mode .auth-card .note{font-size:12px!important;line-height:1.3!important;margin:5px 0 10px!important}
+body.d12-auth-mode .auth-card input{display:block!important;width:100%!important;min-height:48px!important;padding:12px 13px!important;font-size:16px!important;border-radius:12px!important;box-sizing:border-box!important}
+body.d12-auth-mode .auth-actions{display:block!important;margin-top:10px!important}
+body.d12-auth-mode #d12LoginBtn{width:100%!important;min-height:50px!important;font-size:16px!important;padding:11px 14px!important;border-radius:12px!important}
+body.d12-auth-mode .security-note{font-size:10px!important;line-height:1.25!important;padding:8px 10px!important;margin-top:10px!important}
+body.d12-auth-mode .auth-error{display:none;min-height:0!important;margin:8px 0!important;padding:9px 10px!important;font-size:12px!important;line-height:1.25!important}
+body.d12-auth-mode .auth-error.has-error{display:block!important}
+@media(max-width:600px){
+  body.d12-auth-mode .head{padding:5px 8px!important}
+  body.d12-auth-mode .club-logo{width:34px!important;height:34px!important}
+  body.d12-auth-mode h1{font-size:15px!important}
+  body.d12-auth-mode .sub{display:none!important}
+  body.d12-auth-mode .workspace-bar{display:none!important}
+  body.d12-auth-mode main#app{min-height:calc(100dvh - 48px)!important;padding:6px!important}
+  body.d12-auth-mode .auth-gate{min-height:calc(100dvh - 56px)!important;padding:6px!important;align-items:flex-start!important}
+  body.d12-auth-mode .auth-card{margin-top:max(8px,env(safe-area-inset-top));padding:14px!important;border-radius:16px!important}
+  body.d12-auth-mode .auth-brand img{width:42px!important;height:42px!important}
+  body.d12-auth-mode .auth-card h2{font-size:20px!important}
+  body.d12-auth-mode .auth-card input{min-height:48px!important;font-size:16px!important}
+  body.d12-auth-mode #d12LoginBtn{min-height:50px!important}
+}
+@media(max-height:600px) and (orientation:landscape){
+  body.d12-auth-mode .head{display:none!important}
+  body.d12-auth-mode main#app{min-height:100dvh!important;padding:4px!important}
+  body.d12-auth-mode .auth-gate{min-height:100dvh!important;padding:4px!important;align-items:flex-start!important}
+  body.d12-auth-mode .auth-card{padding:10px 12px!important;margin:2px auto!important}
+  body.d12-auth-mode .auth-brand{margin-bottom:4px!important}
+  body.d12-auth-mode .auth-brand img{width:34px!important;height:34px!important}
+  body.d12-auth-mode .auth-card h2{font-size:18px!important}
+  body.d12-auth-mode .auth-card .note{margin:2px 0 5px!important;font-size:10px!important}
+  body.d12-auth-mode .auth-card input{min-height:40px!important;padding:8px 10px!important}
+  body.d12-auth-mode #d12LoginBtn{min-height:42px!important;padding:8px!important}
+  body.d12-auth-mode .security-note{display:none!important}
+}
+
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.min.js"></script></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.0 • Hosted Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
+
+/* ===== D12 SUPABASE CONNECTION =====
+   Browser-safe publishable key only.
+   Database authorization must remain enforced by Supabase RLS.
+*/
+const SUPABASE_URL = "https://ydveditxorbtqufwnzpt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_ClvVE_k4MgkuOK5mldKxhQ_EcuGxYsP";
+let d12Supabase = null;
+let D12_SUPABASE_LOADING = null;
+
+function d12BuildSupabaseClient(){
+  if(d12Supabase)return d12Supabase;
+  if(window.supabase && typeof window.supabase.createClient === "function"){
+    d12Supabase=window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    return d12Supabase;
+  }
+  return null;
+}
+
+function d12LoadExternalScript(src,timeoutMs=12000){
+  return new Promise((resolve,reject)=>{
+    const existing=[...document.scripts].find(x=>x.src===src);
+    if(existing && window.supabase && typeof window.supabase.createClient==='function')return resolve(true);
+    const script=existing||document.createElement('script');
+    let settled=false;
+    const done=(ok,err)=>{if(settled)return;settled=true;clearTimeout(timer);ok?resolve(true):reject(err||new Error('Script load failed: '+src));};
+    script.addEventListener('load',()=>done(true),{once:true});
+    script.addEventListener('error',()=>done(false,new Error('Unable to load Supabase library from '+src)),{once:true});
+    const timer=setTimeout(()=>done(false,new Error('Supabase library timed out while loading.')),timeoutMs);
+    if(!existing){script.src=src;script.async=true;script.crossOrigin='anonymous';document.head.appendChild(script);}
+  });
+}
+
+async function d12EnsureSupabase(){
+  if(d12BuildSupabaseClient())return d12Supabase;
+  if(D12_SUPABASE_LOADING)return D12_SUPABASE_LOADING;
+  D12_SUPABASE_LOADING=(async()=>{
+    const sources=[
+      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.min.js',
+      'https://unpkg.com/@supabase/supabase-js@2.115.0/dist/umd/supabase.js'
+    ];
+    let lastError=null;
+    for(const src of sources){
+      try{
+        await d12LoadExternalScript(src);
+        const client=d12BuildSupabaseClient();
+        if(client)return client;
+      }catch(err){lastError=err;console.warn('D12 Supabase CDN fallback failed:',src,err);}
+    }
+    throw lastError||new Error('Supabase client is unavailable. Check the phone internet connection or browser content-blocking settings.');
+  })();
+  try{return await D12_SUPABASE_LOADING;}finally{D12_SUPABASE_LOADING=null;}
+}
+
+async function d12CheckSupabase(){
+  try{
+    const client=await d12EnsureSupabase();
+    const result=await client.auth.getSession();
+    if(result.error){
+      console.error("D12 Supabase session check failed:", result.error);
+      return false;
+    }
+    return true;
+  }catch(err){
+    console.error("D12 Supabase initialization error:", err);
+    return false;
+  }
+}
+
+
+const D12_PRINT_LOGO="assets/image_01.png";
+const BGS={"Logo":'assets/image_02.png',"8-Ball": "assets/image_03.png", "9-Ball": "assets/image_04.png", "10-Ball": "assets/image_05.png", "Heyball": "assets/image_06.png", "Blackball": "assets/image_07.png", "Duya Legends": "assets/image_08.png", "Snooker": "assets/image_09.png"};
+window.addEventListener('error',e=>console.error('D12 app error:',e.message));const BG=BGS;window.addEventListener('DOMContentLoaded',()=>{const x=document.getElementById('clubLogo');if(x)x.src=BG.Logo});
+/* ===== D12 PHASE 6/7 — REALTIME SYNCHRONISATION ENGINE ===== */
+let D12_RT={channel:null,status:'idle',tableId:null,generation:0};
+let D12_RT_REFRESH_TIMER=null;
+let D12_RT_POLL_TIMER=null;
+let D12_RT_RETRY_TIMER=null;
+let D12_RT_LAST_SIGNATURE='';
+let D12_RT_RECONCILING=false;
+const D12_RT_POLL_MS=2000;
+function d12RealtimeState(state){D12_RT.status=state||'idle';}
+function d12RealtimeStatusHtml(){
+  const s=D12_RT.status||'idle';
+  const labels={ok:'REALTIME ON',warn:'SYNCING / RECONNECTING',bad:'LIVE SYNC OFFLINE',idle:'LIVE SYNC STARTING'};
+  return `<span class="realtime-pill ${s}"><span class="realtime-dot"></span><b>${labels[s]||'LIVE SYNC'}</b></span>`;
+}
+function d12RealtimeClearTimers(){
+  if(D12_RT_REFRESH_TIMER){clearTimeout(D12_RT_REFRESH_TIMER);D12_RT_REFRESH_TIMER=null}
+  if(D12_RT_POLL_TIMER){clearTimeout(D12_RT_POLL_TIMER);D12_RT_POLL_TIMER=null}
+  if(D12_RT_RETRY_TIMER){clearTimeout(D12_RT_RETRY_TIMER);D12_RT_RETRY_TIMER=null}
+}
+function d12RealtimeStop(){
+  d12RealtimeClearTimers();
+  const ch=D12_RT.channel;
+  D12_RT.channel=null;D12_RT.tableId=null;D12_RT.generation++;D12_RT_LAST_SIGNATURE='';D12_RT_RECONCILING=false;
+  if(ch&&d12Supabase){try{void d12Supabase.removeChannel(ch)}catch(err){console.warn('D12 realtime remove channel:',err)}}
+  d12RealtimeState('idle');
+}
+function d12RealtimeScheduleRender(delay=60){
+  if(D12_RT_REFRESH_TIMER)clearTimeout(D12_RT_REFRESH_TIMER);
+  D12_RT_REFRESH_TIMER=setTimeout(()=>{D12_RT_REFRESH_TIMER=null;try{d12SetWorkspaceBar();render()}catch(err){console.warn('D12 realtime render:',err)}},Math.max(0,delay));
+}
+function d12RealtimeRowSignature(row){
+  if(!row)return 'none';
+  return [row.id,row.status,row.table_id,row.discipline,row.player1_id,row.player2_id,row.player1_score,row.player2_score,row.active_player,row.shot_time_seconds,row.extensions_remaining,row.started_at,row.ended_at].map(x=>x==null?'':String(x)).join('|');
+}
+async function d12RealtimeGetActive(tableId){
+  if(!tableId||!D12_AUTH.user||!d12Supabase)return null;
+  const {data,error}=await d12Supabase.from('matches').select('id,discipline,table_id,operator_id,player1_id,player2_id,player1_score,player2_score,active_player,status,shot_clock_enabled,shot_time_seconds,extensions_remaining,started_at,ended_at').eq('table_id',tableId).eq('status','active').maybeSingle();
+  if(error)throw error;
+  return data||null;
+}
+async function d12RealtimeApplyActive(active,expectedGeneration){
+  if(expectedGeneration!==D12_RT.generation||!D12_AUTH.user)return;
+  if(!active){
+    let changed=false;
+    for(const key of Object.keys(S.games||{})){
+      const g=S.games[key];
+      if(g?.cloudMatchId){g.cloudMatchId='';if(!g.matchEnded)changed=true;}
+    }
+    if(changed){D12_RT_LAST_SIGNATURE='none';save();d12CloudStatus('idle','No active cloud match on this table');d12RealtimeScheduleRender(30)}
+    return;
+  }
+  const sig=d12RealtimeRowSignature(active);
+  if(sig===D12_RT_LAST_SIGNATURE)return;
+  const tab=d12DisciplineKey(active.discipline);
+  if(!tab)return;
+  const d=S.games[tab]||null;
+  if(!d)return;
+  if(D12_SCORE_BUSY){
+    d12RealtimeScheduleRender(120);
+    return;
+  }
+  const players=await d12GetPlayers();
+  const p1=players.find(p=>p.id===active.player1_id);
+  const p2=players.find(p=>p.id===active.player2_id);
+  if(!p1||!p2){
+    d12CloudStatus('warn','Cloud match references an unregistered player');
+    D12_RT_LAST_SIGNATURE=sig;
+    d12RealtimeScheduleRender(30);
+    return;
+  }
+  d.p1=p1.full_name;d.p2=p2.full_name;
+  d.s1=Number(active.player1_score)||0;d.s2=Number(active.player2_score)||0;d.active=Number(active.active_player)||1;
+  d.t=Number(active.shot_time_seconds)||d.t||Number(S.set.shot)||45;d.e=Number(active.extensions_remaining)||0;
+  d.matchEnded=false;d.cloudMatchId=active.id;d._cloudMatchSignature=sig;D12_RT_LAST_SIGNATURE=sig;
+  d12CloudStatus('ok','Live cloud match synchronized');
+  void d12RefreshCloudAggregate(d,true);
+  if(cur!==tab&&d12IsAdmin()&&D12_AUTH.selectedTableId===active.table_id){cur=tab;d12Tabs()}
+  save();d12RealtimeScheduleRender(20);
+}
+async function d12RealtimeReconcile(expectedGeneration,reason='poll'){
+  const tableId=D12_RT.tableId;
+  if(!tableId||!D12_AUTH.user||expectedGeneration!==D12_RT.generation||D12_RT_RECONCILING||D12_SCORE_BUSY)return;
+  D12_RT_RECONCILING=true;
+  try{
+    const active=await d12RealtimeGetActive(tableId);
+    if(expectedGeneration!==D12_RT.generation)return;
+    await d12RealtimeApplyActive(active,expectedGeneration);
+    if(reason==='poll'&&D12_RT.channel&&D12_RT.status!=='ok')d12RealtimeState('warn');
+  }catch(err){
+    if(expectedGeneration===D12_RT.generation){
+      console.warn('D12 live reconciliation failed:',err);
+      if(reason!=='poll')d12RealtimeState('warn');
+      d12RealtimeScheduleRender(100);
+    }
+  }finally{
+    D12_RT_RECONCILING=false;
+    if(expectedGeneration===D12_RT.generation&&D12_RT.tableId===tableId){
+      if(D12_RT_POLL_TIMER)clearTimeout(D12_RT_POLL_TIMER);
+      D12_RT_POLL_TIMER=setTimeout(()=>{D12_RT_POLL_TIMER=null;void d12RealtimeReconcile(expectedGeneration,'poll')},D12_RT_POLL_MS);
+    }
+  }
+}
+async function d12RealtimeHandleMatchPayload(payload){
+  const row=payload?.new||payload?.old||{};
+  if(!row?.table_id||String(row.table_id)!==String(D12_RT.tableId))return;
+  if(D12_SCORE_BUSY){d12RealtimeScheduleRender(150);return}
+  if(payload.eventType==='INSERT'||payload.eventType==='UPDATE'){
+    if(row.status==='active')await d12RealtimeReconcile(D12_RT.generation,'event');
+    else if(payload.eventType==='UPDATE'){
+      const games=Object.values(S.games||{});const local=games.find(g=>g?.cloudMatchId===row.id);
+      if(local){local.cloudMatchId='';if(row.status==='completed')local.matchEnded=true;d12CloudStatus(row.status==='completed'?'ok':'idle',row.status==='completed'?'Match completed on another screen':'Cloud match closed on another screen');
+        if(row.status==='completed'&&local.p1&&local.p2){try{local._cloudAggregate=await d12FetchCloudAggregate(local,true)}catch(err){console.warn('D12 realtime aggregate refresh:',err)}}
+        save();d12RealtimeScheduleRender(30);
+      }
+      await d12RealtimeReconcile(D12_RT.generation,'event');
+    }
+  }else if(payload.eventType==='DELETE'){
+    await d12RealtimeReconcile(D12_RT.generation,'event');
+  }
+}
+function d12RealtimeAttachChannel(tableId,generation){
+  const channelName='d12-live-sync-'+String(D12_AUTH.user?.id||'anon').replace(/[^a-zA-Z0-9_-]/g,'')+'-'+String(tableId).replace(/[^a-zA-Z0-9_-]/g,'')+'-'+generation;
+  const channel=d12Supabase.channel(channelName);
+  channel
+    .on('postgres_changes',{event:'*',schema:'public',table:'matches'},payload=>{void d12RealtimeHandleMatchPayload(payload)})
+    .on('postgres_changes',{event:'*',schema:'public',table:'table_assignments'},async payload=>{
+      if(D12_RT.generation!==generation)return;
+      try{
+        const row=payload?.new||payload?.old||{};
+        if(d12IsOperator()&&(String(row.operator_id||'')===String(D12_AUTH.user.id)||String(row.operator_id||'')===String(D12_AUTH.user.id))){
+          await d12LoadAssignment(D12_AUTH.user.id);D12_AUTH.selectedTableId=D12_AUTH.assignment?.table_id||null;d12SetWorkspaceBar();render();
+          if(D12_AUTH.selectedTableId!==tableId)void d12StartRealtime(D12_AUTH.selectedTableId);
+          else void d12RealtimeReconcile(generation,'event');
+        }else if(d12IsOperator()){
+          await d12LoadAssignment(D12_AUTH.user.id);const assigned=D12_AUTH.assignment?.table_id||null;
+          if(String(assigned||'')!==String(D12_AUTH.selectedTableId||'')){D12_AUTH.selectedTableId=assigned||null;d12SetWorkspaceBar();render();void d12StartRealtime(assigned)}
+        }else if(d12IsAdmin()){
+          await d12LoadAdminDashboard();d12RealtimeScheduleRender(50);
+        }
+      }catch(err){console.warn('D12 realtime assignment sync:',err)}
+    })
+    .on('postgres_changes',{event:'*',schema:'public',table:'cue_tables'},async()=>{
+      if(D12_RT.generation!==generation)return;
+      if(d12IsAdmin()){try{await d12LoadAdminDashboard();d12RealtimeScheduleRender(50)}catch(err){console.warn('D12 realtime table sync:',err)}}
+    })
+    .on('postgres_changes',{event:'*',schema:'public',table:'players'},async()=>{
+      if(D12_RT.generation!==generation)return;
+      try{await d12GetPlayers(true);d12RealtimeScheduleRender(50)}catch(err){console.warn('D12 realtime player sync:',err)}
+    });
+  channel.subscribe((status,err)=>{
+    if(D12_RT.channel!==channel||D12_RT.generation!==generation)return;
+    if(status==='SUBSCRIBED'){d12RealtimeState('ok');d12SetWorkspaceBar();void d12RealtimeReconcile(generation,'subscribe')}
+    else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'||status==='CLOSED'){
+      console.warn('D12 realtime channel status:',status,err||'');d12RealtimeState('bad');d12SetWorkspaceBar();
+      if(D12_RT_RETRY_TIMER)clearTimeout(D12_RT_RETRY_TIMER);
+      D12_RT_RETRY_TIMER=setTimeout(()=>{D12_RT_RETRY_TIMER=null;if(D12_AUTH.user&&D12_RT.tableId===tableId)void d12StartRealtime(tableId)},2500);
+    }else if(status==='SUBSCRIBING'){d12RealtimeState('warn');d12SetWorkspaceBar()}
+  });
+  return channel;
+}
+async function d12StartRealtime(tableId){
+  if(!d12Supabase||!D12_AUTH.user||!tableId){d12RealtimeStop();return}
+  const normalized=String(tableId);
+  if(D12_RT.channel&&String(D12_RT.tableId)===normalized)return;
+  d12RealtimeStop();
+  const generation=D12_RT.generation;
+  D12_RT.tableId=normalized;D12_RT_LAST_SIGNATURE='';d12RealtimeState('warn');d12SetWorkspaceBar();
+  const channel=d12RealtimeAttachChannel(normalized,generation);
+  D12_RT.channel=channel;
+  void d12RealtimeReconcile(generation,'initial');
+}
+
+/* ===== D12 ROLE / AUTH UI HELPERS ===== */
+function d12IsAdmin(){return D12_AUTH?.profile?.role==='admin'}
+function d12IsOperator(){return D12_AUTH?.profile?.role==='operator'}
+function d12AuthError(message){const el=document.getElementById('d12AuthError');if(el){el.textContent=message||'';el.classList.toggle('has-error',!!message);}}
+function d12SetLocked(locked){
+  document.documentElement.dataset.d12Locked=locked?'1':'0';
+  document.body.classList.toggle('d12-locked',!!locked);
+}
+function d12SetWorkspaceBar(){
+  const el=document.getElementById('workspaceBar');
+  if(!el)return;
+  if(!D12_AUTH.user){el.innerHTML='';return}
+  const role=D12_AUTH.profile?.role||'user';
+  const name=D12_AUTH.profile?.full_name||D12_AUTH.user.email||'';
+  const table=d12CurrentTableName();
+  el.innerHTML=`<div class="workspace-chip"><b>${esc(name)}</b><span>${esc(role)}</span>${table?`<span>TABLE: ${esc(table)}</span>`:''}${typeof d12RealtimeStatusHtml==='function'?d12RealtimeStatusHtml():''}<button class="device-switch" onclick="d12ChangeDevice()">Device: ${esc(d12DeviceMode().toUpperCase())}</button><button class="workspace-logout" onclick="d12Logout()">Logout</button></div>`;
+}
+
+/* ===== D12 PHASE 4 — AUTH / ROLE ROUTING ===== */
+const D12_AUTH={user:null,profile:null,assignment:null,selectedTableId:null,booted:false};
+let D12_AUTH_BUSY=false;
+let D12_DEVICE_SELECTED_SESSION=false;
+function d12DeviceMode(){return ['mobile','tablet','pc'].includes(S?.set?.deviceMode)?S.set.deviceMode:'pc'}
+function d12ApplyDeviceClass(){const mode=d12DeviceMode();document.body.classList.remove('device-mobile','device-tablet','device-pc');document.body.classList.add('device-'+mode);}
+function d12DeviceHome(){
+  document.getElementById('tabs').style.display='none';
+  const app=document.getElementById('app');if(!app)return;
+  app.innerHTML=`<div class="device-home"><div class="device-home-card"><div class="sub">VERSION 9.0 • HOSTED DEVICE SETUP</div><h2>Select This Device</h2><p class="note">Choose the screen you are using. Scoring features remain the same; spacing, button size and layout are optimized for touch operation.</p><div class="device-home-tabs"><button class="device-home-tab" onclick="d12SelectDevice('mobile')"><div class="device-home-icon">📱</div><b>Mobile Version</b><span>Single-column scoring, larger touch controls and compact phone layout.</span></button><button class="device-home-tab" onclick="d12SelectDevice('tablet')"><div class="device-home-icon">▣</div><b>Tablet Version</b><span>Touch-optimized layout for tablets and iPads with larger scoring targets.</span></button><button class="device-home-tab" onclick="d12SelectDevice('pc')"><div class="device-home-icon">🖥️</div><b>PC Version</b><span>Uses the original desktop scoreboard design and spacing.</span></button></div></div></div>`;
+}
+function d12SelectDevice(mode){if(!['mobile','tablet','pc'].includes(mode))return;S.set.deviceMode=mode;D12_DEVICE_SELECTED_SESSION=true;save();d12ApplyDeviceClass();d12Tabs();render();}
+function d12ChangeDevice(){D12_DEVICE_SELECTED_SESSION=false;d12DeviceHome();d12SetWorkspaceBar();}
+
+let D12_CLOUD_STATUS={state:'idle',message:'Cloud match not started'};
+let D12_PLAYER_CACHE=null;
+let D12_SCORE_BUSY=false;
+function d12CloudStatus(state,message){D12_CLOUD_STATUS={state:state||'idle',message:message||''};}
+function d12CloudStatusHtml(){const s=D12_CLOUD_STATUS||{};const cls=s.state==='ok'?'ok':s.state==='warn'?'warn':s.state==='bad'?'bad':'';return `<div class="cloud-status ${cls}"><span><span class="dot"></span>${esc(s.message||'Cloud status unavailable')}</span><span>SUPABASE MATCH DATA</span></div>`;}
+function d12DisciplineKey(name){return ({'8-ball':'8-Ball','9-ball':'9-Ball','10-ball':'10-Ball','heyball':'Heyball','blackball':'Blackball','duya-legends':'Duya Legends','snooker':'Snooker'})[String(name||'').toLowerCase()]||null}
+async function d12AddCloudPlayer(){if(!d12IsAdmin())return alert('Administrator access required.');const input=document.getElementById('d12CloudPlayerName');const name=String(input?.value||'').trim().replace(/\s+/g,' ');if(!name||name.length>60)return alert('Enter a player name (maximum 60 characters).');try{const players=await d12GetPlayers(true);if(players.some(p=>String(p.full_name||'').trim().toLowerCase()===name.toLowerCase()))return alert('That player is already registered in the D12 cloud player list.');const {data,error}=await d12Supabase.from('players').insert({full_name:name,created_by:D12_AUTH.user.id}).select('id,full_name').single();if(error)throw error;D12_PLAYER_CACHE=[...players,data].sort((a,b)=>String(a.full_name).localeCompare(String(b.full_name)));S.players=D12_PLAYER_CACHE.map(p=>p.full_name);save();if(input)input.value='';d12CloudStatus('ok','Player registered in D12 cloud');render();}catch(err){console.error('D12 add cloud player error:',err);alert('Player could not be registered. '+(err?.message||'Unknown error'));}}
+async function d12DeleteCloudPlayer(id,name){
+  if(!d12IsAdmin())return alert('Administrator access required.');
+  if(!id)return;
+  const label=String(name||'this player');
+  if(!confirm('Remove '+label+' from the D12 cloud player registry?\n\nThis permanently deletes the player registry record and may be blocked if the database has existing match records that reference this player.'))return;
+  try{
+    const {error}=await d12Supabase.from('players').delete().eq('id',id);
+    if(error)throw error;
+    await d12GetPlayers(true);
+    d12CloudStatus('ok','Cloud player list updated');
+    render();
+  }catch(err){
+    console.error('D12 delete cloud player error:',err);
+    alert('Player could not be removed. '+(err?.message||'Unknown database error'));
+  }
+}
+async function d12RemoveSelectedCloudPlayer(){
+  const select=document.getElementById('d12RemovePlayerSelect');
+  const id=String(select?.value||'').trim();
+  if(!id)return alert('Select a player to remove.');
+  const player=(D12_PLAYER_CACHE||[]).find(p=>String(p.id)===id);
+  if(!player)return alert('The selected player is no longer in the cloud registry. Refresh the list.');
+  await d12DeleteCloudPlayer(player.id,player.full_name);
+}
+async function d12RefreshCloudPlayers(){try{await d12GetPlayers(true);render();}catch(err){console.error('D12 refresh cloud players error:',err);alert('Unable to refresh cloud player list. '+(err?.message||'Unknown error'));}}
+
+async function d12GetPlayers(force=false){if(!force&&Array.isArray(D12_PLAYER_CACHE))return D12_PLAYER_CACHE;if(!d12Supabase)throw new Error('Supabase client is not available.');const {data,error}=await d12Supabase.from('players').select('id,full_name').order('full_name');if(error)throw error;D12_PLAYER_CACHE=Array.isArray(data)?data:[];S.players=D12_PLAYER_CACHE.map(p=>String(p.full_name||'').trim()).filter(Boolean).sort((a,b)=>a.localeCompare(b));save();return D12_PLAYER_CACHE;}
+async function d12ResolvePlayerId(name){const target=String(name||'').trim().toLowerCase();if(!target)throw new Error('Player name is required.');const list=await d12GetPlayers();const hit=list.find(p=>String(p.full_name||'').trim().toLowerCase()===target);if(!hit)throw new Error('Player "'+String(name).trim()+'" is not registered in the D12 cloud player list. An administrator must add the player first.');return hit.id;}
+async function d12LoadActiveCloudMatch(tableId){if(!tableId||!D12_AUTH.user)return null;try{const {data,error}=await d12Supabase.from('matches').select('id,discipline,table_id,operator_id,player1_id,player2_id,player1_score,player2_score,active_player,status,shot_clock_enabled,shot_time_seconds,extensions_remaining,started_at').eq('table_id',tableId).eq('status','active').maybeSingle();if(error)throw error;if(!data){d12CloudStatus('idle','No active cloud match on this table');return null;}const ids=[data.player1_id,data.player2_id].filter(Boolean);let players=[];if(ids.length){const r=await d12Supabase.from('players').select('id,full_name').in('id',ids);if(r.error)throw r.error;players=r.data||[];}const names=new Map(players.map(x=>[x.id,x.full_name]));const tab=d12DisciplineKey(data.discipline);if(!tab)return data;S.games[tab]={...(S.games[tab]||{}),p1:names.get(data.player1_id)||'Player 1',p2:names.get(data.player2_id)||'Player 2',s1:Number(data.player1_score)||0,s2:Number(data.player2_score)||0,active:Number(data.active_player)||1,t:Number(data.shot_time_seconds)||S.set.shot,e:Number(data.extensions_remaining)||0,matchEnded:false,lastWinner:'',cloudMatchId:data.id};d12CloudStatus('ok','Active cloud match: '+tab);void d12RefreshCloudAggregate(S.games[tab],true);return data;}catch(err){console.error('D12 load active match error:',err);d12CloudStatus('bad','Cloud match could not be loaded');return null;}}
+async function d12RestoreActiveCloudMatch(tableId){const m=await d12LoadActiveCloudMatch(tableId);if(m){const tab=d12DisciplineKey(m.discipline);if(tab)cur=tab;}return m;}
+async function d12EnsureCloudMatch(d){
+  if(!D12_AUTH.user)throw new Error('You must be signed in.');
+  const tableId=d12CurrentTableId();
+  if(!tableId)throw new Error('No cue table is assigned to this account.');
+  const discipline=({'8-Ball':'8-ball','9-Ball':'9-ball','10-Ball':'10-ball','Heyball':'heyball','Blackball':'blackball','Duya Legends':'duya-legends','Snooker':'snooker'})[cur];
+  if(!discipline)throw new Error('This screen is not a scoring discipline.');
+
+  // A local cloudMatchId may point to an old completed/cancelled match. Always
+  // verify its current database status before using it.
+  if(d.cloudMatchId){
+    const existing=await d12Supabase.from('matches').select('id,status,discipline,player1_id,player2_id,player1_score,player2_score,active_player').eq('id',d.cloudMatchId).maybeSingle();
+    if(existing.error)throw existing.error;
+    if(existing.data?.status==='active'){
+      return existing.data.id;
+    }
+    d.cloudMatchId='';
+  }
+
+  const {data:active,error:activeErr}=await d12Supabase.from('matches').select('id,discipline,player1_id,player2_id,player1_score,player2_score,active_player,status').eq('table_id',tableId).eq('status','active').maybeSingle();
+  if(activeErr)throw activeErr;
+
+  const p1Id=await d12ResolvePlayerId(d.p1),p2Id=await d12ResolvePlayerId(d.p2);
+  if(p1Id===p2Id)throw new Error('Player 1 and Player 2 must be different players.');
+
+  if(active){
+    if(active.discipline!==discipline)throw new Error('Table '+d12CurrentTableName()+' already has an active '+active.discipline+' match. End or reset that match before starting '+discipline+'.');
+    if(active.player1_id!==p1Id||active.player2_id!==p2Id)throw new Error('The table already has an active '+active.discipline+' match with different players. End or reset that match before changing the players.');
+    d.cloudMatchId=active.id;
+    d.s1=Number(active.player1_score)||0;
+    d.s2=Number(active.player2_score)||0;
+    d.active=Number(active.active_player)||1;
+    d.matchEnded=false;
+    d12CloudStatus('ok','Connected to existing cloud match');
+    return active.id;
+  }
+
+  const payload={table_id:tableId,operator_id:D12_AUTH.user.id,discipline,player1_id:p1Id,player2_id:p2Id,player1_score:Number(d.s1)||0,player2_score:Number(d.s2)||0,active_player:Number(d.active)||1,status:'active',shot_clock_enabled:!!S.set.independentClock,shot_time_seconds:Number(S.set.shot)||45,extensions_remaining:Number(d.e)||0};
+  const {data,error}=await d12Supabase.from('matches').insert(payload).select('id,discipline,status').single();
+  if(error)throw error;
+  if(!data?.id)throw new Error('Cloud match was created without an id.');
+  d.cloudMatchId=data.id;
+  d12CloudStatus('ok','Cloud match created');
+  return data.id;
+}
+async function d12RecordCloudEvent(matchId,playerId,points,eventType,metadata={}){if(!matchId||!playerId)return;const {error}=await d12Supabase.from('match_events').insert({match_id:matchId,event_type:eventType||'score',player_id:playerId,points:Number(points)||0,created_by:D12_AUTH.user.id,metadata});if(error)console.warn('D12 match event warning:',error);}
+async function d12PersistScore(d,player,delta,eventType,metadata={}){
+  let matchId=await d12EnsureCloudMatch(d);
+  const p1Id=await d12ResolvePlayerId(d.p1),p2Id=await d12ResolvePlayerId(d.p2);
+  const patch={player1_score:Math.max(0,Number(d.s1)||0),player2_score:Math.max(0,Number(d.s2)||0),active_player:Number(d.active)||1};
+
+  for(let attempt=0;attempt<2;attempt++){
+    const {data,error}=await d12Supabase.from('matches').update(patch).eq('id',matchId).eq('status','active').select('id,status').maybeSingle();
+    if(error)throw error;
+    if(data?.id){
+      await d12RecordCloudEvent(matchId,player===1?p1Id:p2Id,delta,eventType,metadata);
+      d12CloudStatus('ok','Score saved to cloud');
+      return;
+    }
+
+    // The local id can become stale after End Match/Reset, another operator,
+    // or a refresh. Clear it, re-discover the current active match, and retry once.
+    d.cloudMatchId='';
+    if(attempt===0){
+      matchId=await d12EnsureCloudMatch(d);
+      continue;
+    }
+  }
+  throw new Error('The cloud match is no longer active. The app could not reconnect to an active match. Press New Match and try again.');
+}
+async function d12PersistActivePlayer(d){if(!d.cloudMatchId)return;const {error}=await d12Supabase.from('matches').update({active_player:Number(d.active)||1}).eq('id',d.cloudMatchId).eq('status','active');if(error)console.warn('D12 active player sync warning:',error);}
+let D12_AGG_CACHE={};
+let D12_AGG_FETCH_KEY='';
+
+function d12AggregateCacheKey(p1Id,p2Id){return [String(p1Id||''),String(p2Id||'')].sort().join('||')}
+
+async function d12FetchCloudAggregate(d,force=false){
+  const p1Id=await d12ResolvePlayerId(d.p1),p2Id=await d12ResolvePlayerId(d.p2);
+  if(p1Id===p2Id)throw new Error('Player 1 and Player 2 must be different players.');
+  const key=d12AggregateCacheKey(p1Id,p2Id);
+  if(!force&&D12_AGG_CACHE[key])return D12_AGG_CACHE[key];
+  let {data,error}=await d12Supabase.from('head_to_head').select('player_a_id,player_b_id,player_a_wins,player_b_wins').eq('player_a_id',p1Id).eq('player_b_id',p2Id).maybeSingle();
+  if(error)throw error;
+  if(!data){
+    const r=await d12Supabase.from('head_to_head').select('player_a_id,player_b_id,player_a_wins,player_b_wins').eq('player_a_id',p2Id).eq('player_b_id',p1Id).maybeSingle();
+    if(r.error)throw r.error;
+    data=r.data||null;
+  }
+  const result=data
+    ? (data.player_a_id===p1Id
+        ? {player1Wins:Number(data.player_a_wins)||0,player2Wins:Number(data.player_b_wins)||0}
+        : {player1Wins:Number(data.player_b_wins)||0,player2Wins:Number(data.player_a_wins)||0})
+    : {player1Wins:0,player2Wins:0};
+  D12_AGG_CACHE[key]=result;
+  return result;
+}
+
+async function d12RefreshCloudAggregate(d,force=false){
+  try{
+    if(!D12_AUTH.user||!d?.p1||!d?.p2)return;
+    const p1Id=await d12ResolvePlayerId(d.p1),p2Id=await d12ResolvePlayerId(d.p2);
+    if(p1Id===p2Id)return;
+    const key=d12AggregateCacheKey(p1Id,p2Id);
+    if(!force&&D12_AGG_FETCH_KEY===key&&D12_AGG_CACHE[key])return;
+    D12_AGG_FETCH_KEY=key;
+    const agg=await d12FetchCloudAggregate(d,force);
+    d._cloudAggregate=agg;
+    if(S.games[cur]===d)render();
+  }catch(err){
+    console.warn('D12 cloud aggregate load warning:',err);
+  }
+}
+
+async function d12CompleteCloudMatch(d,winnerNumber){
+  if(!D12_AUTH.user)throw new Error('You must be signed in.');
+  const tableId=d12CurrentTableId();
+  if(!tableId)throw new Error('No cue table is assigned to this account.');
+  const p1Id=await d12ResolvePlayerId(d.p1),p2Id=await d12ResolvePlayerId(d.p2);
+  const winnerId=winnerNumber===1?p1Id:p2Id;
+  let matchId=String(d.cloudMatchId||'');
+
+  if(matchId){
+    const current=await d12Supabase.from('matches').select('id,status,table_id,player1_id,player2_id,discipline,player1_score,player2_score').eq('id',matchId).maybeSingle();
+    if(current.error)throw current.error;
+    if(!current.data||current.data.table_id!==tableId||current.data.status!=='active')matchId='';
+    else if(current.data.player1_id!==p1Id||current.data.player2_id!==p2Id)matchId='';
+  }
+
+  if(!matchId){
+    const active=await d12Supabase.from('matches').select('id,status,table_id,player1_id,player2_id,discipline,player1_score,player2_score').eq('table_id',tableId).eq('status','active').maybeSingle();
+    if(active.error)throw active.error;
+    if(!active.data)throw new Error('There is no active cloud match for this table. Start a New Match first.');
+    if(active.data.player1_id!==p1Id||active.data.player2_id!==p2Id)throw new Error('The active cloud match has different players. Reload the table before ending the match.');
+    matchId=active.data.id;
+  }
+
+  const {data,error}=await d12Supabase.rpc('complete_match_and_update_head_to_head',{p_match_id:matchId,p_winner_id:winnerId});
+  if(error)throw error;
+  const result=Array.isArray(data)?data[0]:data;
+  if(!result?.match_id)throw new Error('The secure End Match function did not return a completed match record.');
+
+  const key=d12AggregateCacheKey(p1Id,p2Id);
+  D12_AGG_CACHE[key]={player1Wins:Number(result.player1_wins)||0,player2Wins:Number(result.player2_wins)||0};
+  d._cloudAggregate=D12_AGG_CACHE[key];
+  D12_AGG_FETCH_KEY=key;
+  d12CloudStatus('ok',result.already_completed?'Match was already completed in cloud':'Match completed and aggregate updated securely');
+  return matchId;
+}
+async function d12CancelCloudMatch(d){
+  const tableId=d12CurrentTableId();
+  if(!tableId){ if(d)d.cloudMatchId=''; return true; }
+
+  // Never trust the browser's local match id as the only source of truth.
+  // First resolve the active match for the current table. This handles stale
+  // local ids, browser refreshes, player changes, and matches created by the
+  // same operator on another screen.
+  let matchId=d?.cloudMatchId||'';
+  let check=null;
+
+  if(matchId){
+    check=await d12Supabase.from('matches').select('id,status,table_id').eq('id',matchId).maybeSingle();
+    if(check.error)throw check.error;
+    if(!check.data || check.data.table_id!==tableId){matchId='';check=null;}
+  }
+
+  if(!matchId){
+    const active=await d12Supabase.from('matches').select('id,status,table_id').eq('table_id',tableId).eq('status','active').maybeSingle();
+    if(active.error)throw active.error;
+    if(!active.data){if(d)d.cloudMatchId='';d12CloudStatus('idle','No active cloud match to reset');return true;}
+    matchId=active.data.id;
+    check=active;
+  }
+
+  if(check?.data?.status!=='active'){
+    if(d)d.cloudMatchId='';
+    d12CloudStatus('idle','Previous cloud match was already '+String(check?.data?.status||'closed'));
+    return true;
+  }
+
+  const {error}=await d12Supabase.from('matches')
+    .update({status:'cancelled',ended_at:new Date().toISOString()})
+    .eq('id',matchId)
+    .eq('table_id',tableId)
+    .eq('status','active');
+  if(error)throw error;
+
+  const verify=await d12Supabase.from('matches').select('id,status').eq('id',matchId).maybeSingle();
+  if(verify.error)throw verify.error;
+  if(verify.data?.status==='active')throw new Error('The active cloud match could not be reset. Check the Supabase matches UPDATE policy for the assigned table.');
+
+  if(d)d.cloudMatchId='';
+  d12CloudStatus('idle',verify.data?.status==='completed'?'Previous cloud match was completed':'Cloud match cancelled');
+  return true;
+}
+async function d12LoadProfile(user){
+  const {data,error}=await d12Supabase.from('profiles').select('id,full_name,role').eq('id',user.id).maybeSingle();
+  if(error)throw error;
+  if(!data)throw new Error('No profile record exists for this account. Ask the administrator to complete the account setup.');
+  if(!['admin','operator'].includes(data.role))throw new Error('This account has no valid D12 role.');
+  D12_AUTH.profile=data;
+  return data;
+}
+async function d12LoadAssignment(userId){
+  if(!userId)return null;
+  const {data,error}=await d12Supabase.from('table_assignments').select('id,table_id,operator_id,active,assigned_at,unassigned_at,cue_tables(id,table_name,status)').eq('operator_id',userId).eq('active',true).maybeSingle();
+  if(error)throw error;
+  D12_AUTH.assignment=data||null;
+  return D12_AUTH.assignment;
+}
+function d12LoginView(){
+  d12SetLocked(true);tabs();d12SetWorkspaceBar();
+  document.body.classList.add('d12-auth-mode');
+  document.documentElement.classList.add('d12-auth-mode');
+  const tabsEl=document.getElementById('tabs');if(tabsEl)tabsEl.style.display='none';
+  const app=document.getElementById('app');if(!app)return;
+  app.style.transform='none';app.style.zoom='';app.style.height='';
+  app.innerHTML=`<div class="auth-gate"><form class="auth-card" id="d12LoginForm" onsubmit="event.preventDefault();d12Login();"><div class="auth-brand"><img src="${BG.Logo||''}" alt="D12 Cue Club"><div><div class="sub">D12 CUE CLUB</div><h2>Secure Sign In</h2></div></div><p class="note">Sign in with your D12 account. Your role and table access are controlled by Supabase.</p><div id="d12AuthError" class="auth-error" role="alert" aria-live="polite"></div><input id="d12Email" type="email" inputmode="email" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="username" enterkeyhint="next" placeholder="Email address" required><input id="d12Password" type="password" autocomplete="current-password" enterkeyhint="go" placeholder="Password" style="margin-top:8px" required><div class="auth-actions"><button id="d12LoginBtn" class="btn" type="submit">Sign In</button></div><div class="security-note">Operators can only access their assigned table. Administrators can manage table assignments and access all tables.</div></form></div>`;
+  const email=document.getElementById('d12Email');
+  const password=document.getElementById('d12Password');
+  if(email&&password){email.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();password.focus();}});}
+  setTimeout(()=>{try{email?.focus({preventScroll:true});}catch(_){email?.focus();}},80);
+}
+async function d12Login(){
+  if(D12_AUTH_BUSY)return;
+  D12_AUTH_BUSY=true;d12AuthError('');
+  const btn=document.getElementById('d12LoginBtn');if(btn){btn.disabled=true;btn.textContent='Signing In…'}
+  try{
+    const client=await d12EnsureSupabase();
+    const email=String(document.getElementById('d12Email')?.value||'').trim();
+    const password=String(document.getElementById('d12Password')?.value||'');
+    if(!email||!password)throw new Error('Enter your email and password.');
+    const {data,error}=await client.auth.signInWithPassword({email,password});
+    if(error)throw error;
+    D12_AUTH.user=data.user;
+    await d12ApplySession(data.session);
+  }catch(err){
+    console.error('D12 login error:',err);
+    d12AuthError(err?.message||'Sign in failed.');
+    const p=document.getElementById('d12Password');if(p)p.value='';
+  }finally{
+    D12_AUTH_BUSY=false;const b=document.getElementById('d12LoginBtn');if(b){b.disabled=false;b.textContent='Sign In'}
+  }
+}
+async function d12Logout(){
+  d12RealtimeStop();
+  try{await d12Supabase?.auth.signOut()}catch(err){console.error('D12 logout error:',err)}
+  D12_AUTH.user=null;D12_AUTH.profile=null;D12_AUTH.assignment=null;D12_AUTH.selectedTableId=null;D12_DEVICE_SELECTED_SESSION=false;
+  d12LoginView();
+}
+function d12WorkspaceTabs(){
+  const base=['8-Ball','9-Ball','10-Ball','Heyball','Blackball','Duya Legends','Snooker'];
+  if(d12IsAdmin())base.push('Players','Settings','Admin');
+  return base;
+}
+function d12Tabs(){
+  const list=d12WorkspaceTabs();
+  const el=document.getElementById('tabs');
+  if(!el)return;
+  el.style.display=D12_AUTH.user?'flex':'none';
+  el.innerHTML=list.map(g=>`<button class="tab ${g===cur?'active':''}" data-g="${g}" onclick="go('${g.replace(/'/g,"\\'")}')">${g}</button>`).join('');
+}
+async function d12ApplySession(session){
+  D12_AUTH.user=session?.user||null;
+  if(D12_AUTH.user){document.body.classList.remove('d12-auth-mode');document.documentElement.classList.remove('d12-auth-mode');}
+  if(!D12_AUTH.user){d12LoginView();return}
+  await d12LoadProfile(D12_AUTH.user);
+  if(d12IsOperator())await d12LoadAssignment(D12_AUTH.user.id);else D12_AUTH.assignment=null;
+  if(d12IsOperator()&&D12_AUTH.assignment)D12_AUTH.selectedTableId=D12_AUTH.assignment.table_id;
+  if(d12IsAdmin()&&!D12_AUTH.selectedTableId){D12_AUTH.selectedTableId=null}
+  await d12GetPlayers(true);
+  D12_DEVICE_SELECTED_SESSION=false;
+  d12SetLocked(false);d12SetWorkspaceBar();cur=d12IsAdmin()?'Admin':'8-Ball';
+  if(d12CurrentTableId())await d12RestoreActiveCloudMatch(d12CurrentTableId());
+  d12Tabs();render();
+  void d12StartRealtime(d12CurrentTableId());
+}
+async function d12BootAuth(){
+  try{
+    const client=await d12EnsureSupabase();
+    const {data,error}=await client.auth.getSession();
+    if(error)throw error;
+    if(data.session)await d12ApplySession(data.session);else d12LoginView();
+    client.auth.onAuthStateChange((_event,session)=>{
+      try{
+        if(_event==='SIGNED_OUT'){d12RealtimeStop();D12_AUTH.user=null;D12_AUTH.profile=null;D12_AUTH.assignment=null;D12_AUTH.selectedTableId=null;d12LoginView();return}
+        if(session && session.user && _event==='SIGNED_IN' && D12_AUTH.user?.id===session.user.id)return;
+        if(session && session.user && D12_AUTH.user?.id!==session.user.id){setTimeout(()=>d12ApplySession(session).catch(err=>{console.error('D12 auth state error:',err);d12LoginView();}),0)}
+      }catch(err){console.error('D12 auth state error:',err);d12LoginView();}
+    });
+  }catch(err){console.error('D12 auth boot error:',err);d12LoginView();d12AuthError((err?.message||'Unable to initialize secure sign in.')+' If you are on mobile, confirm the phone is online and temporarily disable browser content blockers for this page.')}
+  finally{D12_AUTH.booted=true}
+}
+async function d12RefreshAssignment(){
+  if(d12IsOperator()&&D12_AUTH.user){await d12LoadAssignment(D12_AUTH.user.id);D12_AUTH.selectedTableId=D12_AUTH.assignment?.table_id||null;d12SetWorkspaceBar();render();void d12StartRealtime(D12_AUTH.selectedTableId);}
+}
+function d12CurrentTableId(){return D12_AUTH.selectedTableId||D12_AUTH.assignment?.table_id||null}
+function d12CurrentTableName(){return D12_AUTH.assignment?.cue_tables?.table_name||''}
+
+G=['8-Ball','9-Ball','10-Ball','Heyball','Blackball','Duya Legends','Snooker','Players','Settings'],K='D12CueScoreV6';let S={};try{S=JSON.parse(localStorage.getItem(K)||localStorage.getItem('D12CueScoreV5')||localStorage.getItem('D12CueScoreV4')||'{}')||{}}catch(e){console.warn('Saved data was invalid and has been safely reset.',e);S={}}S.set={theme:'light',shot:45,ext:15,n:1,sound:true,vibe:true,independentClock:true,showAggregate:true,showExport:true,...(S.set||{})};S.players=Array.isArray(S.players)?S.players:[];S.matchHistory=S.matchHistory&&typeof S.matchHistory==='object'?S.matchHistory:{};S.games=S.games||{};G.slice(0,7).forEach(g=>S.games[g]={p1:'Player 1',p2:'Player 2',s1:0,s2:0,t:S.set.shot,e:S.set.n,active:1,_undo:[],_redo:[],snookerReds:15,snookerRedsRemaining:15,snookerPhase:'reds',snookerTarget:'red',snookerColorIndex:0,snookerPointsPotted:0,snookerFoulPointsAwarded:0,snookerBreak1:0,snookerBreak2:0,snookerMaxBreak1:0,snookerMaxBreak2:0,snookerFrameComplete:false,...(S.games[g]||{})});let cur='8-Ball',tm=null;const desc={'8-Ball':'','9-Ball':'Fast, touch-friendly 9-ball scoring.','10-Ball':'Professional 10-ball match scoring.','Heyball':'','Blackball':'','Duya Legends':'Special match-point scoring system.','Snooker':'Ball-by-ball scoring and foul penalties.'};const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){console.warn('Unable to save local data',e)}};const esc=x=>String(x).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function tabs(){d12Tabs()};function go(g){if(!D12_AUTH.user||!d12WorkspaceTabs().includes(g))return;stop();cur=g;d12Tabs();render()};function opt(sel){return `<option value="">Select saved player</option>`+S.players.map(p=>`<option ${p==sel?'selected':''} value="${esc(p)}">${esc(p)}</option>`).join('')};
+function snookerRemainingPoints(d){
+  // Version 8.8: Remaining Points is derived only from balls/ball opportunities
+  // physically left in the frame sequence. Foul awards never reduce this value.
+  if(!d||d.snookerFrameComplete)return 0;
+  const reds=Math.max(0,Number(d.snookerRedsRemaining)||0);
+  const colors=snookerColorData();
+  if(d.snookerPhase==='reds'){
+    // Each red still on the table can yield Red (1) + Black (7) = 8.
+    // If a red has just been potted, one colour opportunity is currently due (+7 max).
+    // The six final colours always contribute 27 while the reds phase is active.
+    return Math.max(0,(reds*8)+(d.snookerTarget==='color'?7:0)+27);
+  }
+  const idx=Math.max(0,Math.min(colors.length,Number(d.snookerColorIndex)||0));
+  return colors.slice(idx).reduce((sum,x)=>sum+Number(x[1]||0),0);
+}
+function snookerRewardHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0);
+  let html='';
+  if(mx>=100)html+='<span class="snooker-reward century">🏅 CENTURY</span>';
+  if(mx>=147)html+='<span class="snooker-reward maximum">🏆 MAXIMUM 147</span>';
+  return html;
+}
+function snookerRewardText(n,d){
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rewards=[];
+  if(mx>=100)rewards.push('CENTURY');
+  if(mx>=147)rewards.push('MAXIMUM 147');
+  return rewards.join(' • ');
+}
+function snookerLag(n,d){
+  const mine=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0);
+  const other=Math.max(0,Number(d?.[n===1?'s2':'s1'])||0);
+  return Math.max(0,other-mine);
+}
+function snookerScoreHtml(n,d){
+  const score=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0),lag=snookerLag(n,d);
+  return `${score}${lag>0?` <span class="snooker-lag-score">(-${lag})</span>`:''}`;
+}
+function snookerNameLagHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const lag=snookerLag(n,d);
+  return lag>0?`<span class="snooker-lag-badge">-${lag}</span>`:`<span class="snooker-lag-badge level">LEVEL</span>`;
+}
+function snookerTrackingHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const br=Math.max(0,Number(d?.['snookerBreak'+n])||0),mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rem=snookerRemainingPoints(d);
+  const complete=!!d?.snookerFrameComplete,s1=Number(d?.s1)||0,s2=Number(d?.s2)||0;
+  const isWinner=complete&&s1!==s2&&((n===1&&s1>s2)||(n===2&&s2>s1));
+  return `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class="snooker-stat"><span>REMAINING POINTS</span><b>${rem}</b></div></div>${isWinner?'<div class="snooker-winner-icon">🏆 FRAME WINNER</div>':''}</div>`;
+}
+function pc(n){let d=S.games[cur],nk=n==1?'p1':'p2',sk=n==1?'s1':'s2',on=d.active==n;const scoreDisplay=cur==='Snooker'?snookerScoreHtml(n,d):d[sk];return `<div class="card player ${on?'active-player':''}"><div class="active-tag ${on?'is-active':'is-idle'}">ACTIVE PLAYER</div><select onchange="pick(${n},this.value)">${opt(d[nk])}</select><div class="snooker-name-row"><input class="name" value="${esc(d[nk])}" readonly title="Players must be selected from the registered D12 cloud player list">${snookerNameLagHtml(n,d)}${snookerRewardHtml(n,d)}</div><div class="note" style="margin:7px 0 4px">Only players registered by an administrator in the D12 cloud player list can be used for scoring.</div><button class="btn player-select ${on?'active':''}" onclick="setActive(${n})">${on?'Player '+n+' Selected':'Select Player '+n}</button><div class="score">${scoreDisplay}</div>${snookerTrackingHtml(n,d)}<div class="row"><button class="btn" onclick="chg(${n},1)">＋ Add</button><button class="btn gray" onclick="chg(${n},-1)">−</button></div></div>`}
+function matchKey(d){
+  let a=String(d.p1||'Player 1').trim().toLowerCase();
+  let b=String(d.p2||'Player 2').trim().toLowerCase();
+  return [a,b].sort().join('||');
+}
+function getAggregate(d){
+  let p1=String(d.p1||'Player 1'),p2=String(d.p2||'Player 2');
+  return {p1:p1,p2:p2,a:Number(d._cloudAggregate?.player1Wins)||0,b:Number(d._cloudAggregate?.player2Wins)||0};
+}
+function aggregateText(d){
+  let r=getAggregate(d);
+  return 'AGGREGATE ('+r.a+'-'+r.b+')';
+}
+function recordAggregate(d){return false;}
+
+function aggregateCard(d){let r=getAggregate(d);return `<div class="card aggregate-card"><div class="aggregate-title">HEAD-TO-HEAD AGGREGATE</div><div class="aggregate-matchup"><span>${esc(r.p1)}</span><b>${r.a} - ${r.b}</b><span>${esc(r.p2)}</span></div><p class="note">Aggregate is read from the secure D12 cloud head-to-head record. Completed matches only.</p></div>`}
+
+/* ===== VERSION 9.0 — VIEWPORT AUTO-FIT ENGINE ===== */
+let D12_FIT_TIMER=0;
+let D12_FIT_BUSY=false;
+function d12FitViewport(){
+  if(D12_FIT_BUSY)return;
+  const app=document.getElementById('app');
+  if(!app)return;
+  clearTimeout(D12_FIT_TIMER);
+  D12_FIT_TIMER=setTimeout(()=>{
+    if(D12_FIT_BUSY)return;
+    D12_FIT_BUSY=true;
+    try{
+      document.body.classList.remove('d12-fit-active');
+      app.style.transform='none';
+      app.style.zoom='';
+      app.style.height='';
+      // The login and device selector already fit naturally; scaling is reserved for the working interface.
+      if(!D12_AUTH?.user || !D12_DEVICE_SELECTED_SESSION){document.body.classList.remove('d12-fit-active');app.style.transform='none';app.style.zoom='';app.style.height='';return;}
+      const rect=app.getBoundingClientRect();
+      const availableH=Math.max(1,window.innerHeight-rect.top-2);
+      const availableW=Math.max(1,window.innerWidth-4);
+      const naturalH=Math.max(app.scrollHeight,app.offsetHeight,1);
+      const naturalW=Math.max(app.scrollWidth,app.offsetWidth,1);
+      let scale=Math.min(1,availableH/naturalH,availableW/naturalW);
+      if(!Number.isFinite(scale)||scale<=0)scale=1;
+      // Small safety margin prevents one-pixel browser rounding from creating a scrollbar.
+      if(scale<1)scale=scale*.992;
+      app.style.transform=`scale(${scale})`;
+      app.style.transformOrigin='top center';
+      document.body.classList.add('d12-fit-active');
+      app.dataset.fitScale=scale.toFixed(4);
+    }finally{D12_FIT_BUSY=false;}
+  },20);
+}
+window.addEventListener('resize',d12FitViewport,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(d12FitViewport,120),{passive:true});
+if(window.visualViewport){window.visualViewport.addEventListener('resize',d12FitViewport,{passive:true});}
+const D12_FIT_OBSERVER=new MutationObserver(()=>d12FitViewport());
+window.addEventListener('DOMContentLoaded',()=>{
+  const a=document.getElementById('app');
+  if(a)D12_FIT_OBSERVER.observe(a,{childList:true,subtree:true,characterData:true});
+  d12FitViewport();
+});
+
+function render(){S.set.style=S.set.style||'crystal';document.body.className=(S.set.theme=='dark'?'dark ':'')+'style-'+S.set.style+' device-'+d12DeviceMode();let logo=document.getElementById('clubLogo');if(logo&&BG.Logo)logo.src=BG.Logo;d12SetWorkspaceBar();if(!D12_AUTH.user){d12LoginView();return}d12SetLocked(false);if(!D12_DEVICE_SELECTED_SESSION){d12DeviceHome();return;}if(d12IsOperator()&&!D12_AUTH.assignment){d12Tabs();document.getElementById('app').innerHTML=d12PendingAssignmentView();return}let a=document.getElementById('app');if(cur=='Admin'){a.innerHTML=d12AdminView();d12LoadAdminDashboard();return}if(cur=='Players'){a.innerHTML=players();return}if(cur=='Settings'){a.innerHTML=settings();return}let d=S.games[cur];if(D12_AUTH.user&&d?.p1&&d?.p2){void d12RefreshCloudAggregate(d);}a.innerHTML=`<div class="hero" style="background-image:url('${BG[cur]}')"><div><h2>${cur}${cur=='Duya Legends'?' 9-Ball':''}</h2>${desc[cur]?'<p>'+desc[cur]+'</p>':''}</div></div>${d12CloudStatusHtml()}<div class="grid">${pc(1)}${pc(2)}</div>${S.set.showAggregate?aggregateCard(d):''}${cur=='Duya Legends'?duya():''}${cur=='Snooker'?snook():''}${S.set.independentClock?`<div class="card clock"><h3>Independent Shot Clock</h3><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each</p></div>`:''}${S.set.showExport?exportTools():''}<div class="card"><div class="row"><button class="btn gray" onclick="swap()">Swap Scores</button><button class="end-match-btn" onclick="endMatch()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch()">＋ New Match</button><button class="btn red" onclick="resetmatch()">Reset This Match</button></div></div>`}
+
+function d12PendingAssignmentView(){return `<div class="card pending-card"><h2>Waiting for Table Assignment</h2><p class="note">You are signed in as <b>operator</b>, but no active cue table is assigned to your account.</p><p class="note">Please ask the D12 administrator to assign your account to a table. This screen will update after the assignment is made.</p><button class="btn gray" onclick="d12RefreshAssignment()">Refresh Assignment</button></div>`}
+let D12_ADMIN_CACHE={profiles:[],tables:[],assignments:[]};
+async function d12LoadAdminDashboard(){
+  if(!d12IsAdmin())return;
+  try{
+    const [p,t,a]=await Promise.all([
+      d12Supabase.from('profiles').select('id,full_name,role').order('full_name'),
+      d12Supabase.from('cue_tables').select('id,table_name,status').order('table_name'),
+      d12Supabase.from('table_assignments').select('id,table_id,operator_id,active,assigned_at,unassigned_at,cue_tables(id,table_name)').order('assigned_at',{ascending:false})
+    ]);
+    if(p.error)throw p.error;if(t.error)throw t.error;if(a.error)throw a.error;
+    D12_ADMIN_CACHE={profiles:p.data||[],tables:t.data||[],assignments:a.data||[]};
+    if(cur==='Admin'){
+      const app=document.getElementById('app');if(app)app.innerHTML=d12AdminView();
+    }
+  }catch(err){
+    console.error('D12 admin dashboard error:',err);
+    const e=document.getElementById('d12AdminError');if(e)e.textContent='Unable to load admin data: '+(err?.message||'Unknown error');
+  }
+}
+function d12ActiveAssignmentForTable(tableId){return D12_ADMIN_CACHE.assignments.find(a=>a.active&&a.table_id===tableId)||null}
+function d12ActiveAssignmentForOperator(operatorId){return D12_ADMIN_CACHE.assignments.find(a=>a.active&&a.operator_id===operatorId)||null}
+
+async function d12CreateOperator(){
+  const nameEl=document.getElementById('d12NewOperatorName');
+  const emailEl=document.getElementById('d12NewOperatorEmail');
+  const passEl=document.getElementById('d12NewOperatorPassword');
+  const btn=document.getElementById('d12CreateOperatorBtn');
+  const status=document.getElementById('d12OperatorCreateStatus');
+
+  const full_name=String(nameEl?.value||'').trim().replace(/\s+/g,' ');
+  const email=String(emailEl?.value||'').trim().toLowerCase();
+  const password=String(passEl?.value||'');
+
+  const showStatus=(message,type='')=>{
+    if(status){
+      status.textContent=message;
+      status.className='operator-create-status '+type;
+    }
+  };
+
+  if(!full_name){
+    showStatus('Enter the operator full name.','err');
+    nameEl?.focus();
+    return;
+  }
+  if(!email){
+    showStatus('Enter the operator email address.','err');
+    emailEl?.focus();
+    return;
+  }
+  if(!password){
+    showStatus('Enter a password for the operator.','err');
+    passEl?.focus();
+    return;
+  }
+  if(password.length<6){
+    showStatus('Password must contain at least 6 characters.','err');
+    passEl?.focus();
+    return;
+  }
+  if(!d12Supabase){
+    showStatus('Supabase is not available.','err');
+    return;
+  }
+  if(!d12IsAdmin()){
+    showStatus('Only a D12 administrator can create operators.','err');
+    return;
+  }
+
+  try{
+    if(btn){
+      btn.disabled=true;
+      btn.textContent='Creating Operator…';
+    }
+    showStatus('Creating secure operator account…');
+
+    const {data,error}=await d12Supabase.functions.invoke('create-d12-operator',{
+      body:{full_name,email,password}
+    });
+
+    if(error){
+      let message=error.message||'Unable to create operator.';
+      if(data?.error)message=data.error;
+      throw new Error(message);
+    }
+
+    if(!data?.success){
+      throw new Error(data?.error||'Unable to create operator.');
+    }
+
+    if(nameEl)nameEl.value='';
+    if(emailEl)emailEl.value='';
+    if(passEl)passEl.value='';
+
+    showStatus('Operator created successfully. The operator now appears in the assignment list.','ok');
+    await d12LoadAdminDashboard();
+  }catch(err){
+    console.error('D12 create operator error:',err);
+    showStatus(err?.message||'Unable to create operator.','err');
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      btn.textContent='＋ Create Operator';
+    }
+  }
+}
+
+async function d12DeleteOperator(operatorId,name){if(!d12IsAdmin()||!operatorId)return;const label=String(name||'this operator');if(!confirm('Delete '+label+'? This removes the D12 operator account and its active table assignment.'))return;try{const {data,error}=await d12Supabase.functions.invoke('delete-d12-operator',{body:{operator_id:operatorId}});if(error)throw error;if(!data?.success)throw new Error(data?.error||'Unable to delete operator.');await d12LoadAdminDashboard();alert('Operator deleted successfully.');}catch(err){console.error('D12 delete operator error:',err);alert('Operator could not be deleted. '+(err?.message||'Unknown error'));}}
+function d12TableNumber(table){const m=String(table?.table_name||'').match(/(\d+)\s*$/);return m?Number(m[1]):null;}
+function d12NaturalTableSort(a,b){const na=Number((String(a.table_name||'').match(/(\d+)\s*$/)||[])[1]||999999),nb=Number((String(b.table_name||'').match(/(\d+)\s*$/)||[])[1]||999999);return na-nb||String(a.table_name||'').localeCompare(String(b.table_name||''));}
+async function d12SetTableCount(value){
+  if(!d12IsAdmin())return;
+  const desired=Math.max(1,Math.min(64,Math.round(Number(value)||1)));
+  const currentCount=D12_ADMIN_CACHE.tables.length;
+  if(desired===currentCount)return;
+  try{
+    const result=await d12Supabase.functions.invoke('manage-d12-tables',{body:{desired_count:desired}});
+    let data=result.data;
+    const error=result.error;
+    if(error){
+      let detail=error.message||'Edge Function returned a non-2xx status code';
+      try{
+        const ctx=error.context;
+        if(ctx&&typeof ctx.json==='function'){
+          const body=await ctx.json();
+          if(body?.error)detail=body.error;
+        }
+      }catch(_e){}
+      throw new Error(detail);
+    }
+    if(!data?.success)throw new Error(data?.error||'Unable to update table count.');
+    await d12LoadAdminDashboard();
+    const actual=D12_ADMIN_CACHE.tables.length;
+    if(actual!==desired)throw new Error('The database returned '+actual+' tables instead of '+desired+'.');
+    alert('Table count updated to '+desired+'.');
+  }catch(err){
+    console.error('D12 table count error:',err);
+    alert('Unable to update table count. '+(err?.message||'Unknown error'));
+    await d12LoadAdminDashboard();
+  }
+}
+function d12AdminView(){
+  const ops=D12_ADMIN_CACHE.profiles.filter(p=>p.role==='operator');
+  const active=D12_ADMIN_CACHE.assignments.filter(a=>a.active);
+  const availableTables=D12_ADMIN_CACHE.tables.filter(t=>!d12ActiveAssignmentForTable(t.id));
+  const availableOperators=ops.filter(o=>!d12ActiveAssignmentForOperator(o.id));
+  const selected=D12_ADMIN_CACHE.tables.find(t=>t.id===D12_AUTH.selectedTableId);
+
+  return `<div class="card"><div class="role-home-head"><div><div class="sub">ADMIN CONTROL CENTER</div><h2>Table & Operator Management</h2></div><div class="row" style="flex:0 0 auto"><button class="btn gray" onclick="d12LoadAdminDashboard()">↻ Refresh</button></div></div><p class="note">Administrator access is determined by the <b>profiles.role</b> record in Supabase. Assignments below control which table an operator can open.</p><div id="d12AdminError" class="auth-error"></div></div><div class="admin-grid"><div class="admin-stat"><b>${D12_ADMIN_CACHE.tables.length}</b><span>Total Tables</span></div><div class="admin-stat"><b>${active.length}</b><span>Active Assignments</span></div><div class="admin-stat"><b>${ops.length}</b><span>Operators</span></div></div>
+
+  <div class="card admin-section">
+    <h3>＋ Create New D12 Operator</h3>
+    <p class="note">Create the operator's secure Supabase login here. The account is automatically created with the <b>operator</b> role. After creation, assign the operator to a table below.</p>
+    <div class="operator-create-grid">
+      <input id="d12NewOperatorName" class="full" type="text" maxlength="60" autocomplete="name" placeholder="Operator full name">
+      <input id="d12NewOperatorEmail" type="email" autocomplete="email" placeholder="Operator email address">
+      <input id="d12NewOperatorPassword" type="password" minlength="6" autocomplete="new-password" placeholder="Temporary password (minimum 6 characters)">
+    </div>
+    <div class="operator-create-actions">
+      <button id="d12CreateOperatorBtn" class="btn green" onclick="d12CreateOperator()">＋ Create Operator</button>
+    </div>
+    <div id="d12OperatorCreateStatus" class="operator-create-status"></div>
+  </div>
+
+  <div class="card admin-section"><h3>Table Count & Operator Slots</h3><div class="table-count-grid"><div><input id="d12TableCountSlider" type="range" min="1" max="64" value="${D12_ADMIN_CACHE.tables.length}" aria-label="Number of D12 tables" oninput="document.getElementById('d12TableCountValue').textContent=this.value" onchange="d12SetTableCount(this.value)"><p class="note">Table numbers define the operator/table slots: Table 1 = Operator 1, Table 2 = Operator 2, and so on. Operator accounts are still created separately. Table numbers are kept sequentially from 1 through the selected count.</p></div><div id="d12TableCountValue" class="table-count-value">${D12_ADMIN_CACHE.tables.length}</div></div></div>
+
+  <div class="card admin-section"><h3>Operator Accounts</h3><div class="admin-list">${ops.length?ops.map(o=>{const oa=d12ActiveAssignmentForOperator(o.id);return `<div class="admin-row"><div><b>${esc(o.full_name)}</b><div class="muted">${esc(o.role)}${oa?' • '+esc(oa.cue_tables?.table_name||'Assigned'):''}</div></div><div></div><div class="actions"><button class="admin-mini red" onclick="d12DeleteOperator('${o.id}',${JSON.stringify(String(o.full_name))})">Delete Operator</button></div></div>`}).join(''):'<div class="admin-empty">No operators found.</div>'}</div><p class="note">Delete removes the operator account. Unassigning first is recommended.</p></div>
+
+  <div class="card admin-section">
+    <h3>Assign Operator to Table</h3>
+    <div class="admin-form"><select id="d12AssignOperator"><option value="">Select available operator</option>${availableOperators.map(o=>`<option value="${o.id}">${esc(o.full_name)}</option>`).join('')}</select><select id="d12AssignTable"><option value="">Select available table</option>${availableTables.map(t=>`<option value="${t.id}">${esc(t.table_name)} • Operator ${d12TableNumber(t)||'?'}${t.status!=='available'?' • '+esc(t.status):''}</option>`).join('')}</select><button class="btn green" onclick="d12AssignSelected()">Assign</button></div>
+    <p class="note">One active operator per table and one active table per operator are enforced by the database constraints.</p>
+  </div>
+
+  <div class="card admin-section">
+    <h3>Current Assignments</h3>
+    <div class="admin-list">${active.length?active.map(a=>{const op=D12_ADMIN_CACHE.profiles.find(p=>p.id===a.operator_id);const table=a.cue_tables||{};return `<div class="admin-row"><div><b>${esc(op?.full_name||'Unknown operator')}</b><div class="muted">${esc(op?.role||'operator')}</div></div><div><b>${esc(table.table_name||'Unknown table')} • Operator ${d12TableNumber(table)||'?'}</b><div class="muted">Assigned ${a.assigned_at?new Date(a.assigned_at).toLocaleString():''}</div></div><div class="actions"><button class="admin-mini primary" onclick="d12AdminOpenTable('${a.table_id}')">Open Table</button><button class="admin-mini red" onclick="d12Unassign('${a.id}','${a.table_id}')">Unassign</button><button class="admin-mini red" onclick="d12DeleteOperator('${a.operator_id}',${JSON.stringify(String(op?.full_name||'Unknown operator'))})">Delete Operator</button></div></div>`}).join(''):'<div class="admin-empty">No active table assignments.</div>'}</div>
+  </div>
+
+  <div class="card admin-section">
+    <h3>Open a Table as Administrator</h3>
+    <div class="row"><select class="admin-table-select" onchange="d12AdminChooseTable(this.value)"><option value="">Select a table to score</option>${D12_ADMIN_CACHE.tables.map(t=>`<option value="${t.id}" ${selected?.id===t.id?'selected':''}>${esc(t.table_name)} • Operator ${d12TableNumber(t)||'?'} • ${esc(t.status)}</option>`).join('')}</select><button class="btn" onclick="d12AdminOpenTable(d12_AUTH.selectedTableId)">Open Selected Table</button></div>
+    <p class="note">Administrator scoring is not restricted by table assignment. Operator scoring is restricted to the assigned table.</p>
+  </div>
+
+  <div class="card admin-section">
+    <h3>Security</h3>
+    <div class="security-note">This UI only routes users. Supabase Auth identifies the user, the <b>profiles.role</b> value determines the role, and the database RLS policies remain the enforcement layer for records and assignments. Operator creation uses the secure <b>create-d12-operator</b> Edge Function; privileged Supabase keys are never stored in this HTML.</div>
+  </div>`;
+}
+function d12AdminChooseTable(id){D12_AUTH.selectedTableId=id||null}
+async function d12AdminOpenTable(tableId){if(!tableId){alert('Select a table first.');return}D12_AUTH.selectedTableId=tableId;const t=D12_ADMIN_CACHE.tables.find(x=>x.id===tableId);D12_AUTH.assignment={table_id:tableId,operator_id:D12_AUTH.user?.id||null,active:true,cue_tables:t};cur='8-Ball';await d12RestoreActiveCloudMatch(tableId);d12Tabs();render();void d12StartRealtime(tableId)}
+async function d12AssignSelected(){const operatorId=document.getElementById('d12AssignOperator')?.value;const tableId=document.getElementById('d12AssignTable')?.value;if(!operatorId||!tableId){alert('Select both an operator and a table.');return}await d12Assign(operatorId,tableId)}
+async function d12Assign(operatorId,tableId){
+  try{
+    const {error:opErr}=await d12Supabase.from('table_assignments').update({active:false,unassigned_at:new Date().toISOString()}).eq('operator_id',operatorId).eq('active',true);if(opErr)throw opErr;
+    const {error:tErr}=await d12Supabase.from('table_assignments').update({active:false,unassigned_at:new Date().toISOString()}).eq('table_id',tableId).eq('active',true);if(tErr)throw tErr;
+    const {error:iErr}=await d12Supabase.from('table_assignments').insert({table_id:tableId,operator_id:operatorId,active:true});if(iErr)throw iErr;
+    await d12Supabase.from('cue_tables').update({status:'active'}).eq('id',tableId);
+    await d12LoadAdminDashboard();
+    alert('Operator assigned successfully.');
+  }catch(err){console.error('D12 assign error:',err);alert('Unable to assign operator: '+(err?.message||'Unknown error'))}
+}
+async function d12Unassign(assignmentId,tableId){
+  if(!confirm('Unassign this operator from the table?'))return;
+  try{
+    const {error}=await d12Supabase.from('table_assignments').update({active:false,unassigned_at:new Date().toISOString()}).eq('id',assignmentId);if(error)throw error;
+    const {count}=await d12Supabase.from('table_assignments').select('id',{count:'exact',head:true}).eq('table_id',tableId).eq('active',true);
+    if((count||0)===0)await d12Supabase.from('cue_tables').update({status:'available'}).eq('id',tableId);
+    await d12LoadAdminDashboard();alert('Assignment removed.');
+  }catch(err){console.error('D12 unassign error:',err);alert('Unable to remove assignment: '+(err?.message||'Unknown error'))}
+}
+
+function players(){
+  const cache=Array.isArray(D12_PLAYER_CACHE)?D12_PLAYER_CACHE:[];
+  const options=cache.map(p=>`<option value="${esc(p.id)}">${esc(p.full_name)}</option>`).join('');
+  const list=cache.length?cache.map(p=>`<div class="item"><div><b>${esc(p.full_name)}</b><div class="note">Cloud registered player</div></div><div class="player-row-actions"><button class="player-remove-btn" onclick="d12DeleteCloudPlayer('${p.id}',${JSON.stringify(String(p.full_name))})">🗑 Remove Player</button></div></div>`).join(''):'<p class="note">No players are registered in the D12 cloud player list yet.</p>';
+  return `<div class="card"><div class="role-home-head"><div><div class="sub">D12 CLOUD PLAYER REGISTRY</div><h2>Players</h2></div><div class="row" style="flex:0 0 auto"><button class="btn gray" onclick="d12RefreshCloudPlayers()">↻ Refresh</button></div></div><p class="note"><b>Administrator only:</b> players must be registered here before they can be selected in any scoring match. Local-only player names are not accepted for cloud scoring.</p><div class="row"><input id="d12CloudPlayerName" placeholder="Enter player full name" maxlength="60"><button class="btn purple" onclick="d12AddCloudPlayer()">＋ Register Player</button></div><div class="player-remove-panel"><div><b>Remove Player from Cloud Registry</b><div class="note">Select a registered player and remove the player from the cloud registry.</div></div><div class="row" style="flex:1"><select id="d12RemovePlayerSelect" ${cache.length?'':'disabled'}><option value="">${cache.length?'Select player to remove':'No players available'}</option>${options}</select><button class="player-remove-btn" ${cache.length?'':'disabled'} onclick="d12RemoveSelectedCloudPlayer()">🗑 Remove Player</button></div></div><h3 style="margin-top:20px">Registered Cloud Players (${cache.length})</h3>${list}</div>`;
+}
+function settings(){return `<div class="card"><h2>Master Settings</h2><h3>Appearance</h3><div class="row"><button class="btn ${S.set.theme=='dark'?'green':'gray'}" onclick="theme()">Dark Theme: ${S.set.theme=='dark'?'ON':'OFF'}</button></div><h3>Theme Style</h3><select onchange="setStyle(this.value)"><option value="golden" ${S.set.style=='golden'?'selected':''}>Golden Theme</option><option value="silver" ${S.set.style=='silver'?'selected':''}>Silver Theme</option><option value="bronze" ${S.set.style=='bronze'?'selected':''}>Bronze Theme</option><option value="metallic" ${S.set.style=='metallic'?'selected':''}>Metallic Theme</option><option value="plastic" ${S.set.style=='plastic'?'selected':''}>Plastic Theme</option><option value="crystal" ${S.set.style=='crystal'?'selected':''}>Crystal Theme</option><option value="monochrome" ${S.set.style=='monochrome'?'selected':''}>Monochrome Theme</option><option value="vivid" ${S.set.style=='vivid'?'selected':''}>Vivid Colors Theme</option><option value="classic" ${S.set.style=='classic'?'selected':''}>Classic Theme</option><option value="opulent" ${S.set.style=='opulent'?'selected':''}>Opulent Theme</option><option value="neutrals" ${S.set.style=='neutrals'?'selected':''}>Neutrals Theme</option><option value="byd" ${S.set.style=='byd'?'selected':''}>BYD Inspired Theme</option><option value="apple" ${S.set.style=='apple'?'selected':''}>Apple Inspired Theme</option><option value="bmw" ${S.set.style=='bmw'?'selected':''}>BMW Inspired Theme</option><option value="mercedes" ${S.set.style=='mercedes'?'selected':''}>Mercedes-Benz Inspired Theme</option><option value="ferrari" ${S.set.style=='ferrari'?'selected':''}>Ferrari Inspired Theme</option><option value="porsche" ${S.set.style=='porsche'?'selected':''}>Porsche Inspired Theme</option><option value="tesla" ${S.set.style=='tesla'?'selected':''}>Tesla Inspired Theme</option><option value="lamborghini" ${S.set.style=='lamborghini'?'selected':''}>Lamborghini Inspired Theme</option><option value="nike" ${S.set.style=='nike'?'selected':''}>Nike Inspired Theme</option><option value="samsung" ${S.set.style=='samsung'?'selected':''}>Samsung Inspired Theme</option></select><p class="note">Choose a visual style. Your choice is saved on this device.</p><h3>Shot Clock</h3><div class="row"><button class="btn ${S.set.independentClock?'green':'gray'}" onclick="indClock()">Independent Shot Clock: ${S.set.independentClock?'ON':'OFF'}</button></div><p class="note">Turn this OFF to hide the independent shot clock from every game tab.</p>${S.set.independentClock?`<p class="note">Default shot time (5–300 seconds)</p><input type="number" min="5" max="300" value="${S.set.shot}" onchange="num('shot',this.value,5,300)"><p class="note">Extension time (1–120 seconds)</p><input type="number" min="1" max="120" value="${S.set.ext}" onchange="num('ext',this.value,1,120)"><p class="note">Extensions available (0–10)</p><input type="number" min="0" max="10" value="${S.set.n}" onchange="num('n',this.value,0,10)">`:''}<h3>General Display</h3><div class="row"><button class="btn ${S.set.showAggregate?'green':'gray'}" onclick="tog('showAggregate')">Head-to-Head Aggregate Bar: ${S.set.showAggregate?'ON':'OFF'}</button><button class="btn ${S.set.showExport?'green':'gray'}" onclick="tog('showExport')">Print / Export Scores Bar: ${S.set.showExport?'ON':'OFF'}</button></div><p class="note">Control visibility of the aggregate and print/export sections on scoring screens.</p><h3>Alerts</h3><div class="row"><button class="btn ${S.set.sound?'green':'gray'}" onclick="tog('sound')">Sound: ${S.set.sound?'ON':'OFF'}</button><button class="btn ${S.set.vibe?'green':'gray'}" onclick="tog('vibe')">Vibration: ${S.set.vibe?'ON':'OFF'}</button></div><h3>Data</h3><button class="btn red" onclick="if(confirm('Delete all saved data?')){localStorage.removeItem(K);location.reload()}">Delete All Saved Data</button></div>`}
+function duya(){return `<div class="card"><h3>Duya Legends 9-Ball Scoring</h3><p class="note">Break-and-run = 10, table-run = 7, normal victory = 4. A foul awards opponent 1 point.</p><select id="dp" onchange="selectActiveFromMenu(this.value,'duyaPlayer')"><option ${S.games[cur].duyaPlayer==1?'selected':''} value="1">Player 1</option><option ${S.games[cur].duyaPlayer==2?'selected':''} value="2">Player 2</option></select><div class="row" style="margin-top:10px"><button class="btn green" onclick="award(10)">Break & Run +10</button><button class="btn" onclick="award(7)">Table Run +7</button><button class="btn orange" onclick="award(4)">Normal Win +4</button></div><button class="btn red" style="width:100%;margin-top:10px" onclick="dfoul()">Foul → Opponent +1</button>${d12HistoryButtons()}</div>`}
+const D12_SNOOKER_ANY_COLOR_IMAGE='assets/image_10.png';
+function snookerColorData(){return [['Yellow',2,'y'],['Green',3,'g'],['Brown',4,'br'],['Blue',5,'b'],['Pink',6,'p'],['Black',7,'k']];}
+function snookerTargetLabel(d){if(d.snookerPhase==='reds')return d.snookerTarget==='red'?'RED':'ANY COLOR';const z=snookerColorData();return d.snookerColorIndex>=z.length?'FRAME COMPLETE':z[d.snookerColorIndex][0].toUpperCase();}
+function snookerTargetHtml(d){if(d.snookerPhase==='reds'){if(d.snookerTarget==='red')return `<div class="snooker-target-red">RED<br>+1</div>`;return `<img class="snooker-any-color-image" src="${D12_SNOOKER_ANY_COLOR_IMAGE}" alt="Any colour" title="Any colour">`;}const z=snookerColorData();if(d.snookerColorIndex>=z.length)return `<div class="snooker-target-red" style="background:radial-gradient(circle at 30% 25%,#fff 0 8%,#666 35%,#222 100%)">FRAME<br>DONE</div>`;const x=z[d.snookerColorIndex];const c=x[2]==='y'?'#d6a400':x[2]==='g'?'#13824a':x[2]==='br'?'#805034':x[2]==='b'?'#1877c9':x[2]==='p'?'#db638f':'#171717';return `<div class="snooker-target-red" style="background:radial-gradient(circle at 30% 25%,#fff 0 8%,${c} 35%,#111 100%)">${x[0]}<br>+${x[1]}</div>`;}
+function snookerOrderHtml(d){const z=snookerColorData(),idx=Number(d.snookerColorIndex)||0;return `<div class="snooker-final-order">${z.map((x,i)=>`<div class="snooker-order-ball ${i===idx?'current ':''}${i<idx?'done ':''}${x[2]}">${x[0]}<br>+${x[1]}</div>`).join('')}</div>`;}
+function snookerResetSequence(d){d.snookerReds=Math.max(6,Math.min(15,Number(d.snookerReds)||15));d.snookerRedsRemaining=d.snookerReds;d.snookerPhase='reds';d.snookerTarget='red';d.snookerColorIndex=0;d.snookerPointsPotted=0;d.snookerFoulPointsAwarded=0;d.snookerBreak1=0;d.snookerBreak2=0;d.snookerMaxBreak1=0;d.snookerMaxBreak2=0;d.snookerFrameComplete=false;}
+function setSnookerReds(v){const d=S.games['Snooker'];if(!d)return;d.snookerReds=Math.max(6,Math.min(15,Math.round(Number(v)||15)));snookerResetSequence(d);d._undo=[];d._redo=[];d.s1=0;d.s2=0;d.matchEnded=false;d.lastWinner='';d.cloudMatchId='';save();if(cur==='Snooker')render();}
+function snookerStartVisit(d,p){if(!d)return;p=Number(p)||1;d['snookerBreak'+p]=0;snookerPrepareForIncomingPlayer(d);}
+function snookerRecordPot(g,p,value){p=Number(p)||1;value=Math.max(0,Number(value)||0);g.snookerPointsPotted=Math.max(0,Number(g.snookerPointsPotted)||0)+value;const bk='snookerBreak'+p,mk='snookerMaxBreak'+p;g[bk]=Math.max(0,Number(g[bk])||0)+value;g[mk]=Math.max(Math.max(0,Number(g[mk])||0),g[bk]);}
+function snookerMarkFrameComplete(g){g.snookerFrameComplete=true;const a=Number(g.s1)||0,b=Number(g.s2)||0;g.lastWinner=a===b?'':(a>b?String(g.p1||'Player 1'):String(g.p2||'Player 2'));}
+function snookerScore(ballValue){
+  const d=S.games['Snooker'];
+  if(!d||d.matchEnded||D12_SCORE_BUSY)return;
+  const p=Number(document.getElementById('sp')?.value||d.snookerPlayer||d.active||1);
+  d.snookerPlayer=p;
+  const value=Number(ballValue)||0;
+  let eventType='',metadata={},mutation=null;
+
+  if(d.snookerPhase==='reds'){
+    if(d.snookerTarget==='red'&&value===1){
+      eventType='snooker_red';
+      metadata={source:'snooker',ball_value:1,sequence:'red'};
+      mutation=(g)=>{
+        snookerRecordPot(g,p,1);
+        g.snookerRedsRemaining=Math.max(0,(Number(g.snookerRedsRemaining)||0)-1);
+        g.snookerTarget='color';
+      };
+    }else if(d.snookerTarget==='color'&&value>=2&&value<=7){
+      eventType='snooker_color';
+      metadata={source:'snooker',ball_value:value,sequence:'colour_after_red'};
+      mutation=(g)=>{
+        snookerRecordPot(g,p,value);
+        const remaining=Math.max(0,Number(g.snookerRedsRemaining)||0);
+        if(remaining>0){
+          g.snookerTarget='red';
+        }else{
+          g.snookerPhase='colors';
+          g.snookerTarget='yellow';
+          g.snookerColorIndex=0;
+        }
+      };
+    }else{
+      alert('Follow the sequence: RED, then ANY COLOR, then RED, then ANY COLOR.');
+      return;
+    }
+  }else{
+    const z=snookerColorData();
+    const idx=Number(d.snookerColorIndex)||0;
+    if(idx>=z.length){alert('This frame is complete.');return;}
+    if(value!==z[idx][1]){alert('Next color is '+z[idx][0]+'.');return;}
+    eventType='snooker_final_color';
+    metadata={source:'snooker',ball_value:value,color:z[idx][0],sequence:'final_colors'};
+    mutation=(g)=>{
+      snookerRecordPot(g,p,value);
+      const next=Number(g.snookerColorIndex)||0;
+      g.snookerColorIndex=next+1;
+      g.snookerTarget=g.snookerColorIndex<z.length?z[g.snookerColorIndex][0].toLowerCase():'done';
+      g.snookerPhase='colors';
+      if(g.snookerColorIndex>=z.length)snookerMarkFrameComplete(g);
+    };
+  }
+
+  void d12ScoreDelta(p,value,eventType,metadata,mutation);
+}
+function ss(n){snookerScore(Number(n));}
+
+function snook(){let d=S.games['Snooker'],z=[['Red',1,'r'],...snookerColorData()];const reds=Number(d.snookerReds)||15,remaining=Number(d.snookerRedsRemaining)||0;return `<div class="card"><h3>Snooker Frame Setup</h3><div class="snooker-reds-control"><div><div class="note">Number of Reds: 6–15</div><input type="range" min="6" max="15" step="1" value="${reds}" oninput="document.getElementById('snookerRedsValue').textContent=this.value" onchange="setSnookerReds(this.value)"></div><div id="snookerRedsValue" class="snooker-reds-count">${reds}</div></div><p class="note">Changing the number of reds starts a fresh snooker frame sequence.</p></div><div class="card"><h3>Reds Remaining</h3><div class="snooker-red-rack">${Array.from({length:reds},(_,i)=>`<span class="snooker-red-ball ${i>=remaining?'potted':''}" title="${i<remaining?'Red remaining':'Red potted'}"></span>`).join('')}</div><p class="note" style="text-align:center">${remaining} of ${reds} reds remaining</p><div class="snooker-frame-reference">Points remaining from balls left: ${snookerRemainingPoints(d)} • Fouls do not reduce remaining points</div></div><div class="card snooker-next"><h3>What to Pot Next</h3><div class="snooker-next-label">${snookerTargetLabel(d)}</div>${snookerTargetHtml(d)}<p class="note">${d.snookerPhase==='reds'?(d.snookerTarget==='red'?'Red is required. After a red, any colour may be potted.':(remaining===0?'Any colour may be potted. This is the final colour after the last red.':'Any colour may be potted. After the colour, return to red.')):'The reds are cleared. Pot colours in order: Yellow → Green → Brown → Blue → Pink → Black.'}</p>${d.snookerPhase==='colors'?snookerOrderHtml(d):''}</div><div class="card"><h3>Snooker Ball-by-Ball Scoring</h3><select id="sp" onchange="selectActiveFromMenu(this.value,'snookerPlayer')"><option ${d.snookerPlayer==1?'selected':''} value="1">Player 1</option><option ${d.snookerPlayer==2?'selected':''} value="2">Player 2</option></select><div class="balls" style="margin-top:10px">${z.map(x=>{const allowed=(d.snookerPhase==='reds'?(d.snookerTarget==='red'?x[1]===1:x[1]>=2&&x[1]<=7):x[1]===(snookerColorData()[Number(d.snookerColorIndex)||0]?.[1]||-1));return `<button class="${x[2]} ${allowed?'':'v8-disabled'}" onclick="${allowed?`ss(${x[1]})`:'return false'}" ${allowed?'':'disabled'}>${x[0]}<br>+${x[1]}</button>`}).join('')}</div><div class="row" style="margin-top:12px"><button class="btn orange" onclick="snookerEndBreak()">↪ End Break — Miss / No Foul</button></div><p class="note" style="text-align:center;margin-top:8px">Ends the current break without awarding foul points and automatically activates the other player. While reds remain, the incoming player starts on RED.</p>${d12HistoryButtons()}<h3 style="margin-top:18px">Foul Count System</h3><p class="note">Basic fouls: 4 points. Blue: 5, Pink: 6, Black: 7. No stacking: only the highest single penalty applies.</p><div class="row"><select id="fp" onchange="setGameSelect('foulValue',this.value)"><option ${d.foulValue==4?'selected':''} value="4">Basic foul — 4</option><option ${d.foulValue==5?'selected':''} value="5">Blue involved — 5</option><option ${d.foulValue==6?'selected':''} value="6">Pink involved — 6</option><option ${d.foulValue==7?'selected':''} value="7">Black involved — 7</option></select><button class="btn red" onclick="sf()">Award Foul</button></div></div>`}
+function addname(x){x=(x||'').trim().replace(/\s+/g,' ');if(!x||x.length>60||S.players.some(p=>p.toLowerCase()==x.toLowerCase()))return false;S.players.push(x);S.players.sort();return true}function addp(){alert('Players must be registered by an administrator in the D12 cloud player registry.');}function delp(){alert('Players are managed from the D12 cloud player registry.')}function imp(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=String(r.result),a;if(f.name.toLowerCase().endsWith('.json')){let q=JSON.parse(x);a=Array.isArray(q)?q:(q.players||[]);a=a.map(v=>typeof v=='string'?v:v&&v.name)}else a=x.split(/[\r\n,;]+/);let n=0;a.forEach(v=>{if(addname(v))n++});save();render();alert('Imported '+n+' new player(s).')}catch(_){alert('Invalid player file. Use CSV, TXT or JSON.')}};r.readAsText(f)}
+function snookerPrepareForIncomingPlayer(d){
+  if(!d)return;
+  const remaining=Math.max(0,Number(d.snookerRedsRemaining)||0);
+  if(remaining>0){d.snookerPhase='reds';d.snookerTarget='red';return;}
+  // After the last red, a missed colour ends that break and the incoming player starts the ordered colours at Yellow.
+  if(d.snookerPhase==='reds'){d.snookerPhase='colors';d.snookerColorIndex=0;d.snookerTarget='yellow';return;}
+  const z=snookerColorData();const idx=Math.max(0,Number(d.snookerColorIndex)||0);d.snookerTarget=idx<z.length?z[idx][0].toLowerCase():'done';
+}
+async function snookerEndBreak(){
+  if(D12_SCORE_BUSY)return;
+  const d=S.games['Snooker'];if(!d||d.matchEnded)return;
+  const outgoing=Number(d.active)||Number(d.snookerPlayer)||1;const incoming=outgoing===1?2:1;
+  const before=d12SnapshotGame(d);D12_SCORE_BUSY=true;
+  try{
+    d.active=incoming;d.snookerPlayer=incoming;snookerStartVisit(d,incoming);
+    await d12PersistActivePlayer(d);
+    const matchId=await d12EnsureCloudMatch(d);const activePlayerId=await d12ResolvePlayerId(incoming===1?d.p1:d.p2);
+    await d12RecordCloudEvent(matchId,activePlayerId,0,'snooker_end_break',{source:'snooker',reason:'miss_no_foul',previous_player:outgoing,incoming_player:incoming,snookerRedsRemaining:d.snookerRedsRemaining,snookerPhase:d.snookerPhase,snookerTarget:d.snookerTarget});
+    d12PushHistory(d,before);save();d12CloudStatus('ok','Break ended — next player active');render();
+  }catch(err){d12RestoreGameSnapshot(d,before);console.error('D12 snooker end break error:',err);d12CloudStatus('warn','Break change saved locally only');save();render();alert('Unable to synchronize End Break to cloud. '+(err?.message||'Unknown error'));}
+  finally{D12_SCORE_BUSY=false;}
+}
+function syncActivePlayer(p,source){p=Number(p);if(p!==1&&p!==2)return;let d=S.games[cur];const previous=Number(d.active)||1;d.active=p;if(cur==='Snooker'){d.snookerPlayer=p;if(previous!==p)snookerStartVisit(d,p);else snookerPrepareForIncomingPlayer(d);}if(cur==='Duya Legends')d.duyaPlayer=p;save();d12PersistActivePlayer(d).then(()=>{d12CloudStatus('ok','Active player synchronized');render()}).catch(err=>{console.warn('D12 active player sync:',err);d12CloudStatus('warn','Active player saved locally; cloud sync failed');render()});render()}
+function setActive(p){syncActivePlayer(p,'scoreboard')}
+function selectActiveFromMenu(v,key){let p=Number(v);if(p!==1&&p!==2)return;syncActivePlayer(p,key==='duyaPlayer'?'duya':'snooker')}
+function setGameSelect(k,v){S.games[cur][k]=+v;if(k==='duyaPlayer'||k==='snookerPlayer')syncActivePlayer(v,k==='duyaPlayer'?'duya':'snooker');else save()}
+function indClock(){S.set.independentClock=!S.set.independentClock;if(!S.set.independentClock)stop();save();render()}
+function pick(p,v){if(v){S.games[cur][p==1?'p1':'p2']=v;S.games[cur].cloudMatchId='';syncActivePlayer(p,'scoreboard')}}
+function namep(p,v){S.games[cur][p==1?'p1':'p2']=v.trim()||(p==1?'Player 1':'Player 2');S.games[cur].cloudMatchId='';syncActivePlayer(p,'scoreboard')}
+function d12SnapshotGame(d){return {s1:Number(d.s1)||0,s2:Number(d.s2)||0,active:Number(d.active)||1,snookerReds:Number(d.snookerReds)||15,snookerRedsRemaining:Number(d.snookerRedsRemaining??d.snookerReds)||15,snookerPhase:d.snookerPhase||'reds',snookerTarget:d.snookerTarget||'red',snookerColorIndex:Number(d.snookerColorIndex)||0,snookerPointsPotted:Number(d.snookerPointsPotted)||0,snookerFoulPointsAwarded:Number(d.snookerFoulPointsAwarded)||0,snookerBreak1:Number(d.snookerBreak1)||0,snookerBreak2:Number(d.snookerBreak2)||0,snookerMaxBreak1:Number(d.snookerMaxBreak1)||0,snookerMaxBreak2:Number(d.snookerMaxBreak2)||0,snookerFrameComplete:!!d.snookerFrameComplete,lastWinner:d.lastWinner||''};}
+function d12RestoreGameSnapshot(d,snap){if(!snap)return;d.s1=Number(snap.s1)||0;d.s2=Number(snap.s2)||0;d.active=Number(snap.active)||1;d.snookerPlayer=d.active;d.snookerReds=Number(snap.snookerReds)||15;d.snookerRedsRemaining=Math.max(0,Math.min(d.snookerReds,Number(snap.snookerRedsRemaining)||0));d.snookerPhase=snap.snookerPhase||'reds';d.snookerTarget=snap.snookerTarget||'red';d.snookerColorIndex=Math.max(0,Math.min(6,Number(snap.snookerColorIndex)||0));d.snookerPointsPotted=Math.max(0,Number(snap.snookerPointsPotted)||0);d.snookerFoulPointsAwarded=Math.max(0,Number(snap.snookerFoulPointsAwarded)||0);d.snookerBreak1=Math.max(0,Number(snap.snookerBreak1)||0);d.snookerBreak2=Math.max(0,Number(snap.snookerBreak2)||0);d.snookerMaxBreak1=Math.max(0,Number(snap.snookerMaxBreak1)||0);d.snookerMaxBreak2=Math.max(0,Number(snap.snookerMaxBreak2)||0);d.snookerFrameComplete=!!snap.snookerFrameComplete;d.lastWinner=snap.lastWinner||'';}
+function d12HistoryEnabled(){return cur==='Snooker'||cur==='Duya Legends';}
+function d12PushHistory(d,snap){if(!d12HistoryEnabled())return;d._undo=Array.isArray(d._undo)?d._undo:[];d._redo=[];d._undo.push(snap);if(d._undo.length>100)d._undo.shift();}
+async function d12PersistGameSnapshot(d,reason){const matchId=await d12EnsureCloudMatch(d);const patch={player1_score:Number(d.s1)||0,player2_score:Number(d.s2)||0,active_player:Number(d.active)||1};const {error}=await d12Supabase.from('matches').update(patch).eq('id',matchId).eq('status','active').select('id').maybeSingle();if(error)throw error;const activePlayerId=await d12ResolvePlayerId(d.active===1?d.p1:d.p2);await d12RecordCloudEvent(matchId,activePlayerId,0,reason||'score_history',{source:'version8.8',undo_redo:true,snookerRedsRemaining:d.snookerRedsRemaining,snookerPhase:d.snookerPhase,snookerTarget:d.snookerTarget,snookerPointsPotted:d.snookerPointsPotted,snookerFoulPointsAwarded:d.snookerFoulPointsAwarded,snookerBreak1:d.snookerBreak1,snookerBreak2:d.snookerBreak2,snookerMaxBreak1:d.snookerMaxBreak1,snookerMaxBreak2:d.snookerMaxBreak2});}
+async function d12UndoScore(){if(D12_SCORE_BUSY)return;const d=S.games[cur];if(!d12HistoryEnabled()||!d||!Array.isArray(d._undo)||!d._undo.length)return;D12_SCORE_BUSY=true;const before=d12SnapshotGame(d),target=d._undo.pop();try{d._redo=Array.isArray(d._redo)?d._redo:[];d._redo.push(before);d12RestoreGameSnapshot(d,target);await d12PersistGameSnapshot(d,'undo');save();render();}catch(err){d._undo.push(target);d._redo.pop();console.error('D12 undo error:',err);alert('Undo failed. '+(err?.message||'Unknown error'));render();}finally{D12_SCORE_BUSY=false;}}
+async function d12RedoScore(){if(D12_SCORE_BUSY)return;const d=S.games[cur];if(!d12HistoryEnabled()||!d||!Array.isArray(d._redo)||!d._redo.length)return;D12_SCORE_BUSY=true;const before=d12SnapshotGame(d),target=d._redo.pop();try{d._undo=Array.isArray(d._undo)?d._undo:[];d._undo.push(before);d12RestoreGameSnapshot(d,target);await d12PersistGameSnapshot(d,'redo');save();render();}catch(err){d._redo.push(target);d._undo.pop();console.error('D12 redo error:',err);alert('Redo failed. '+(err?.message||'Unknown error'));render();}finally{D12_SCORE_BUSY=false;}}
+function d12HistoryButtons(){if(!d12HistoryEnabled())return '';const d=S.games[cur],u=Array.isArray(d?._undo)&&d._undo.length>0,r=Array.isArray(d?._redo)&&d._redo.length>0;return `<div class="v8-history-actions"><button class="btn gray ${u?'':'v8-disabled'}" onclick="d12UndoScore()" ${u?'':'disabled'}>↶ Undo Score</button><button class="btn gray ${r?'':'v8-disabled'}" onclick="d12RedoScore()" ${r?'':'disabled'}>↷ Redo Score</button></div>`;}
+async function d12ScoreDelta(p,n,eventType='score',metadata={},mutate=null){if(D12_SCORE_BUSY)return;const d=S.games[cur];if(!d||d.matchEnded){alert('Start a new match before scoring.');return}D12_SCORE_BUSY=true;const old=d12SnapshotGame(d);try{d.active=p;const k=p===1?'s1':'s2';d[k]=Math.max(0,(Number(d[k])||0)+Number(n||0));if(typeof mutate==='function')mutate(d);await d12PersistScore(d,p,n,eventType,metadata);d12PushHistory(d,old);save();render()}catch(err){d12RestoreGameSnapshot(d,old);d12CloudStatus('bad','Score was not saved to Supabase');console.error('D12 scoring sync error:',err);alert('Score not saved to cloud. '+(err?.message||'Unknown error'));render()}finally{D12_SCORE_BUSY=false}}
+
+function chg(p,n){void d12ScoreDelta(p,n,'score_adjustment',{source:'scoreboard',discipline:cur})}
+function award(n){let p=+document.getElementById('dp').value;S.games[cur].duyaPlayer=p;void d12ScoreDelta(p,n,'duya_points',{source:'duya',reason:n===10?'break_and_run':n===7?'table_run':'normal_win'})}
+function dfoul(){let p=+document.getElementById('dp').value,o=p==1?2:1;S.games[cur].duyaPlayer=p;void d12ScoreDelta(o,1,'foul',{source:'duya',for_player:o,committed_by:p})}
+
+function sf(){let p=+document.getElementById('sp').value,o=p==1?2:1,n=+document.getElementById('fp').value,d=S.games['Snooker'];d.snookerPlayer=p;void d12ScoreDelta(o,n,'foul',{source:'snooker',foul_value:n,committed_by:p},game=>{game.snookerFoulPointsAwarded=Math.max(0,Number(game.snookerFoulPointsAwarded)||0)+Math.max(0,Number(n)||0);game.active=o;game.snookerPlayer=o;snookerStartVisit(game,o);})}
+function fmt(s){s=Math.max(0,Math.floor(s||0));return s>=60?Math.floor(s/60)+':'+String(s%60).padStart(2,'0'):String(s).padStart(2,'0')}function start(){if(tm)return;tm=setInterval(()=>{let d=S.games[cur];if(d.t<=0){stop();beep(true);return}d.t--;if(d.t==10||d.t<=5)beep();save();let e=document.getElementById('clock');if(e){e.textContent=fmt(d.t);e.className='time '+(d.t<=5?'critical':d.t<=10?'warn':'')}if(d.t==0){stop();beep(true)}},1000)}function stop(){if(tm){clearInterval(tm);tm=null}}function resetclock(){stop();let d=S.games[cur];d.t=S.set.shot;d.e=S.set.n;save();render()}function extend(){let d=S.games[cur];if(d.e<=0)return alert('No extensions remaining.');d.t+=S.set.ext;d.e--;save();render()}function beep(fin){if(S.set.vibe&&navigator.vibrate)navigator.vibrate(fin?[150,80,150]:70);if(S.set.sound){try{let C=window.AudioContext||webkitAudioContext,c=new C,o=c.createOscillator(),g=c.createGain();o.frequency.value=fin?520:850;g.gain.value=.06;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.12)}catch(_){}}}function swap(){let d=S.games[cur];[d.s1,d.s2]=[d.s2,d.s1];save();render()}
+
+async function newMatch(){
+  const d=S.games[cur];if(!d){alert('No active match found.');return;}
+  const hasScores=(Number(d.s1)||0)!==0||(Number(d.s2)||0)!==0;
+  if(tm)stop();
+  const message=hasScores?'Start a new match? Current scores will be cleared. Use End Match first if you want this result completed and counted.':'Start a new match with the current selected players?';
+  if(!confirm(message))return;
+  try{
+    await d12CancelCloudMatch(d);
+    d.s1=0;d.s2=0;d.t=Number(S.set.shot)||30;d.e=Number(S.set.n)||0;d.active=1;d.matchEnded=false;d.lastWinner='';d.cloudMatchId='';d._undo=[];d._redo=[];if(cur==='Snooker')snookerResetSequence(d);
+    d12CloudStatus('idle','New match ready — creating cloud record');
+    await d12EnsureCloudMatch(d);
+    d12CloudStatus('ok','New match created in cloud');
+    save();render();
+  }catch(err){console.error('New Match error:',err);alert('Unable to start the new match: '+(err?.message||'Unknown error'));}
+}
+
+async function endMatch(){
+  const d=S.games[cur];if(!d){alert('No active match found.');return;}
+  if(d.matchEnded){alert('This match has already been ended. Start a New Match for the next result.');return;}
+  const s1=Number(d.s1)||0,s2=Number(d.s2)||0;if(s1===s2){alert('The match is tied. A completed result needs a clear winner.');return;}
+  const winner=s1>s2?String(d.p1||'Player 1'):String(d.p2||'Player 2');
+  const loser=s1>s2?String(d.p2||'Player 2'):String(d.p1||'Player 1');
+  if(!confirm('End match?\n\nWinner: '+winner+'\nFinal score: '+s1+' - '+s2+'\n\nThe completed match will be stored in Supabase.'))return;
+  try{await d12CompleteCloudMatch(d,s1>s2?1:2);d.matchEnded=true;d.lastWinner=winner;d.cloudMatchId='';save();render();alert('Match completed successfully. '+winner+' won '+s1+' - '+s2+'. The head-to-head aggregate was updated securely in Supabase.');}
+  catch(err){console.error('End Match error:',err);d12CloudStatus('bad','Match completion failed');alert('The match was not marked completed in Supabase. '+(err?.message||'Unknown error'));render();}
+}
+
+async function resetmatch(){
+  if(!confirm('Reset this match? Current scores will be cleared. This does not count a winner.'))return;
+  try{const d=S.games[cur];await d12CancelCloudMatch(d);d.s1=0;d.s2=0;d.t=S.set.shot;d.e=S.set.n;d.active=1;d.matchEnded=false;d.lastWinner='';d.cloudMatchId='';d._undo=[];d._redo=[];if(cur==='Snooker')snookerResetSequence(d);d12CloudStatus('idle','Match reset — no result recorded');save();render();}
+  catch(err){console.error('Reset match error:',err);alert('Unable to reset the cloud match safely: '+(err?.message||'Unknown error'));}
+}
+
+function exportTools(){return `<div class="card export-card"><img class="print-card-logo" src="${D12_PRINT_LOGO}" alt="D12 Cue Club Logo"><h3>Print / Export Scores</h3><p class="note">Save the current ${esc(cur)} score board as PDF, JPG or PNG. The export highlights the winner and includes the final aggregate.</p><div class="export-grid"><button class="btn export-btn" onclick="exportScore('pdf')">🖨 PDF</button><button class="btn export-btn orange" onclick="exportScore('jpg')">🖼 JPG</button><button class="btn export-btn purple" onclick="exportScore('png')">▣ PNG</button></div><div id="exportStatus" class="note export-status" aria-live="polite"></div></div>`}
+function exportStatus(msg){let e=document.getElementById('exportStatus');if(e)e.textContent=msg}
+function safeFileName(x){return String(x||'score').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()||'score'}
+function downloadBlob(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500)}
+
+async function getExportLogo(){
+  try{
+    const img=new Image();
+    img.decoding='async';
+    img.src=D12_PRINT_LOGO;
+    if(img.decode) await img.decode();
+    else await new Promise((ok,fail)=>{img.onload=ok;img.onerror=fail});
+    return img;
+  }catch(_){return null}
+}
+function winnerInfo(d){
+  const a=Number(d.s1)||0,b=Number(d.s2)||0;
+  if(cur==='Snooker'&&!d.snookerFrameComplete&&!d.matchEnded)return {tie:false,winner:0,label:'FRAME IN PROGRESS'};
+  if(a===b)return {tie:true,winner:0,label:'MATCH TIED'};
+  return a>b?{winner:1,label:'WINNER'}:{winner:2,label:'WINNER'};
+}
+function drawRoundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.roundRect(x,y,w,h,r);
+}
+function scoreCanvas(logo){
+  let d=S.games[cur],W=1800,H=1120,c=document.createElement('canvas');c.width=W;c.height=H;
+  let x=c.getContext('2d'),dark=S.set.theme==='dark';
+  let bg=dark?'#07101b':'#edf4fb',panel=dark?'#101c2d':'#ffffff',tx=dark?'#f5f8ff':'#101722',mut=dark?'#b8c5d8':'#5e6877';
+  let cs=getComputedStyle(document.body),accent=cs.getPropertyValue('--accent').trim()||'#0a84ff',accent2=cs.getPropertyValue('--accent2').trim()||'#5eb7ff';
+  let gr=x.createLinearGradient(0,0,W,H);gr.addColorStop(0,bg);gr.addColorStop(1,dark?'#02060c':'#d7e8f8');x.fillStyle=gr;x.fillRect(0,0,W,H);
+
+  x.fillStyle='rgba(255,255,255,.08)';
+  for(let i=0;i<10;i++){x.beginPath();x.arc(110+i*190,90+(i%4)*245,115,0,Math.PI*2);x.fill()}
+
+  drawRoundRect(x,70,60,W-140,H-120,42);x.fillStyle=panel;x.shadowColor='rgba(0,0,0,.24)';x.shadowBlur=40;x.fill();x.shadowBlur=0;
+  x.fillStyle=accent;drawRoundRect(x,70,60,W-140,18,18);x.fill();
+
+  let titleX=150;
+  if(logo){
+    try{
+      x.save();
+      const maxW=210,maxH=125,lw=logo.naturalWidth||maxW,lh=logo.naturalHeight||maxH;
+      const scale=Math.min(maxW/lw,maxH/lh);
+      const dw=Math.max(1,lw*scale),dh=Math.max(1,lh*scale);
+      x.drawImage(logo,135+(maxW-dw)/2,105+(maxH-dh)/2,dw,dh);
+      x.restore();
+      titleX=365;
+    }catch(_){}
+  }
+  x.fillStyle=tx;x.font='900 56px Arial';x.fillText('D12 CUESPORTS SCORE BOARD',titleX,160);
+  x.font='800 34px Arial';x.fillStyle=accent;x.fillText(cur.toUpperCase(),titleX,212);
+  x.font='500 24px Arial';x.fillStyle=mut;x.fillText(new Date().toLocaleString(),titleX,255);
+
+  const info=winnerInfo(d);
+  const boxes=[{x:150,n:d.p1,s:Number(d.s1)||0,p:1},{x:950,n:d.p2,s:Number(d.s2)||0,p:2}];
+  boxes.forEach(b=>{
+    const win=info.winner===b.p;
+    const tie=info.tie;
+    const boxFill=win?(dark?'#2a2410':'#fff8dc'):(dark?'#152338':'#f5f9ff');
+    x.fillStyle=boxFill;
+    x.strokeStyle=win?'#f2c94c':(b.p===d.active?accent:'#cbd5e1');
+    x.lineWidth=win?14:(b.p===d.active?9:3);
+    x.shadowColor=win?'rgba(242,201,76,.9)':'transparent';x.shadowBlur=win?34:0;
+    drawRoundRect(x,b.x,335,700,440,38);x.fill();x.stroke();x.shadowBlur=0;
+
+    if(win){
+      x.fillStyle='#f2c94c';drawRoundRect(x,b.x+38,365,205,48,24);x.fill();
+      x.fillStyle='#16120a';x.font='900 24px Arial';x.fillText('🏆 WINNER',b.x+60,398);
+    }else if(tie){
+      x.fillStyle=accent2;drawRoundRect(x,b.x+38,365,180,48,24);x.fill();
+      x.fillStyle='#07101b';x.font='900 22px Arial';x.fillText('MATCH TIED',b.x+55,398);
+    }else if(b.p===d.active){
+      x.fillStyle=accent;x.font='900 22px Arial';x.fillText('ACTIVE PLAYER',b.x+42,405);
+    }
+
+    x.fillStyle=tx;x.font=win?'900 44px Arial':'800 40px Arial';
+    let nm=String(b.n||('Player '+b.p)),lag=cur==='Snooker'?snookerLag(b.p,d):0;
+    let exportName=nm.slice(0,27)+(lag>0?' (-'+lag+')':'');x.fillText(exportName,b.x+42,490);
+    x.fillStyle=win?'#d5a600':accent;x.font='900 240px Arial';
+    let sc=String(b.s),m=x.measureText(sc);x.fillText(sc,b.x+350-m.width/2,690);
+    if(cur==='Snooker'){
+      const maxBreak=Math.max(0,Number(d['snookerMaxBreak'+b.p])||0);
+      const rewardText=snookerRewardText(b.p,d);x.fillStyle=mut;x.font='800 25px Arial';x.fillText('Player performance • Maximum break: '+maxBreak+(rewardText?' • '+rewardText:''),b.x+42,735);
+    }
+  });
+
+  // Aggregate result.
+  const agg=aggregateText(d);
+  x.fillStyle=dark?'#1b2a3e':'#e8f2ff';drawRoundRect(x,520,825,760,95,28);x.fill();
+  x.strokeStyle=accent;x.lineWidth=3;x.stroke();
+  x.fillStyle=tx;x.font='900 38px Arial';let am=x.measureText(agg);x.fillText(agg,(W-am.width)/2,887);
+
+  x.fillStyle=mut;x.font='600 24px Arial';
+  let note=cur==='Duya Legends'?'Duya: Break & Run 10 • Table Run 7 • Normal Win 4 • Foul 1':cur==='Snooker'?('Snooker: Remaining ball points '+snookerRemainingPoints(d)+' • Fouls excluded • Century = 100+ break • Maximum = 147 break'):'Final match score';
+  x.fillText(note,150,975);
+  x.fillStyle=accent;x.font='800 22px Arial';x.fillText('Generated by D12 Cue Club • D12 Cuesports Score Board • Version 8.8',150,1030);
+  return c;
+}
+function canvasBlob(c,type,q){return new Promise(r=>c.toBlob(r,type,q))}
+async function exportScore(type){
+  try{
+    exportStatus('Preparing '+String(type).toUpperCase()+'…');
+    const logo=await getExportLogo();
+    let c=scoreCanvas(logo),base=safeFileName('d12-'+cur+'-'+new Date().toISOString().slice(0,10));
+    if(type==='png'){
+      let b=await canvasBlob(c,'image/png');if(!b)throw new Error('PNG export failed');downloadBlob(b,base+'.png');
+    }else if(type==='jpg'){
+      let b=await canvasBlob(c,'image/jpeg',.95);if(!b)throw new Error('JPG export failed');downloadBlob(b,base+'.jpg');
+    }else{
+      let data=c.toDataURL('image/jpeg',.94).split(',')[1],bin=atob(data),bytes=new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+      let pdf=buildScorePDF(bytes,c.width,c.height);
+      downloadBlob(new Blob([pdf],{type:'application/pdf'}),base+'.pdf');
+    }
+    exportStatus(String(type).toUpperCase()+' saved successfully.');
+  }catch(e){
+    console.error('D12 export error:',e);
+    exportStatus('Export failed. Please try again.');
+    alert('Unable to export the score. Please try again.');
+  }
+}
+
+function buildScorePDF(img,w,h){
+  const enc=new TextEncoder(),pw=842,ph=595,margin=24;
+  const scale=Math.min((pw-margin*2)/w,(ph-margin*2)/h),dw=w*scale,dh=h*scale,x=(pw-dw)/2,y=(ph-dh)/2;
+  const content='q\n'+dw.toFixed(2)+' 0 0 '+dh.toFixed(2)+' '+x.toFixed(2)+' '+y.toFixed(2)+' cm\n/Im0 Do\nQ';
+  const chunks=[],offsets=[0];
+  function addText(t){chunks.push(enc.encode(t))}
+  addText('%PDF-1.4\n%âãÏÓ\n');
+  let pos=chunks.reduce((n,a)=>n+a.length,0);
+  function addObj(num,parts){
+    offsets[num]=pos;
+    const htxt=num+' 0 obj\n';addText(htxt);pos+=enc.encode(htxt).length;
+    for(const part of parts){if(part instanceof Uint8Array){chunks.push(part);pos+=part.length}else{addText(part);pos+=enc.encode(part).length}}
+    addText('\nendobj\n');pos+=8;
+  }
+  addObj(1,['<< /Type /Catalog /Pages 2 0 R >>']);
+  addObj(2,['<< /Type /Pages /Kids [3 0 R] /Count 1 >>']);
+  addObj(3,['<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+pw+' '+ph+'] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>']);
+  addObj(4,['<< /Type /XObject /Subtype /Image /Width '+w+' /Height '+h+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+img.length+' >>\nstream\n',img,'\nendstream']);
+  addObj(5,['<< /Length '+enc.encode(content).length+' >>\nstream\n'+content+'\nendstream']);
+  const xref=pos;addText('xref\n0 6\n0000000000 65535 f \n');
+  for(let i=1;i<=5;i++)addText(String(offsets[i]).padStart(10,'0')+' 00000 n \n');
+  addText('trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+  const total=chunks.reduce((n,a)=>n+a.length,0),out=new Uint8Array(total);let at=0;
+  for(const a of chunks){out.set(a,at);at+=a.length}
+  return out;
+}
+function setStyle(v){S.set.style=v||'crystal';save();render()}function theme(){S.set.theme=S.set.theme=='dark'?'light':'dark';save();render()}function tog(k){S.set[k]=!S.set[k];save();render()}function num(k,v,a,b){v=Math.round(+v);if(!Number.isFinite(v))return;S.set[k]=Math.max(a,Math.min(b,v));save();render()}document.addEventListener('DOMContentLoaded',()=>{d12BootAuth()});
+</script></body></html>
