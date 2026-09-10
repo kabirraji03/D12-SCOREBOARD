@@ -1,0 +1,102 @@
+name: Publish D12 Scoreboard Version 9.3
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-v9-3.yml']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Version 9.3 from working 9204 build
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          src=Path('app-v9-2-9204.html')
+          s=src.read_text()
+
+          # Version identity.
+          s=s.replace('D12 Cuesports Score Board V9.2 • Secure Access','D12 Cuesports Score Board V9.3 • Secure Access')
+          s=s.replace('Version 9.2 • Touch-First Context Edition','Version 9.3 • Touch-First Context Edition')
+
+          # Remove Scoring from the contextual primary-action strip.
+          s=s.replace('    <button class="d12-primary-action" onclick="d12OpenContext(\'scoring\')"><span class="ico">🎯</span><span class="lbl">Scoring</span></button>\n','')
+
+          # Snooker main page: Frame Setup + What To Pot Next + Ball-by-Ball scoring.
+          old="if(cur==='Snooker')return snookerBallButtons(d);"
+          new="if(cur==='Snooker')return snook()+snookerBallButtons(d);"
+          if old not in s:
+              raise SystemExit('Snooker main scoring hook not found')
+          s=s.replace(old,new,1)
+
+          # Compact Snooker setup/target presentation overrides.
+          marker='</style>'
+          css=r'''\n/* VERSION 9.3 — MAIN SNOOKER SETUP + COMPACT TARGET */
+.snooker-setup-main{margin-top:12px}
+.snooker-setup-main .snooker-target-grid{display:grid;grid-template-columns:minmax(0,180px) minmax(0,180px);gap:12px;align-items:stretch;justify-content:start}
+.snooker-setup-main .snooker-target-cell{padding:10px 12px;border-radius:16px;min-height:128px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.snooker-setup-main .snooker-target-cell h3{font-size:14px;margin:0 0 7px}
+.snooker-setup-main .snooker-target-red,.snooker-setup-main .snooker-any-color-image{width:74px!important;height:74px!important;min-width:74px!important;min-height:74px!important;max-width:74px!important;max-height:74px!important;object-fit:contain;border-radius:50%}
+.snooker-setup-main .snooker-red-counter{width:74px;height:74px;min-width:74px;min-height:74px}
+@media(max-width:700px){.snooker-setup-main .snooker-target-grid{grid-template-columns:1fr 1fr}.snooker-setup-main .snooker-target-cell{min-height:112px;padding:8px}.snooker-setup-main .snooker-target-red,.snooker-setup-main .snooker-any-color-image{width:64px!important;height:64px!important;min-width:64px!important;min-height:64px!important;max-width:64px!important;max-height:64px!important}.snooker-setup-main .snooker-red-counter{width:64px;height:64px;min-width:64px;min-height:64px}}
+'''
+          s=s.replace(marker,css+marker,1)
+
+          # Give the existing snooker setup wrapper a main-page class without changing its scoring logic.
+          s=s.replace('return `<div class="card"><h3>Snooker Frame Setup</h3>','return `<div class="card snooker-setup-main"><h3>Snooker Frame Setup</h3>',1)
+
+          # Add compact-cell classes to the two existing target cells where possible.
+          s=s.replace('<div class="snooker-target-card">','<div class="snooker-target-card snooker-target-cell">')
+          s=s.replace('<div class="snooker-info-card">','<div class="snooker-info-card snooker-target-cell">')
+
+          # Ensure What to Pot Next wording is normalized.
+          s=s.replace('What To Pot Next','What to Pot Next').replace('What To Pot NexT','What to Pot Next')
+
+          Path('app-v9-3.html').write_text(s)
+      - name: Verify complete Version 9.3 JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('app-v9-3.html').read_text()
+          js='\n'.join(re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',s,flags=re.S|re.I))
+          Path('/tmp/d12-v93.js').write_text(js)
+          PY
+          node --check /tmp/d12-v93.js
+      - name: Verify Version 9.3 requirements
+        shell: python
+        run: |
+          from pathlib import Path
+          s=Path('app-v9-3.html').read_text()
+          assert 'V9.3' in s
+          assert "if(cur==='Snooker')return snook()+snookerBallButtons(d);" in s
+          assert 'd12OpenContext(\'scoring\')' not in s
+          assert 'What to Pot Next' in s
+          print('Version 9.3 structural checks passed')
+      - name: Browser smoke test
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+          python3 -m http.server 8080 >/tmp/d12-http.log 2>&1 &
+          cat > smoke.js <<'JS'
+          const {chromium}=require('playwright');
+          (async()=>{const b=await chromium.launch({headless:true});const p=await b.newPage({viewport:{width:1700,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message));await p.goto('http://127.0.0.1:8080/app-v9-3.html',{waitUntil:'domcontentloaded'});await p.waitForTimeout(2500);const text=await p.locator('#app').innerText();console.log(text.slice(0,500));if(!text.trim())throw new Error('Blank app');if(errs.length)throw new Error('Runtime errors: '+errs.join(' | '));await b.close();})();
+          JS
+          node smoke.js
+      - name: Point live index to Version 9.3
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index.html')
+          p.write_text('''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"><meta http-equiv="pragma" content="no-cache"><meta http-equiv="expires" content="0"><title>D12 Cuesports Score Board V9.3</title><script>location.replace("app-v9-3.html?v=9300")</script></head><body><p>Loading D12 Cuesports Score Board Version 9.3…</p></body></html>''')
+      - name: Commit Version 9.3 live build
+        run: |
+          git config user.name "D12 Scoreboard Publisher"
+          git config user.email "actions@users.noreply.github.com"
+          git add app-v9-3.html index.html
+          git commit -m "Publish D12 Scoreboard Version 9.3"
+          git push
