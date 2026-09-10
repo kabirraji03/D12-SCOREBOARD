@@ -1,0 +1,51 @@
+name: Diagnose D12 Scoreboard V9.2 runtime 2
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/diagnose-v9-2-runtime-2.yml'
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify inline JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('app-v9-2.html').read_text()
+          js='\n'.join(re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',s,flags=re.S|re.I))
+          Path('d12-inline-check.js').write_text(js)
+          PY
+          node --check d12-inline-check.js
+      - name: Install Playwright Chromium
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Run browser runtime diagnostic
+        run: |
+          python3 -m http.server 8080 >/tmp/d12-http.log 2>&1 &
+          cat > diag.js <<'JS'
+          const { chromium } = require('playwright');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const page=await browser.newPage();
+            const errors=[];
+            page.on('pageerror',e=>errors.push('PAGEERROR: '+e.message+'\n'+(e.stack||'')));
+            page.on('console',m=>{ if(['error','warning'].includes(m.type())) errors.push('CONSOLE '+m.type().toUpperCase()+': '+m.text()); });
+            page.on('requestfailed',r=>errors.push('REQUEST FAILED: '+r.url()+' :: '+(r.failure()?.errorText||'')));
+            await page.goto('http://127.0.0.1:8080/app-v9-2.html?diag=2',{waitUntil:'domcontentloaded',timeout:30000});
+            await page.waitForTimeout(12000);
+            const state=await page.evaluate(()=>({title:document.title,appHTML:document.getElementById('app')?.innerHTML||'',appText:document.getElementById('app')?.innerText||'',bodyClass:document.body.className,tabs:document.getElementById('tabs')?.innerText||'',supabase:typeof window.supabase,ready:document.readyState}));
+            console.log('STATE='+JSON.stringify(state));
+            if(errors.length) console.log('ERRORS_START\n'+errors.join('\n---\n')+'\nERRORS_END');
+            await browser.close();
+            if(!state.appText.trim()) process.exitCode=2;
+            if(errors.some(x=>x.startsWith('PAGEERROR:'))) process.exitCode=3;
+          })();
+          JS
+          node diag.js
