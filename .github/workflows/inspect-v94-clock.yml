@@ -1,0 +1,19 @@
+name: Inspect V9.4 Clock
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/inspect-v94-clock.yml']
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print clock and reward internals
+        shell: python
+        run: |
+          from pathlib import Path
+          s=Path('app-v9-3.html').read_text()
+          for pat,span in [("if(type==='clock')",4200),('function d12Clock',3000),('function ballPlayed',2500),('function bp(',2500),('function ss(',5000),('function sf(',2500)]:
+            i=s.find(pat)
+            print('\n### '+pat+'\n')
+            print('NOT FOUND' if i<0 else s[i:i+span])
