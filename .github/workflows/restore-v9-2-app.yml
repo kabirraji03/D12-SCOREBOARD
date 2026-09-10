@@ -1,0 +1,29 @@
+name: Restore D12 Scoreboard V9.2 App
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/restore-v9-2-app.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore full Version 9.2 application file
+        run: |
+          git show 236ce9d541a46a31fd05889ab74cd63ff3f1bdea:index.html > app-v9-2.html
+          grep -q 'D12 Cuesports Score Board V9.2' app-v9-2.html
+      - name: Commit restored app
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app-v9-2.html
+          git commit -m 'Restore missing Version 9.2 application file' || exit 0
+          git push
