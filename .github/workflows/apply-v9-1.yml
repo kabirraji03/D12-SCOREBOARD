@@ -1,0 +1,33 @@
+name: Apply D12 Scoreboard Version 9.1
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/patches/v9.1.patch'
+      - '.github/workflows/apply-v9-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply Version 9.1 patch
+        run: |
+          git apply --check .github/patches/v9.1.patch
+          git apply .github/patches/v9.1.patch
+
+      - name: Commit live Version 9.1
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Publish D12 Scoreboard Version 9.1 live"
+          git push
