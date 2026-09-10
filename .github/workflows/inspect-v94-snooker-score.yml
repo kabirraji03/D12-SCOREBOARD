@@ -1,0 +1,17 @@
+name: Inspect V9.4 Snooker Score
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/inspect-v94-snooker-score.yml']
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print Snooker score function
+        shell: python
+        run: |
+          from pathlib import Path
+          s=Path('app-v9-3.html').read_text()
+          i=s.find('function snookerScore(')
+          print(s[i:i+6000] if i>=0 else 'NOT FOUND')
