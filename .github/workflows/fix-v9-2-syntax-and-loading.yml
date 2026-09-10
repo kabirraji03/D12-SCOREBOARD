@@ -1,0 +1,84 @@
+name: Fix D12 Scoreboard V9.2 syntax and loading
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/fix-v9-2-syntax-and-loading.yml']
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove corrupted duplicate JavaScript and repair startup
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('app-v9-2.html')
+          s=p.read_text()
+          # Remove the accidental duplicate/corrupted initialization line that starts with g]=
+          lines=s.splitlines()
+          bad=[i for i,line in enumerate(lines) if line.startswith("g]={p1:'Player 1'")]
+          if bad:
+              lines=[line for line in lines if not line.startswith("g]={p1:'Player 1'")]
+              s='\n'.join(lines)
+          # Remove blocking head CDN script; the app loader will handle Supabase asynchronously.
+          s=s.replace('</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head>', '</style></head>')
+          s=s.replace('function d12LoadExternalScript(src,timeoutMs=12000){','function d12LoadExternalScript(src,timeoutMs=5000){')
+          old_sources="""const sources=[
+                'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
+                'https://unpkg.com/@supabase/supabase-js@2'
+              ];"""
+          new_sources="""const sources=[
+                'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.109.0/dist/umd/supabase.js',
+                'https://unpkg.com/@supabase/supabase-js@2.109.0/dist/umd/supabase.js',
+                'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
+                'https://unpkg.com/@supabase/supabase-js@2'
+              ];"""
+          if old_sources in s:
+              s=s.replace(old_sources,new_sources)
+          start=s.index('async function d12BootAuth(){')
+          end=s.index('\nasync function d12RefreshAssignment()', start)
+          new_boot="""async function d12BootAuth(){
+            try{d12LoginView();d12AuthError('Connecting securely to D12 cloud…');}catch(uiErr){console.error('D12 initial login render error:',uiErr)}
+            const timeout=(ms,label)=>new Promise((_,reject)=>setTimeout(()=>reject(new Error(label)),ms));
+            try{
+              const client=await Promise.race([d12EnsureSupabase(),timeout(10000,'Supabase connection timed out.')]);
+              const result=await Promise.race([client.auth.getSession(),timeout(10000,'Session check timed out.')]);
+              const {data,error}=result||{};
+              if(error)throw error;
+              d12AuthError('');
+              if(data?.session)await d12ApplySession(data.session);else d12LoginView();
+              client.auth.onAuthStateChange((_event,session)=>{
+                try{
+                  if(_event==='SIGNED_OUT'){d12RealtimeStop();D12_AUTH.user=null;D12_AUTH.profile=null;D12_AUTH.assignment=null;D12_AUTH.selectedTableId=null;d12LoginView();return}
+                  if(session && session.user && _event==='SIGNED_IN' && D12_AUTH.user?.id===session.user.id)return;
+                  if(session && session.user && D12_AUTH.user?.id!==session.user.id){setTimeout(()=>d12ApplySession(session).catch(err=>{console.error('D12 auth state error:',err);d12LoginView();}),0)}
+                }catch(err){console.error('D12 auth state error:',err);d12LoginView();}
+              });
+            }catch(err){
+              console.error('D12 auth boot error:',err);
+              d12LoginView();
+              d12AuthError((err?.message||'Unable to initialize secure sign in.')+' The login screen remains available; retry after checking the connection.');
+            } finally {D12_AUTH.booted=true}
+          }"""
+          s=s[:start]+new_boot+s[end:]
+          p.write_text(s)
+      - name: Verify complete inline JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('app-v9-2.html').read_text()
+          js='\n'.join(re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',s,flags=re.S|re.I))
+          Path('/tmp/d12-v92.js').write_text(js)
+          PY
+          node --check /tmp/d12-v92.js
+      - name: Commit repaired Version 9.2
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add app-v9-2.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Fix Version 9.2 syntax and blank loading"
+          git push
