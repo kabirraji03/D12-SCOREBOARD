@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D12 Cuesports Score Board V9.0 • Secure Access</title><style>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D12 Cuesports Score Board V9.1 • Secure Access</title><style>
 :root{--bg:#f4f5f8;--card:#fffef0;--tx:#101114;--mut:#6c7078;--ln:#d9dde4;--blue:#0a84ff;--orange:#ff9f0a;--purple:#af52de;--green:#34c759;--red:#ff453a;--teal:#00a6a6;--sn:#9b2448}body.dark{--bg:#050608;--card:#181a1f;--tx:#f6f7fa;--mut:#a0a5ad;--ln:#353940}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif}button,input,select{font:inherit}button{border:0;cursor:pointer;touch-action:manipulation}.head{padding:14px 16px;position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--ln)}h1{margin:0;font-size:25px}.sub{color:var(--mut);font-size:12px}.tabs{display:flex;gap:8px;overflow:auto;padding:10px;background:var(--bg);position:sticky;top:75px;z-index:4;border-bottom:1px solid var(--ln)}.tab{white-space:nowrap;padding:11px 16px;border-radius:17px;background:var(--card);color:var(--tx);border:1px solid var(--ln);font-weight:800}.tab.active{color:white}.tab[data-g='8-Ball'].active{background:var(--blue)}.tab[data-g='9-Ball'].active{background:var(--orange)}.tab[data-g='10-Ball'].active{background:var(--purple)}.tab[data-g='Heyball'].active{background:var(--green)}.tab[data-g='Blackball'].active{background:var(--red)}.tab[data-g='Duya Legends'].active{background:var(--teal)}.tab[data-g='Snooker'].active{background:var(--sn)}.tab[data-g='Players'].active{background:#5856d6}.tab[data-g='Settings'].active{background:#636366}main{max-width:1150px;margin:auto;padding:16px}.hero{height:230px;border-radius:28px;background:center/cover no-repeat;position:relative;overflow:hidden;color:white;display:flex;align-items:end;padding:24px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#000b,transparent 70%)}.hero div{position:relative}.hero h2{font-size:42px;margin:0}.hero p{margin:6px 0 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.card{background:var(--card);border:1px solid var(--ln);border-radius:24px;padding:18px;margin-top:16px}.player{text-align:center}.score{font-size:100px;font-weight:900}.name,select,input{width:100%;padding:11px;border-radius:14px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);text-align:center}.name{font-size:20px;font-weight:800;margin:7px 0}.row{display:flex;gap:9px;flex-wrap:wrap}.btn{flex:1;min-height:52px;padding:12px;border-radius:16px;background:var(--blue);color:white;font-weight:800}.gray{background:#6e6e73}.red{background:var(--red)}.orange{background:var(--orange)}.green{background:#248a4a}.purple{background:#5856d6}.clock{text-align:center}.time{font-size:120px;font-weight:900}.warn{color:var(--orange)}.critical{color:var(--red)}.note{color:var(--mut);font-size:13px}.balls{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.balls button{min-height:60px;border-radius:16px;color:#fff;font-weight:800}.r{background:#d92831}.y{background:#d6a400}.g{background:#13824a}.br{background:#805034}.b{background:#1877c9}.p{background:#db638f}.k{background:#171717}.item{display:flex;justify-content:space-between;gap:8px;padding:12px;border:1px solid var(--ln);border-radius:15px;margin-top:8px}.drop{padding:16px;border:2px dashed var(--ln);border-radius:18px;text-align:center;color:var(--blue);font-weight:800}.drop input{display:none}@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{height:185px}.balls{grid-template-columns:repeat(4,1fr)}.time{font-size:88px}}
 
 /* Version 4 crystal / glossy interface */
@@ -388,7 +388,28 @@ body.d12-auth-mode .auth-error.has-error{display:block!important}
   body.d12-auth-mode .security-note{display:none!important}
 }
 
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.min.js"></script></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.0 • Hosted Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
+
+/* Version 9.1 — touch-first context-driven interface with progressive disclosure */
+.d12-primary-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.d12-primary-action{min-height:68px;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--ln));background:linear-gradient(145deg,color-mix(in srgb,var(--card) 94%,#fff 6%),color-mix(in srgb,var(--card) 88%,var(--accent) 12%));color:var(--tx);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px rgba(20,35,60,.10)}
+.d12-primary-action .ico{font-size:24px;line-height:1}.d12-primary-action .lbl{font-size:12px;letter-spacing:.02em}.d12-primary-action:active{transform:scale(.97)}
+.d12-context-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(2,6,14,.62);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:14px}
+.d12-context-window{width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:12px;padding:10px 0 2px;background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 96%,transparent) 24%)}
+.d12-context-done .btn{width:100%}
+body.d12-context-open{overflow:hidden!important}
+body.device-mobile .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:4px}
+body.device-mobile .d12-primary-action{min-height:42px;border-radius:9px;gap:1px;padding:3px 2px}
+body.device-mobile .d12-primary-action .ico{font-size:15px}body.device-mobile .d12-primary-action .lbl{font-size:7.5px}
+body.device-mobile .d12-context-backdrop{padding:5px;align-items:flex-end}
+body.device-mobile .d12-context-window{width:100%;max-height:92dvh;border-radius:18px 18px 8px 8px;padding:8px}
+body.device-mobile .d12-context-head{top:-8px;padding:7px 2px 6px}body.device-mobile .d12-context-head h2{font-size:14px}body.device-mobile .d12-context-close{min-height:34px;min-width:58px;font-size:10px;border-radius:9px}
+body.device-tablet .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr))}body.device-tablet .d12-primary-action{min-height:74px}
+@media(max-width:540px){.d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.min.js"></script></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.1 • Touch-First Context Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
 
 /* ===== D12 SUPABASE CONNECTION =====
    Browser-safe publishable key only.
@@ -1114,8 +1135,41 @@ window.addEventListener('DOMContentLoaded',()=>{
   d12FitViewport();
 });
 
-function render(){S.set.style=S.set.style||'crystal';document.body.className=(S.set.theme=='dark'?'dark ':'')+'style-'+S.set.style+' device-'+d12DeviceMode();let logo=document.getElementById('clubLogo');if(logo&&BG.Logo)logo.src=BG.Logo;d12SetWorkspaceBar();if(!D12_AUTH.user){d12LoginView();return}d12SetLocked(false);if(!D12_DEVICE_SELECTED_SESSION){d12DeviceHome();return;}if(d12IsOperator()&&!D12_AUTH.assignment){d12Tabs();document.getElementById('app').innerHTML=d12PendingAssignmentView();return}let a=document.getElementById('app');if(cur=='Admin'){a.innerHTML=d12AdminView();d12LoadAdminDashboard();return}if(cur=='Players'){a.innerHTML=players();return}if(cur=='Settings'){a.innerHTML=settings();return}let d=S.games[cur];if(D12_AUTH.user&&d?.p1&&d?.p2){void d12RefreshCloudAggregate(d);}a.innerHTML=`<div class="hero" style="background-image:url('${BG[cur]}')"><div><h2>${cur}${cur=='Duya Legends'?' 9-Ball':''}</h2>${desc[cur]?'<p>'+desc[cur]+'</p>':''}</div></div>${d12CloudStatusHtml()}<div class="grid">${pc(1)}${pc(2)}</div>${S.set.showAggregate?aggregateCard(d):''}${cur=='Duya Legends'?duya():''}${cur=='Snooker'?snook():''}${S.set.independentClock?`<div class="card clock"><h3>Independent Shot Clock</h3><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each</p></div>`:''}${S.set.showExport?exportTools():''}<div class="card"><div class="row"><button class="btn gray" onclick="swap()">Swap Scores</button><button class="end-match-btn" onclick="endMatch()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch()">＋ New Match</button><button class="btn red" onclick="resetmatch()">Reset This Match</button></div></div>`}
-
+function d12PrimaryActions(){
+  return `<div class="d12-primary-actions" aria-label="Primary actions">
+    <button class="d12-primary-action" onclick="d12OpenContext('scoring')"><span class="ico">🎯</span><span class="lbl">Scoring</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('clock')"><span class="ico">⏱</span><span class="lbl">Shot Clock</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('match')"><span class="ico">🏁</span><span class="lbl">Match</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('more')"><span class="ico">⋯</span><span class="lbl">More</span></button>
+  </div>`;
+}
+function d12ContextTitle(type){return ({scoring:'Focused Scoring',clock:'Shot Clock',match:'Match Controls',more:'Match Tools'})[type]||'Controls';}
+function d12ContextBody(type){
+  const d=S.games[cur]; if(!d)return '<div class="card">No active match.</div>';
+  if(type==='scoring'){
+    if(cur==='Snooker') return snook();
+    if(cur==='Duya Legends') return duya();
+    return `<div class="card"><h3>Quick Score</h3><p class="note">Use the active-player controls below. Only scoring actions are shown here.</p><div class="grid">${pc(1)}${pc(2)}</div></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="swap();d12CloseContext()">Swap Scores</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button></div></div>`;
+  let out='';
+  if(S.set.showAggregate)out+=aggregateCard(d);
+  if(S.set.showExport)out+=exportTools();
+  if(!out)out=`<div class="card"><h3>No Secondary Tools Enabled</h3><p class="note">Enable Aggregate or Print / Export in Settings.</p></div>`;
+  return out;
+}
+function d12OpenContext(type){
+  d12CloseContext();
+  const wrap=document.createElement('div');wrap.id='d12ContextLayer';wrap.className='d12-context-backdrop';
+  wrap.innerHTML=`<section class="d12-context-window" role="dialog" aria-modal="true" aria-label="${esc(d12ContextTitle(type))}"><div class="d12-context-head"><h2>${esc(d12ContextTitle(type))}</h2><button class="d12-context-close" onclick="d12CloseContext()">Done</button></div><div class="d12-context-body">${d12ContextBody(type)}</div><div class="d12-context-done"><button class="btn gray" onclick="d12CloseContext()">✓ Done — Return to Scoreboard</button></div></section>`;
+  wrap.addEventListener('click',e=>{if(e.target===wrap)d12CloseContext()});document.body.appendChild(wrap);document.body.classList.add('d12-context-open');
+}
+function d12CloseContext(){const n=document.getElementById('d12ContextLayer');if(n)n.remove();document.body.classList.remove('d12-context-open');}
+function render(){S.set.style=S.set.style||'crystal';document.body.className=(S.set.theme=='dark'?'dark ':'')+'style-'+S.set.style+' device-'+d12DeviceMode();let logo=document.getElementById('clubLogo');if(logo&&BG.Logo)logo.src=BG.Logo;d12SetWorkspaceBar();if(!D12_AUTH.user){d12LoginView();return}d12SetLocked(false);if(!D12_DEVICE_SELECTED_SESSION){d12DeviceHome();return;}if(d12IsOperator()&&!D12_AUTH.assignment){d12Tabs();document.getElementById('app').innerHTML=d12PendingAssignmentView();return}let a=document.getElementById('app');if(cur=='Admin'){a.innerHTML=d12AdminView();d12LoadAdminDashboard();return}if(cur=='Players'){a.innerHTML=players();return}if(cur=='Settings'){a.innerHTML=settings();return}let d=S.games[cur];if(D12_AUTH.user&&d?.p1&&d?.p2){void d12RefreshCloudAggregate(d);}a.innerHTML=`<div class="hero" style="background-image:url('${BG[cur]}')"><div><h2>${cur}${cur=='Duya Legends'?' 9-Ball':''}</h2>${desc[cur]?'<p>'+desc[cur]+'</p>':''}</div></div>${d12CloudStatusHtml()}<div class="grid">${pc(1)}${pc(2)}</div>${d12PrimaryActions()}`;}
 function d12PendingAssignmentView(){return `<div class="card pending-card"><h2>Waiting for Table Assignment</h2><p class="note">You are signed in as <b>operator</b>, but no active cue table is assigned to your account.</p><p class="note">Please ask the D12 administrator to assign your account to a table. This screen will update after the assignment is made.</p><button class="btn gray" onclick="d12RefreshAssignment()">Refresh Assignment</button></div>`}
 let D12_ADMIN_CACHE={profiles:[],tables:[],assignments:[]};
 async function d12LoadAdminDashboard(){
@@ -1634,4 +1688,5 @@ function buildScorePDF(img,w,h){
   return out;
 }
 function setStyle(v){S.set.style=v||'crystal';save();render()}function theme(){S.set.theme=S.set.theme=='dark'?'light':'dark';save();render()}function tog(k){S.set[k]=!S.set[k];save();render()}function num(k,v,a,b){v=Math.round(+v);if(!Number.isFinite(v))return;S.set[k]=Math.max(a,Math.min(b,v));save();render()}document.addEventListener('DOMContentLoaded',()=>{d12BootAuth()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')d12CloseContext();});
 </script></body></html>
