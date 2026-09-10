@@ -412,7 +412,7 @@ body.device-tablet .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,
 
 /* Version 9.2 — compact snooker + touch clock */
 .snooker-compact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}.snooker-mini-card{padding:10px;border:1px solid var(--ln);border-radius:16px;background:rgba(255,255,255,.06);text-align:center}.snooker-mini-title{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--mut);margin-bottom:6px}.snooker-red-counter-ball{width:74px;height:74px;border-radius:50%;margin:0 auto;background:radial-gradient(circle at 30% 25%,#ff969b 0 8%,#d92831 35%,#7d1018 100%);box-shadow:inset -6px -7px 12px rgba(0,0,0,.3),0 7px 18px rgba(217,40,49,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:950}.snooker-mini-target{display:flex;align-items:center;justify-content:center;min-height:82px}.snooker-mini-target .snooker-target-red,.snooker-mini-target .snooker-any-color-image{width:74px;height:74px;margin:0;object-fit:contain}.snooker-number-input{display:grid;grid-template-columns:1fr 92px;gap:10px;align-items:end}.snooker-number-input input[type=number]{font-size:20px;font-weight:900;text-align:center}.d12-main-scoring{margin-top:10px}.d12-main-scoring h3{margin:0 0 8px}.clock-player-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 10px}.clock-player-btn{min-height:54px;border-radius:15px;border:2px solid var(--ln);background:var(--card);color:var(--tx);font-weight:900;padding:8px}.clock-player-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);background:color-mix(in srgb,var(--accent) 12%,var(--card))}.ball-played-btn{background:linear-gradient(135deg,#34c759,#168a36)!important}.score-player-label{font-weight:950;text-align:center;margin:0 0 8px;color:var(--accent)}@media(max-width:520px){.snooker-number-input{grid-template-columns:1fr}.snooker-red-counter-ball,.snooker-mini-target .snooker-target-red,.snooker-mini-target .snooker-any-color-image{width:62px;height:62px}.snooker-red-counter-ball{font-size:22px}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.min.js"></script></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.2 • Touch-First Context Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.2 • Touch-First Context Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
 
 /* ===== D12 SUPABASE CONNECTION =====
    Browser-safe publishable key only.
@@ -451,8 +451,8 @@ async function d12EnsureSupabase(){
   if(D12_SUPABASE_LOADING)return D12_SUPABASE_LOADING;
   D12_SUPABASE_LOADING=(async()=>{
     const sources=[
-      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0/dist/umd/supabase.min.js',
-      'https://unpkg.com/@supabase/supabase-js@2.115.0/dist/umd/supabase.js'
+      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
+      'https://unpkg.com/@supabase/supabase-js@2'
     ];
     let lastError=null;
     for(const src of sources){
