@@ -1,0 +1,37 @@
+name: Scan V9.3 for V9.4
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/scan-v9-3-for-v9-4.yml']
+permissions:
+  contents: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract implementation snippets
+        shell: python
+        run: |
+          from pathlib import Path
+          s=Path('app-v9-3.html').read_text()
+          pats=['d12-primary-action','BALL PLAYED','Ball Played','FOUL COUNT','Foul Count','foul count','snookerRewardHtml','CENTURY','MAXIMUM 147','function clock','function d12OpenContext','function render','Shot Clock']
+          out=[]
+          for p in pats:
+            out.append('\n===== '+p+' =====\n')
+            start=0;hits=0
+            while True:
+              i=s.find(p,start)
+              if i<0 or hits>=6: break
+              out.append(s[max(0,i-900):min(len(s),i+1700)])
+              out.append('\n---\n')
+              start=i+len(p);hits+=1
+            if hits==0: out.append('NOT FOUND\n')
+          Path('v94-source-scan.txt').write_text(''.join(out))
+      - name: Commit scan report
+        run: |
+          git config user.name "D12 Scoreboard Scanner"
+          git config user.email "actions@users.noreply.github.com"
+          git add v94-source-scan.txt
+          git commit -m "Add V9.4 source scan report"
+          git push
