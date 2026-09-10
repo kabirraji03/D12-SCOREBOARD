@@ -1,0 +1,33 @@
+name: Rebuild repaired Version 9.2 app
+on:
+  push:
+    paths:
+      - '.github/workflows/rebuild-v9-2-app.yml'
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore last full V9.2 and remove blocking boot dependency
+        run: |
+          git show 236ce9d541a46a31fd05889ab74cd63ff3f1bdea:index.html > app-v9-2.html
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app-v9-2.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head>', '</style></head>')
+          s=s.replace("document.addEventListener('DOMContentLoaded',()=>{d12BootAuth()});", "document.addEventListener('DOMContentLoaded',()=>{d12LoginView();setTimeout(()=>d12BootAuth(),50)});")
+          p.write_text(s,encoding='utf-8')
+          PY
+          node -e "const fs=require('fs'),s=fs.readFileSync('app-v9-2.html','utf8'),m=s.match(/<script>([\\s\\S]*)<\\/script>/);if(!m)throw Error('inline script missing');new Function(m[1]);console.log('JS parse OK')"
+      - name: Commit repaired application
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app-v9-2.html
+          git commit -m 'Publish repaired non-blocking Version 9.2 app' || exit 0
+          git push
