@@ -1,0 +1,622 @@
+
+===== d12-primary-action =====
+dy.d12-auth-mode main#app{min-height:100dvh!important;padding:4px!important}
+  body.d12-auth-mode .auth-gate{min-height:100dvh!important;padding:4px!important;align-items:flex-start!important}
+  body.d12-auth-mode .auth-card{padding:10px 12px!important;margin:2px auto!important}
+  body.d12-auth-mode .auth-brand{margin-bottom:4px!important}
+  body.d12-auth-mode .auth-brand img{width:34px!important;height:34px!important}
+  body.d12-auth-mode .auth-card h2{font-size:18px!important}
+  body.d12-auth-mode .auth-card .note{margin:2px 0 5px!important;font-size:10px!important}
+  body.d12-auth-mode .auth-card input{min-height:40px!important;padding:8px 10px!important}
+  body.d12-auth-mode #d12LoginBtn{min-height:42px!important;padding:8px!important}
+  body.d12-auth-mode .security-note{display:none!important}
+}
+
+
+/* Version 9.2 — touch-first context-driven interface with progressive disclosure */
+.d12-primary-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.d12-primary-action{min-height:68px;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--ln));background:linear-gradient(145deg,color-mix(in srgb,var(--card) 94%,#fff 6%),color-mix(in srgb,var(--card) 88%,var(--accent) 12%));color:var(--tx);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px rgba(20,35,60,.10)}
+.d12-primary-action .ico{font-size:24px;line-height:1}.d12-primary-action .lbl{font-size:12px;letter-spacing:.02em}.d12-primary-action:active{transform:scale(.97)}
+.d12-context-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(2,6,14,.62);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:14px}
+.d12-context-window{width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:
+---
+te{min-height:100dvh!important;padding:4px!important;align-items:flex-start!important}
+  body.d12-auth-mode .auth-card{padding:10px 12px!important;margin:2px auto!important}
+  body.d12-auth-mode .auth-brand{margin-bottom:4px!important}
+  body.d12-auth-mode .auth-brand img{width:34px!important;height:34px!important}
+  body.d12-auth-mode .auth-card h2{font-size:18px!important}
+  body.d12-auth-mode .auth-card .note{margin:2px 0 5px!important;font-size:10px!important}
+  body.d12-auth-mode .auth-card input{min-height:40px!important;padding:8px 10px!important}
+  body.d12-auth-mode #d12LoginBtn{min-height:42px!important;padding:8px!important}
+  body.d12-auth-mode .security-note{display:none!important}
+}
+
+
+/* Version 9.2 — touch-first context-driven interface with progressive disclosure */
+.d12-primary-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.d12-primary-action{min-height:68px;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--ln));background:linear-gradient(145deg,color-mix(in srgb,var(--card) 94%,#fff 6%),color-mix(in srgb,var(--card) 88%,var(--accent) 12%));color:var(--tx);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px rgba(20,35,60,.10)}
+.d12-primary-action .ico{font-size:24px;line-height:1}.d12-primary-action .lbl{font-size:12px;letter-spacing:.02em}.d12-primary-action:active{transform:scale(.97)}
+.d12-context-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(2,6,14,.62);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:14px}
+.d12-context-window{width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:12px;padding:10px 0 2px;background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 96%,transparent
+---
+nt-size:10px!important}
+  body.d12-auth-mode .auth-card input{min-height:40px!important;padding:8px 10px!important}
+  body.d12-auth-mode #d12LoginBtn{min-height:42px!important;padding:8px!important}
+  body.d12-auth-mode .security-note{display:none!important}
+}
+
+
+/* Version 9.2 — touch-first context-driven interface with progressive disclosure */
+.d12-primary-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.d12-primary-action{min-height:68px;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--ln));background:linear-gradient(145deg,color-mix(in srgb,var(--card) 94%,#fff 6%),color-mix(in srgb,var(--card) 88%,var(--accent) 12%));color:var(--tx);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px rgba(20,35,60,.10)}
+.d12-primary-action .ico{font-size:24px;line-height:1}.d12-primary-action .lbl{font-size:12px;letter-spacing:.02em}.d12-primary-action:active{transform:scale(.97)}
+.d12-context-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(2,6,14,.62);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:14px}
+.d12-context-window{width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:12px;padding:10px 0 2px;background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 96%,transparent) 24%)}
+.d12-context-done .btn{width:100%}
+body.d12-context-open{overflow:hidden!important}
+body.device-mobile .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:4px}
+body.device-mobile .d12-primary-action{min-height:42px;border-radius:9px;gap:1px;padding:3px 2px}
+body.device-mobile .d12-primary-action .ico{font-size:15px}body.device-mobile .d12-primary-action .lbl{font-size:7.5px}
+body.device-mobile .d12-c
+---
+d input{min-height:40px!important;padding:8px 10px!important}
+  body.d12-auth-mode #d12LoginBtn{min-height:42px!important;padding:8px!important}
+  body.d12-auth-mode .security-note{display:none!important}
+}
+
+
+/* Version 9.2 — touch-first context-driven interface with progressive disclosure */
+.d12-primary-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.d12-primary-action{min-height:68px;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--ln));background:linear-gradient(145deg,color-mix(in srgb,var(--card) 94%,#fff 6%),color-mix(in srgb,var(--card) 88%,var(--accent) 12%));color:var(--tx);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px rgba(20,35,60,.10)}
+.d12-primary-action .ico{font-size:24px;line-height:1}.d12-primary-action .lbl{font-size:12px;letter-spacing:.02em}.d12-primary-action:active{transform:scale(.97)}
+.d12-context-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(2,6,14,.62);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:14px}
+.d12-context-window{width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:12px;padding:10px 0 2px;background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 96%,transparent) 24%)}
+.d12-context-done .btn{width:100%}
+body.d12-context-open{overflow:hidden!important}
+body.device-mobile .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:4px}
+body.device-mobile .d12-primary-action{min-height:42px;border-radius:9px;gap:1px;padding:3px 2px}
+body.device-mobile .d12-primary-action .ico{font-size:15px}body.device-mobile .d12-primary-action .lbl{font-size:7.5px}
+body.device-mobile .d12-context-backdrop{padding:5px;align-items:flex-end}
+body
+---
+
+  body.d12-auth-mode #d12LoginBtn{min-height:42px!important;padding:8px!important}
+  body.d12-auth-mode .security-note{display:none!important}
+}
+
+
+/* Version 9.2 — touch-first context-driven interface with progressive disclosure */
+.d12-primary-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.d12-primary-action{min-height:68px;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--ln));background:linear-gradient(145deg,color-mix(in srgb,var(--card) 94%,#fff 6%),color-mix(in srgb,var(--card) 88%,var(--accent) 12%));color:var(--tx);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 8px 20px rgba(20,35,60,.10)}
+.d12-primary-action .ico{font-size:24px;line-height:1}.d12-primary-action .lbl{font-size:12px;letter-spacing:.02em}.d12-primary-action:active{transform:scale(.97)}
+.d12-context-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(2,6,14,.62);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:14px}
+.d12-context-window{width:min(760px,100%);max-height:min(88dvh,900px);overflow:auto;overscroll-behavior:contain;background:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:12px;padding:10px 0 2px;background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 96%,transparent) 24%)}
+.d12-context-done .btn{width:100%}
+body.d12-context-open{overflow:hidden!important}
+body.device-mobile .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:4px}
+body.device-mobile .d12-primary-action{min-height:42px;border-radius:9px;gap:1px;padding:3px 2px}
+body.device-mobile .d12-primary-action .ico{font-size:15px}body.device-mobile .d12-primary-action .lbl{font-size:7.5px}
+body.device-mobile .d12-context-backdrop{padding:5px;align-items:flex-end}
+body.device-mobile .d12-context-window{width:100%;max-height:92dv
+---
+:var(--bg);border:1px solid var(--ln);border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.38);padding:14px}
+.d12-context-head{position:sticky;top:-14px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 4px 10px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px);border-bottom:1px solid var(--ln)}
+.d12-context-head h2{font-size:20px;margin:0}.d12-context-close{min-width:76px;min-height:44px;border-radius:14px;background:var(--card);border:1px solid var(--ln);color:var(--tx);font-weight:900}
+.d12-context-body>.card:first-child{margin-top:10px}.d12-context-done{position:sticky;bottom:-14px;margin-top:12px;padding:10px 0 2px;background:linear-gradient(transparent,color-mix(in srgb,var(--bg) 96%,transparent) 24%)}
+.d12-context-done .btn{width:100%}
+body.d12-context-open{overflow:hidden!important}
+body.device-mobile .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin-top:4px}
+body.device-mobile .d12-primary-action{min-height:42px;border-radius:9px;gap:1px;padding:3px 2px}
+body.device-mobile .d12-primary-action .ico{font-size:15px}body.device-mobile .d12-primary-action .lbl{font-size:7.5px}
+body.device-mobile .d12-context-backdrop{padding:5px;align-items:flex-end}
+body.device-mobile .d12-context-window{width:100%;max-height:92dvh;border-radius:18px 18px 8px 8px;padding:8px}
+body.device-mobile .d12-context-head{top:-8px;padding:7px 2px 6px}body.device-mobile .d12-context-head h2{font-size:14px}body.device-mobile .d12-context-close{min-height:34px;min-width:58px;font-size:10px;border-radius:9px}
+body.device-tablet .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr))}body.device-tablet .d12-primary-action{min-height:74px}
+@media(max-width:540px){.d12-primary-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+
+/* Version 9.2 — compact snooker + touch clock */
+.snooker-compact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}.snooker-mini-card{padding:10px;border:1px solid var(--ln);border-radius:16px;background:rgba(255,255,255,.06);text-align:center}.snooker-mini-title{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--mut);margin-bottom:6px}.snooker-red-counter-ball{width:74px;height:74px;border-radius:50%;margin:0 auto;background:radial-gradient(circle at 30% 25%,#ff969b 0 8%,#d92831 35%,#7d1018 100%);box-shadow:inset -6px -7px 12px rgba(0,0,0,.3),0 7px 18px rgba(217,40,49,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:950}.snooker-
+---
+
+===== BALL PLAYED =====
+NOT FOUND
+
+===== Ball Played =====
+ore.</p></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    const cp=Number(d.clockPlayer||d.active||1); d.clockPlayer=cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button class="clock-player-btn ${cp===2?'active':''}" onclick="selectClockPlayer(2)">${esc(d.p2||'Player 2')}</button></div><div class="score-player-label">Timer: ${esc(cp===1?(d.p1||'Player 1'):(d.p2||'Player 2'))}</div><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn ball-played-btn" onclick="ballPlayed()">● Ball Played</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each. “Ball Played” resets the selected player’s shot clock and immediately starts the next countdown.</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="resetAggregate();d12CloseContext()">Reset Aggregate</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button></div></div>`;
+  let out='';
+  if(S.set.showAggregate)out+=aggregateCard(d);
+  if(S.set.showExport)out+=exportTools();
+  if(!out)out=`<div class="card"><h3>No Secondary Tools Enabled</h3><p class="note">Enable Aggregate or Print / Export in Settings.</p></div>`;
+  return out;
+}
+function d12OpenContext(type){
+  d12CloseContext();
+  const wrap=document.createElement('div');wrap.id='d12ContextLayer';wrap.className='d12-context-backdrop';
+  wrap.innerHTML=`<section class="d12-context-window" role="dialog" aria-modal="true" aria-label="${esc(d12ContextTitle(type))}"><div class="d12-context-head"><h2>${esc(d12ContextTitle(type))}</h2><button class="d12-context-close" onclick="d12CloseContext()">Done</button></div><div class="d12-context-body">${d12ContextBody(type)}</div><div class="d12-con
+---
+cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button class="clock-player-btn ${cp===2?'active':''}" onclick="selectClockPlayer(2)">${esc(d.p2||'Player 2')}</button></div><div class="score-player-label">Timer: ${esc(cp===1?(d.p1||'Player 1'):(d.p2||'Player 2'))}</div><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn ball-played-btn" onclick="ballPlayed()">● Ball Played</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each. “Ball Played” resets the selected player’s shot clock and immediately starts the next countdown.</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="resetAggregate();d12CloseContext()">Reset Aggregate</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button></div></div>`;
+  let out='';
+  if(S.set.showAggregate)out+=aggregateCard(d);
+  if(S.set.showExport)out+=exportTools();
+  if(!out)out=`<div class="card"><h3>No Secondary Tools Enabled</h3><p class="note">Enable Aggregate or Print / Export in Settings.</p></div>`;
+  return out;
+}
+function d12OpenContext(type){
+  d12CloseContext();
+  const wrap=document.createElement('div');wrap.id='d12ContextLayer';wrap.className='d12-context-backdrop';
+  wrap.innerHTML=`<section class="d12-context-window" role="dialog" aria-modal="true" aria-label="${esc(d12ContextTitle(type))}"><div class="d12-context-head"><h2>${esc(d12ContextTitle(type))}</h2><button class="d12-context-close" onclick="d12CloseContext()">Done</button></div><div class="d12-context-body">${d12ContextBody(type)}</div><div class="d12-context-done"><button class="btn gray" onclick="d12CloseContext()">✓ Done — Return to Scoreboard</button></div></section>`;
+  wrap.addEventListener('click',e=>{if(e.target===wrap)d12CloseContext()});document.body.appendChild(wrap);document.body.classList.add('d12-context-open');
+}
+f
+---
+
+===== FOUL COUNT =====
+NOT FOUND
+
+===== Foul Count =====
+oker Ball-by-Ball Scoring</h3><div class="score-player-label">Scoring for: ${esc(pname)}</div><select id="sp" onchange="selectActiveFromMenu(this.value,'snookerPlayer')"><option ${player==1?'selected':''} value="1">${esc(d.p1||'Player 1')}</option><option ${player==2?'selected':''} value="2">${esc(d.p2||'Player 2')}</option></select><div class="balls" style="margin-top:10px">${z.map(x=>{const allowed=(d.snookerPhase==='reds'?(d.snookerTarget==='red'?x[1]===1:x[1]>=2&&x[1]<=7):x[1]===(snookerColorData()[Number(d.snookerColorIndex)||0]?.[1]||-1));return `<button class="${x[2]} ${allowed?'':'v8-disabled'}" onclick="${allowed?`ss(${x[1]})`:'return false'}" ${allowed?'':'disabled'}>${x[0]}<br>+${x[1]}</button>`}).join('')}</div><div class="row" style="margin-top:12px"><button class="btn orange" onclick="snookerEndBreak()">↪ End Break — Miss / No Foul</button></div><h3 style="margin-top:14px">Foul Count System</h3><div class="row"><select id="fp" onchange="setGameSelect('foulValue',this.value)"><option ${d.foulValue==4?'selected':''} value="4">Basic foul — 4</option><option ${d.foulValue==5?'selected':''} value="5">Blue involved — 5</option><option ${d.foulValue==6?'selected':''} value="6">Pink involved — 6</option><option ${d.foulValue==7?'selected':''} value="7">Black involved — 7</option></select><button class="btn red" onclick="sf()">Award Foul</button></div>${d12HistoryButtons()}</div>`;
+}
+function d12MainScoring(){
+  const d=S.games[cur];if(!d)return '';
+  if(cur==='Snooker')return snook()+snookerBallButtons(d);
+  if(cur==='Duya Legends')return `<div class="card d12-main-scoring"><h3>Duya Legends Scoring</h3>${duya()}</div>`;
+  const p=Number(d.active)||1,pname=p===1?(d.p1||'Player 1'):(d.p2||'Player 2');
+  return `<div class="card d12-main-scoring"><h3>${esc(cur)} Scoring</h3><div class="score-player-label">Active: ${esc(pname)}</div><div class="row"><button class="btn" onclick="chg(${p},1)">＋ Add Point</button><button class="btn gray" onclick="chg(${p},-1)">− Remove Point</button></div></div>`;
+}
+function snook(){
+  let d=S.games['Snooker'];const reds=Number(d.snookerReds)||15,remaining=Number(d.snookerRedsRemaining)||0;
+  return `<div class="card snooker-setup-main"><h3>Snooker Frame Setup</h3><div class="snooker-number-input"><div><div class="note">Number of Reds: 6–15</div><input type="range" min="6" max="15" step="1" value="${reds}" oninput="document.getElementById('snookerRedsNumber').value=this.value" onchange="setSnookerReds(this.value)"></div><input id="snookerRedsNumber" type="number" inputmode="numeric" min="6" max="15" step="1" value="${reds
+---
+
+===== foul count =====
+NOT FOUND
+
+===== snookerRewardHtml =====
+selected':''} value="${esc(p)}">${esc(p)}</option>`).join('')};
+function snookerRemainingPoints(d){
+  // Version 8.8: Remaining Points is derived only from balls/ball opportunities
+  // physically left in the frame sequence. Foul awards never reduce this value.
+  if(!d||d.snookerFrameComplete)return 0;
+  const reds=Math.max(0,Number(d.snookerRedsRemaining)||0);
+  const colors=snookerColorData();
+  if(d.snookerPhase==='reds'){
+    // Each red still on the table can yield Red (1) + Black (7) = 8.
+    // If a red has just been potted, one colour opportunity is currently due (+7 max).
+    // The six final colours always contribute 27 while the reds phase is active.
+    return Math.max(0,(reds*8)+(d.snookerTarget==='color'?7:0)+27);
+  }
+  const idx=Math.max(0,Math.min(colors.length,Number(d.snookerColorIndex)||0));
+  return colors.slice(idx).reduce((sum,x)=>sum+Number(x[1]||0),0);
+}
+function snookerRewardHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0);
+  let html='';
+  if(mx>=100)html+='<span class="snooker-reward century">🏅 CENTURY</span>';
+  if(mx>=147)html+='<span class="snooker-reward maximum">🏆 MAXIMUM 147</span>';
+  return html;
+}
+function snookerRewardText(n,d){
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rewards=[];
+  if(mx>=100)rewards.push('CENTURY');
+  if(mx>=147)rewards.push('MAXIMUM 147');
+  return rewards.join(' • ');
+}
+function snookerLag(n,d){
+  const mine=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0);
+  const other=Math.max(0,Number(d?.[n===1?'s2':'s1'])||0);
+  return Math.max(0,other-mine);
+}
+function snookerScoreHtml(n,d){
+  const score=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0),lag=snookerLag(n,d);
+  return `${score}${lag>0?` <span class="snooker-lag-score">(-${lag})</span>`:''}`;
+}
+function snookerNameLagHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const lag=snookerLag(n,d);
+  return lag>0?`<span class="snooker-lag-badge">-${lag}</span>`:`<span class="snooker-lag-badge level">LEVEL</span>`;
+}
+function snookerTrackingHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const br=Math.max(0,Number(d?.['snookerBreak'+n])||0),mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rem=snookerRemainingPoints(d);
+  const complete=!!d?.snookerFrameComplete,s1=Number(d?.s1)||0,s2=Number(d?.s2)||0;
+  const isWinner=complete&&s1!==s2&&((n===1&&s1>s2)||(n===2&&s2>s1));
+  return `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class
+---
+rn `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class="snooker-stat"><span>REMAINING POINTS</span><b>${rem}</b></div></div>${isWinner?'<div class="snooker-winner-icon">🏆 FRAME WINNER</div>':''}</div>`;
+}
+function pc(n){let d=S.games[cur],nk=n==1?'p1':'p2',sk=n==1?'s1':'s2',on=d.active==n;const scoreDisplay=cur==='Snooker'?snookerScoreHtml(n,d):d[sk];return `<div class="card player ${on?'active-player':''}"><div class="active-tag ${on?'is-active':'is-idle'}">ACTIVE PLAYER</div><select onchange="pick(${n},this.value)">${opt(d[nk])}</select><div class="snooker-name-row"><input class="name" value="${esc(d[nk])}" readonly title="Players must be selected from the registered D12 cloud player list">${snookerNameLagHtml(n,d)}${snookerRewardHtml(n,d)}</div><div class="note" style="margin:7px 0 4px">Only players registered by an administrator in the D12 cloud player list can be used for scoring.</div><button class="btn player-select ${on?'active':''}" onclick="setActive(${n})">${on?'Player '+n+' Selected':'Select Player '+n}</button><div class="score">${scoreDisplay}</div>${snookerTrackingHtml(n,d)}<div class="row"><button class="btn" onclick="chg(${n},1)">＋ Add</button><button class="btn gray" onclick="chg(${n},-1)">−</button></div></div>`}
+function matchKey(d){
+  let a=String(d.p1||'Player 1').trim().toLowerCase();
+  let b=String(d.p2||'Player 2').trim().toLowerCase();
+  return [a,b].sort().join('||');
+}
+function getAggregate(d){
+  let p1=String(d.p1||'Player 1'),p2=String(d.p2||'Player 2');
+  const rawA=Number(d._cloudAggregate?.player1Wins)||0,rawB=Number(d._cloudAggregate?.player2Wins)||0;
+  const offA=Number(d._aggregateResetA)||0,offB=Number(d._aggregateResetB)||0;
+  return {p1:p1,p2:p2,a:Math.max(0,rawA-offA),b:Math.max(0,rawB-offB)};
+}
+function aggregateText(d){
+  let r=getAggregate(d);
+  return 'AGGREGATE ('+r.a+'-'+r.b+')';
+}
+function recordAggregate(d){return false;}
+
+function aggregateCard(d){let r=getAggregate(d);return `<div class="card aggregate-card"><div class="aggregate-title">HEAD-TO-HEAD AGGREGATE</div><div class="aggregate-matchup"><span>${esc(r.p1)}</span><b>${r.a} - ${r.b}</b><span>${esc(r.p2)}</span></div><p class="note">Aggregate is read from the secure D12 cloud head-to-head record. Completed matches only.</p></div>`}
+
+/* ===== VERSION 9.0 — VIEWPORT AUTO-FIT ENGINE ===== */
+let D12_FIT_TIMER=0;
+let D12_FIT_BUSY=false;
+function d12FitViewport(){
+  if(D12_FIT_BUSY)return
+---
+
+===== CENTURY =====
+ically left in the frame sequence. Foul awards never reduce this value.
+  if(!d||d.snookerFrameComplete)return 0;
+  const reds=Math.max(0,Number(d.snookerRedsRemaining)||0);
+  const colors=snookerColorData();
+  if(d.snookerPhase==='reds'){
+    // Each red still on the table can yield Red (1) + Black (7) = 8.
+    // If a red has just been potted, one colour opportunity is currently due (+7 max).
+    // The six final colours always contribute 27 while the reds phase is active.
+    return Math.max(0,(reds*8)+(d.snookerTarget==='color'?7:0)+27);
+  }
+  const idx=Math.max(0,Math.min(colors.length,Number(d.snookerColorIndex)||0));
+  return colors.slice(idx).reduce((sum,x)=>sum+Number(x[1]||0),0);
+}
+function snookerRewardHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0);
+  let html='';
+  if(mx>=100)html+='<span class="snooker-reward century">🏅 CENTURY</span>';
+  if(mx>=147)html+='<span class="snooker-reward maximum">🏆 MAXIMUM 147</span>';
+  return html;
+}
+function snookerRewardText(n,d){
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rewards=[];
+  if(mx>=100)rewards.push('CENTURY');
+  if(mx>=147)rewards.push('MAXIMUM 147');
+  return rewards.join(' • ');
+}
+function snookerLag(n,d){
+  const mine=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0);
+  const other=Math.max(0,Number(d?.[n===1?'s2':'s1'])||0);
+  return Math.max(0,other-mine);
+}
+function snookerScoreHtml(n,d){
+  const score=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0),lag=snookerLag(n,d);
+  return `${score}${lag>0?` <span class="snooker-lag-score">(-${lag})</span>`:''}`;
+}
+function snookerNameLagHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const lag=snookerLag(n,d);
+  return lag>0?`<span class="snooker-lag-badge">-${lag}</span>`:`<span class="snooker-lag-badge level">LEVEL</span>`;
+}
+function snookerTrackingHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const br=Math.max(0,Number(d?.['snookerBreak'+n])||0),mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rem=snookerRemainingPoints(d);
+  const complete=!!d?.snookerFrameComplete,s1=Number(d?.s1)||0,s2=Number(d?.s2)||0;
+  const isWinner=complete&&s1!==s2&&((n===1&&s1>s2)||(n===2&&s2>s1));
+  return `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class="snooker-stat"><span>REMAINING POINTS</span><b>${rem}</b></div></div>${isWinner?'<div class="snooker-winner-icon">🏆 FRAME WINNER</div>':''}</div>`;
+}
+function pc(n){let d=S.games[cur],nk=n=
+---
+/ Each red still on the table can yield Red (1) + Black (7) = 8.
+    // If a red has just been potted, one colour opportunity is currently due (+7 max).
+    // The six final colours always contribute 27 while the reds phase is active.
+    return Math.max(0,(reds*8)+(d.snookerTarget==='color'?7:0)+27);
+  }
+  const idx=Math.max(0,Math.min(colors.length,Number(d.snookerColorIndex)||0));
+  return colors.slice(idx).reduce((sum,x)=>sum+Number(x[1]||0),0);
+}
+function snookerRewardHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0);
+  let html='';
+  if(mx>=100)html+='<span class="snooker-reward century">🏅 CENTURY</span>';
+  if(mx>=147)html+='<span class="snooker-reward maximum">🏆 MAXIMUM 147</span>';
+  return html;
+}
+function snookerRewardText(n,d){
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rewards=[];
+  if(mx>=100)rewards.push('CENTURY');
+  if(mx>=147)rewards.push('MAXIMUM 147');
+  return rewards.join(' • ');
+}
+function snookerLag(n,d){
+  const mine=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0);
+  const other=Math.max(0,Number(d?.[n===1?'s2':'s1'])||0);
+  return Math.max(0,other-mine);
+}
+function snookerScoreHtml(n,d){
+  const score=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0),lag=snookerLag(n,d);
+  return `${score}${lag>0?` <span class="snooker-lag-score">(-${lag})</span>`:''}`;
+}
+function snookerNameLagHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const lag=snookerLag(n,d);
+  return lag>0?`<span class="snooker-lag-badge">-${lag}</span>`:`<span class="snooker-lag-badge level">LEVEL</span>`;
+}
+function snookerTrackingHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const br=Math.max(0,Number(d?.['snookerBreak'+n])||0),mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rem=snookerRemainingPoints(d);
+  const complete=!!d?.snookerFrameComplete,s1=Number(d?.s1)||0,s2=Number(d?.s2)||0;
+  const isWinner=complete&&s1!==s2&&((n===1&&s1>s2)||(n===2&&s2>s1));
+  return `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class="snooker-stat"><span>REMAINING POINTS</span><b>${rem}</b></div></div>${isWinner?'<div class="snooker-winner-icon">🏆 FRAME WINNER</div>':''}</div>`;
+}
+function pc(n){let d=S.games[cur],nk=n==1?'p1':'p2',sk=n==1?'s1':'s2',on=d.active==n;const scoreDisplay=cur==='Snooker'?snookerScoreHtml(n,d):d[sk];return `<div class="card player ${on?'active-player':''}"><div class="active-tag ${on?'is-active':'is-idle'}">ACTIVE PLAYER</div><select
+---
+
+===== MAXIMUM 147 =====
+(!d||d.snookerFrameComplete)return 0;
+  const reds=Math.max(0,Number(d.snookerRedsRemaining)||0);
+  const colors=snookerColorData();
+  if(d.snookerPhase==='reds'){
+    // Each red still on the table can yield Red (1) + Black (7) = 8.
+    // If a red has just been potted, one colour opportunity is currently due (+7 max).
+    // The six final colours always contribute 27 while the reds phase is active.
+    return Math.max(0,(reds*8)+(d.snookerTarget==='color'?7:0)+27);
+  }
+  const idx=Math.max(0,Math.min(colors.length,Number(d.snookerColorIndex)||0));
+  return colors.slice(idx).reduce((sum,x)=>sum+Number(x[1]||0),0);
+}
+function snookerRewardHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0);
+  let html='';
+  if(mx>=100)html+='<span class="snooker-reward century">🏅 CENTURY</span>';
+  if(mx>=147)html+='<span class="snooker-reward maximum">🏆 MAXIMUM 147</span>';
+  return html;
+}
+function snookerRewardText(n,d){
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rewards=[];
+  if(mx>=100)rewards.push('CENTURY');
+  if(mx>=147)rewards.push('MAXIMUM 147');
+  return rewards.join(' • ');
+}
+function snookerLag(n,d){
+  const mine=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0);
+  const other=Math.max(0,Number(d?.[n===1?'s2':'s1'])||0);
+  return Math.max(0,other-mine);
+}
+function snookerScoreHtml(n,d){
+  const score=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0),lag=snookerLag(n,d);
+  return `${score}${lag>0?` <span class="snooker-lag-score">(-${lag})</span>`:''}`;
+}
+function snookerNameLagHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const lag=snookerLag(n,d);
+  return lag>0?`<span class="snooker-lag-badge">-${lag}</span>`:`<span class="snooker-lag-badge level">LEVEL</span>`;
+}
+function snookerTrackingHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const br=Math.max(0,Number(d?.['snookerBreak'+n])||0),mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rem=snookerRemainingPoints(d);
+  const complete=!!d?.snookerFrameComplete,s1=Number(d?.s1)||0,s2=Number(d?.s2)||0;
+  const isWinner=complete&&s1!==s2&&((n===1&&s1>s2)||(n===2&&s2>s1));
+  return `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class="snooker-stat"><span>REMAINING POINTS</span><b>${rem}</b></div></div>${isWinner?'<div class="snooker-winner-icon">🏆 FRAME WINNER</div>':''}</div>`;
+}
+function pc(n){let d=S.games[cur],nk=n==1?'p1':'p2',sk=n==1?'s1':'s2',on=d.active==n;const scoreDisplay=cur==='Snoo
+---
+d Red (1) + Black (7) = 8.
+    // If a red has just been potted, one colour opportunity is currently due (+7 max).
+    // The six final colours always contribute 27 while the reds phase is active.
+    return Math.max(0,(reds*8)+(d.snookerTarget==='color'?7:0)+27);
+  }
+  const idx=Math.max(0,Math.min(colors.length,Number(d.snookerColorIndex)||0));
+  return colors.slice(idx).reduce((sum,x)=>sum+Number(x[1]||0),0);
+}
+function snookerRewardHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0);
+  let html='';
+  if(mx>=100)html+='<span class="snooker-reward century">🏅 CENTURY</span>';
+  if(mx>=147)html+='<span class="snooker-reward maximum">🏆 MAXIMUM 147</span>';
+  return html;
+}
+function snookerRewardText(n,d){
+  const mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rewards=[];
+  if(mx>=100)rewards.push('CENTURY');
+  if(mx>=147)rewards.push('MAXIMUM 147');
+  return rewards.join(' • ');
+}
+function snookerLag(n,d){
+  const mine=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0);
+  const other=Math.max(0,Number(d?.[n===1?'s2':'s1'])||0);
+  return Math.max(0,other-mine);
+}
+function snookerScoreHtml(n,d){
+  const score=Math.max(0,Number(d?.[n===1?'s1':'s2'])||0),lag=snookerLag(n,d);
+  return `${score}${lag>0?` <span class="snooker-lag-score">(-${lag})</span>`:''}`;
+}
+function snookerNameLagHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const lag=snookerLag(n,d);
+  return lag>0?`<span class="snooker-lag-badge">-${lag}</span>`:`<span class="snooker-lag-badge level">LEVEL</span>`;
+}
+function snookerTrackingHtml(n,d){
+  if(cur!=='Snooker')return '';
+  const br=Math.max(0,Number(d?.['snookerBreak'+n])||0),mx=Math.max(0,Number(d?.['snookerMaxBreak'+n])||0),rem=snookerRemainingPoints(d);
+  const complete=!!d?.snookerFrameComplete,s1=Number(d?.s1)||0,s2=Number(d?.s2)||0;
+  const isWinner=complete&&s1!==s2&&((n===1&&s1>s2)||(n===2&&s2>s1));
+  return `<div class="snooker-performance"><div class="snooker-performance-grid"><div class="snooker-stat"><span>CURRENT BREAK</span><b>${br}</b></div><div class="snooker-stat"><span>MAXIMUM BREAK</span><b>${mx}</b></div><div class="snooker-stat"><span>REMAINING POINTS</span><b>${rem}</b></div></div>${isWinner?'<div class="snooker-winner-icon">🏆 FRAME WINNER</div>':''}</div>`;
+}
+function pc(n){let d=S.games[cur],nk=n==1?'p1':'p2',sk=n==1?'s1':'s2',on=d.active==n;const scoreDisplay=cur==='Snooker'?snookerScoreHtml(n,d):d[sk];return `<div class="card player ${on?'active-player':''}"><div class="active-tag ${on?'is-active':'is-idle'}">ACTIVE PLAYER</div><select onchange="pick(${n},this.value)">${op
+---
+
+===== function clock =====
+NOT FOUND
+
+===== function d12OpenContext =====
+ Played” resets the selected player’s shot clock and immediately starts the next countdown.</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="resetAggregate();d12CloseContext()">Reset Aggregate</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button></div></div>`;
+  let out='';
+  if(S.set.showAggregate)out+=aggregateCard(d);
+  if(S.set.showExport)out+=exportTools();
+  if(!out)out=`<div class="card"><h3>No Secondary Tools Enabled</h3><p class="note">Enable Aggregate or Print / Export in Settings.</p></div>`;
+  return out;
+}
+function d12OpenContext(type){
+  d12CloseContext();
+  const wrap=document.createElement('div');wrap.id='d12ContextLayer';wrap.className='d12-context-backdrop';
+  wrap.innerHTML=`<section class="d12-context-window" role="dialog" aria-modal="true" aria-label="${esc(d12ContextTitle(type))}"><div class="d12-context-head"><h2>${esc(d12ContextTitle(type))}</h2><button class="d12-context-close" onclick="d12CloseContext()">Done</button></div><div class="d12-context-body">${d12ContextBody(type)}</div><div class="d12-context-done"><button class="btn gray" onclick="d12CloseContext()">✓ Done — Return to Scoreboard</button></div></section>`;
+  wrap.addEventListener('click',e=>{if(e.target===wrap)d12CloseContext()});document.body.appendChild(wrap);document.body.classList.add('d12-context-open');
+}
+function d12CloseContext(){const n=document.getElementById('d12ContextLayer');if(n)n.remove();document.body.classList.remove('d12-context-open');}
+function d12RefreshOpenContext(type){const layer=document.getElementById('d12ContextLayer');if(!layer)return;const body=layer.querySelector('.d12-context-body');if(body)body.innerHTML=d12ContextBody(type);}
+function render(){S.set.style=S.set.style||'crystal';document.body.className=(S.set.theme=='dark'?'dark ':'')+'style-'+S.set.style+' device-'+d12DeviceMode();let logo=document.getElementById('clubLogo');if(logo&&BG.Logo)logo.src=BG.Logo;d12SetWorkspaceBar();if(!D12_AUTH.user){d12LoginView();return}d12SetLocked(false);if(!D12_DEVICE_SELECTED_SESSION){d12DeviceHome();return;}if(d12IsOperator()&&!D12_AUTH.assignment){d12Tabs();document.getElementById('app').innerHTML=d12PendingAssignmentView();return}let a=document.getElementById('app');if(cur=='Ad
+---
+
+===== function render =====
+a-label="${esc(d12ContextTitle(type))}"><div class="d12-context-head"><h2>${esc(d12ContextTitle(type))}</h2><button class="d12-context-close" onclick="d12CloseContext()">Done</button></div><div class="d12-context-body">${d12ContextBody(type)}</div><div class="d12-context-done"><button class="btn gray" onclick="d12CloseContext()">✓ Done — Return to Scoreboard</button></div></section>`;
+  wrap.addEventListener('click',e=>{if(e.target===wrap)d12CloseContext()});document.body.appendChild(wrap);document.body.classList.add('d12-context-open');
+}
+function d12CloseContext(){const n=document.getElementById('d12ContextLayer');if(n)n.remove();document.body.classList.remove('d12-context-open');}
+function d12RefreshOpenContext(type){const layer=document.getElementById('d12ContextLayer');if(!layer)return;const body=layer.querySelector('.d12-context-body');if(body)body.innerHTML=d12ContextBody(type);}
+function render(){S.set.style=S.set.style||'crystal';document.body.className=(S.set.theme=='dark'?'dark ':'')+'style-'+S.set.style+' device-'+d12DeviceMode();let logo=document.getElementById('clubLogo');if(logo&&BG.Logo)logo.src=BG.Logo;d12SetWorkspaceBar();if(!D12_AUTH.user){d12LoginView();return}d12SetLocked(false);if(!D12_DEVICE_SELECTED_SESSION){d12DeviceHome();return;}if(d12IsOperator()&&!D12_AUTH.assignment){d12Tabs();document.getElementById('app').innerHTML=d12PendingAssignmentView();return}let a=document.getElementById('app');if(cur=='Admin'){a.innerHTML=d12AdminView();d12LoadAdminDashboard();return}if(cur=='Players'){a.innerHTML=players();return}if(cur=='Settings'){a.innerHTML=settings();return}let d=S.games[cur];if(D12_AUTH.user&&d?.p1&&d?.p2){void d12RefreshCloudAggregate(d);}a.innerHTML=`<div class="hero" style="background-image:url('${BG[cur]}')"><div><h2>${cur}${cur=='Duya Legends'?' 9-Ball':''}</h2>${desc[cur]?'<p>'+desc[cur]+'</p>':''}</div></div>${d12CloudStatusHtml()}<div class="grid">${pc(1)}${pc(2)}</div>${d12MainScoring()}${d12PrimaryActions()}`;}
+function d12PendingAssignmentView(){return `<div class="card pending-card"><h2>Waiting for Table Assignment</h2><p class="note">You are signed in as <b>operator</b>, but no active cue table is assigned to your account.</p><p class="note">Please ask the D12 administrator to assign your account to a table. This screen will update after the assignment is made.</p><button class="btn gray" onclick="d12RefreshAssignment()">Refresh Assignment</button></div>`}
+let D12_ADMIN_CACHE={profiles:[],tables:[],assignments:[]};
+async function d12LoadAdminDashboard(){
+  if(!d12IsAdmin())return;
+  try{
+    const [p,t,a]=await 
+---
+
+===== Shot Clock =====
+
+      document.body.classList.add('d12-fit-active');
+      app.dataset.fitScale=scale.toFixed(4);
+    }finally{D12_FIT_BUSY=false;}
+  },20);
+}
+window.addEventListener('resize',d12FitViewport,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(d12FitViewport,120),{passive:true});
+if(window.visualViewport){window.visualViewport.addEventListener('resize',d12FitViewport,{passive:true});}
+const D12_FIT_OBSERVER=new MutationObserver(()=>d12FitViewport());
+window.addEventListener('DOMContentLoaded',()=>{
+  const a=document.getElementById('app');
+  if(a)D12_FIT_OBSERVER.observe(a,{childList:true,subtree:true,characterData:true});
+  d12FitViewport();
+});
+
+function d12PrimaryActions(){
+  return `<div class="d12-primary-actions" aria-label="Primary actions">
+    <button class="d12-primary-action" onclick="d12OpenContext('clock')"><span class="ico">⏱</span><span class="lbl">Shot Clock</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('match')"><span class="ico">🏁</span><span class="lbl">Match</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('more')"><span class="ico">⋯</span><span class="lbl">More</span></button>
+  </div>`;
+}
+function d12ContextTitle(type){return ({scoring:'Focused Scoring',clock:'Shot Clock',match:'Match Controls',more:'Match Tools'})[type]||'Controls';}
+function d12ContextBody(type){
+  const d=S.games[cur]; if(!d)return '<div class="card">No active match.</div>';
+  if(type==='scoring'){
+function resetAggregate(){let d=S.games[cur];if(!d)return;if(!confirm('Reset the displayed head-to-head aggregate to 0-0 for these players on this device? Completed cloud match records will not be deleted.'))return;d._aggregateResetA=Number(d._cloudAggregate?.player1Wins)||0;d._aggregateResetB=Number(d._cloudAggregate?.player2Wins)||0;save();render();}
+    return `<div class="card"><h3>Scoring is on the Main Page</h3><p class="note">Version 9.2 keeps the live scoring controls on the main scoreboard so the scoring state and active player stay synchronized. Close this window to score.</p></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    const cp=Number(d.clockPlayer||d.active||1); d.clockPlayer=cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button clas
+---
+port,{passive:true});}
+const D12_FIT_OBSERVER=new MutationObserver(()=>d12FitViewport());
+window.addEventListener('DOMContentLoaded',()=>{
+  const a=document.getElementById('app');
+  if(a)D12_FIT_OBSERVER.observe(a,{childList:true,subtree:true,characterData:true});
+  d12FitViewport();
+});
+
+function d12PrimaryActions(){
+  return `<div class="d12-primary-actions" aria-label="Primary actions">
+    <button class="d12-primary-action" onclick="d12OpenContext('clock')"><span class="ico">⏱</span><span class="lbl">Shot Clock</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('match')"><span class="ico">🏁</span><span class="lbl">Match</span></button>
+    <button class="d12-primary-action" onclick="d12OpenContext('more')"><span class="ico">⋯</span><span class="lbl">More</span></button>
+  </div>`;
+}
+function d12ContextTitle(type){return ({scoring:'Focused Scoring',clock:'Shot Clock',match:'Match Controls',more:'Match Tools'})[type]||'Controls';}
+function d12ContextBody(type){
+  const d=S.games[cur]; if(!d)return '<div class="card">No active match.</div>';
+  if(type==='scoring'){
+function resetAggregate(){let d=S.games[cur];if(!d)return;if(!confirm('Reset the displayed head-to-head aggregate to 0-0 for these players on this device? Completed cloud match records will not be deleted.'))return;d._aggregateResetA=Number(d._cloudAggregate?.player1Wins)||0;d._aggregateResetB=Number(d._cloudAggregate?.player2Wins)||0;save();render();}
+    return `<div class="card"><h3>Scoring is on the Main Page</h3><p class="note">Version 9.2 keeps the live scoring controls on the main scoreboard so the scoring state and active player stay synchronized. Close this window to score.</p></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    const cp=Number(d.clockPlayer||d.active||1); d.clockPlayer=cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button class="clock-player-btn ${cp===2?'active':''}" onclick="selectClockPlayer(2)">${esc(d.p2||'Player 2')}</button></div><div class="score-player-label">Timer: ${esc(cp===1?(d.p1||'Player 1'):(d.p2||'Player 2'))}</div><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn ball-played-btn" onclick="ballPlayed()">● Bal
+---
+hot Clock',match:'Match Controls',more:'Match Tools'})[type]||'Controls';}
+function d12ContextBody(type){
+  const d=S.games[cur]; if(!d)return '<div class="card">No active match.</div>';
+  if(type==='scoring'){
+function resetAggregate(){let d=S.games[cur];if(!d)return;if(!confirm('Reset the displayed head-to-head aggregate to 0-0 for these players on this device? Completed cloud match records will not be deleted.'))return;d._aggregateResetA=Number(d._cloudAggregate?.player1Wins)||0;d._aggregateResetB=Number(d._cloudAggregate?.player2Wins)||0;save();render();}
+    return `<div class="card"><h3>Scoring is on the Main Page</h3><p class="note">Version 9.2 keeps the live scoring controls on the main scoreboard so the scoring state and active player stay synchronized. Close this window to score.</p></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    const cp=Number(d.clockPlayer||d.active||1); d.clockPlayer=cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button class="clock-player-btn ${cp===2?'active':''}" onclick="selectClockPlayer(2)">${esc(d.p2||'Player 2')}</button></div><div class="score-player-label">Timer: ${esc(cp===1?(d.p1||'Player 1'):(d.p2||'Player 2'))}</div><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn ball-played-btn" onclick="ballPlayed()">● Ball Played</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each. “Ball Played” resets the selected player’s shot clock and immediately starts the next countdown.</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="resetAggregate();d12CloseContext()">Reset Aggregate</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button
+---
+pe]||'Controls';}
+function d12ContextBody(type){
+  const d=S.games[cur]; if(!d)return '<div class="card">No active match.</div>';
+  if(type==='scoring'){
+function resetAggregate(){let d=S.games[cur];if(!d)return;if(!confirm('Reset the displayed head-to-head aggregate to 0-0 for these players on this device? Completed cloud match records will not be deleted.'))return;d._aggregateResetA=Number(d._cloudAggregate?.player1Wins)||0;d._aggregateResetB=Number(d._cloudAggregate?.player2Wins)||0;save();render();}
+    return `<div class="card"><h3>Scoring is on the Main Page</h3><p class="note">Version 9.2 keeps the live scoring controls on the main scoreboard so the scoring state and active player stay synchronized. Close this window to score.</p></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    const cp=Number(d.clockPlayer||d.active||1); d.clockPlayer=cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button class="clock-player-btn ${cp===2?'active':''}" onclick="selectClockPlayer(2)">${esc(d.p2||'Player 2')}</button></div><div class="score-player-label">Timer: ${esc(cp===1?(d.p1||'Player 1'):(d.p2||'Player 2'))}</div><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn ball-played-btn" onclick="ballPlayed()">● Ball Played</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each. “Ball Played” resets the selected player’s shot clock and immediately starts the next countdown.</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="resetAggregate();d12CloseContext()">Reset Aggregate</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button></div></div>`;
+  let out='';
+  if(S.set.showAggregate)ou
+---
+te(){let d=S.games[cur];if(!d)return;if(!confirm('Reset the displayed head-to-head aggregate to 0-0 for these players on this device? Completed cloud match records will not be deleted.'))return;d._aggregateResetA=Number(d._cloudAggregate?.player1Wins)||0;d._aggregateResetB=Number(d._cloudAggregate?.player2Wins)||0;save();render();}
+    return `<div class="card"><h3>Scoring is on the Main Page</h3><p class="note">Version 9.2 keeps the live scoring controls on the main scoreboard so the scoring state and active player stay synchronized. Close this window to score.</p></div>`;
+  }
+  if(type==='clock'){
+    if(!S.set.independentClock)return `<div class="card"><h3>Shot Clock Hidden</h3><p class="note">Enable Independent Shot Clock in Settings to use this control.</p></div>`;
+    const cp=Number(d.clockPlayer||d.active||1); d.clockPlayer=cp;
+    return `<div class="card clock"><h3>Independent Shot Clock</h3><div class="clock-player-picks"><button class="clock-player-btn ${cp===1?'active':''}" onclick="selectClockPlayer(1)">${esc(d.p1||'Player 1')}</button><button class="clock-player-btn ${cp===2?'active':''}" onclick="selectClockPlayer(2)">${esc(d.p2||'Player 2')}</button></div><div class="score-player-label">Timer: ${esc(cp===1?(d.p1||'Player 1'):(d.p2||'Player 2'))}</div><div id="clock" class="time">${fmt(d.t)}</div><div class="row"><button class="btn" onclick="start()">Start</button><button class="btn ball-played-btn" onclick="ballPlayed()">● Ball Played</button><button class="btn gray" onclick="stop()">Pause</button><button class="btn orange" onclick="extend()">+ Extension</button><button class="btn gray" onclick="resetclock()">Reset</button></div><p class="note">${d.e} extension(s) remaining • +${S.set.ext}s each. “Ball Played” resets the selected player’s shot clock and immediately starts the next countdown.</p></div>`;
+  }
+  if(type==='match') return `<div class="card"><h3>Match Controls</h3><div class="row"><button class="btn gray" onclick="resetAggregate();d12CloseContext()">Reset Aggregate</button><button class="end-match-btn" onclick="endMatch();d12CloseContext()" ${d.matchEnded?'disabled':''}>${d.matchEnded?'✓ Match Ended':'🏁 End Match'}</button><button class="new-match-btn" onclick="newMatch();d12CloseContext()">＋ New Match</button><button class="btn red" onclick="resetmatch();d12CloseContext()">Reset This Match</button></div></div>`;
+  let out='';
+  if(S.set.showAggregate)out+=aggregateCard(d);
+  if(S.set.showExport)out+=exportTools();
+  if(!out)out=`<div class="card"><h3>No Secondary Tools Enabled</h3><p class="note">Enable Aggregate or Print / 
+---
+e=='apple'?'selected':''}>Apple Inspired Theme</option><option value="bmw" ${S.set.style=='bmw'?'selected':''}>BMW Inspired Theme</option><option value="mercedes" ${S.set.style=='mercedes'?'selected':''}>Mercedes-Benz Inspired Theme</option><option value="ferrari" ${S.set.style=='ferrari'?'selected':''}>Ferrari Inspired Theme</option><option value="porsche" ${S.set.style=='porsche'?'selected':''}>Porsche Inspired Theme</option><option value="tesla" ${S.set.style=='tesla'?'selected':''}>Tesla Inspired Theme</option><option value="lamborghini" ${S.set.style=='lamborghini'?'selected':''}>Lamborghini Inspired Theme</option><option value="nike" ${S.set.style=='nike'?'selected':''}>Nike Inspired Theme</option><option value="samsung" ${S.set.style=='samsung'?'selected':''}>Samsung Inspired Theme</option></select><p class="note">Choose a visual style. Your choice is saved on this device.</p><h3>Shot Clock</h3><div class="row"><button class="btn ${S.set.independentClock?'green':'gray'}" onclick="indClock()">Independent Shot Clock: ${S.set.independentClock?'ON':'OFF'}</button></div><p class="note">Turn this OFF to hide the independent shot clock from every game tab.</p>${S.set.independentClock?`<p class="note">Default shot time (5–300 seconds)</p><input type="number" min="5" max="300" value="${S.set.shot}" onchange="num('shot',this.value,5,300)"><p class="note">Extension time (1–120 seconds)</p><input type="number" min="1" max="120" value="${S.set.ext}" onchange="num('ext',this.value,1,120)"><p class="note">Extensions available (0–10)</p><input type="number" min="0" max="10" value="${S.set.n}" onchange="num('n',this.value,0,10)">`:''}<h3>General Display</h3><div class="row"><button class="btn ${S.set.showAggregate?'green':'gray'}" onclick="tog('showAggregate')">Head-to-Head Aggregate Bar: ${S.set.showAggregate?'ON':'OFF'}</button><button class="btn ${S.set.showExport?'green':'gray'}" onclick="tog('showExport')">Print / Export Scores Bar: ${S.set.showExport?'ON':'OFF'}</button></div><p class="note">Control visibility of the aggregate and print/export sections on scoring screens.</p><h3>Alerts</h3><div class="row"><button class="btn ${S.set.sound?'green':'gray'}" onclick="tog('sound')">Sound: ${S.set.sound?'ON':'OFF'}</button><button class="btn ${S.set.vibe?'green':'gray'}" onclick="tog('vibe')">Vibration: ${S.set.vibe?'ON':'OFF'}</button></div><h3>Data</h3><button class="btn red" onclick="if(confirm('Delete all saved data?')){localStorage.removeItem(K);location.reload()}">Delete All Saved Data</button></div>`}
+function duya(){return `<div class="card"><h3>Duya Lege
+---
