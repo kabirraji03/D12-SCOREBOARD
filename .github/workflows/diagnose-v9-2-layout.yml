@@ -1,0 +1,32 @@
+name: Diagnose D12 V9.2 layout
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/diagnose-v9-2-layout.yml'
+permissions:
+  contents: write
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Inspect computed layout at desktop viewport
+        run: |
+          python3 -m http.server 8080 >/tmp/d12-http.log 2>&1 &
+          cat > diag-layout.js <<'JS'
+          const { chromium }=require('playwright'); const fs=require('fs');
+          (async()=>{const b=await chromium.launch({headless:true});const p=await b.newPage({viewport:{width:1700,height:900}});const errs=[];p.on('pageerror',e=>errs.push('PAGEERROR '+e.message));p.on('console',m=>{if(m.type()==='error')errs.push('CONSOLE '+m.text())});await p.goto('http://127.0.0.1:8080/app-v9-2.html?layout=1',{waitUntil:'domcontentloaded'});await p.waitForTimeout(12000);const s=await p.evaluate(()=>{const app=document.getElementById('app');const login=app?.querySelector('.auth-card,.login-card,.d12-login-card,.card');const cs=x=>x?(()=>{const c=getComputedStyle(x),r=x.getBoundingClientRect();return {tag:x.tagName,cls:x.className,display:c.display,visibility:c.visibility,opacity:c.opacity,position:c.position,transform:c.transform,overflow:c.overflow,width:r.width,height:r.height,top:r.top,left:r.left,color:c.color,background:c.backgroundColor,z:c.zIndex}})():null;return {app:cs(app),login:cs(login),html:cs(document.documentElement),body:cs(document.body),appText:app?.innerText||'',bodyScrollHeight:document.body.scrollHeight,innerHeight:innerHeight,innerWidth:innerWidth}});fs.writeFileSync('layout-diagnostic.txt',JSON.stringify(s,null,2)+'\nERRORS\n'+errs.join('\n'));await b.close()})();
+          JS
+          node diag-layout.js
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add layout-diagnostic.txt
+          git commit -m "Add V9.2 layout diagnostic report" || exit 0
+          git push
