@@ -1,0 +1,78 @@
+name: Publish D12 Scoreboard Version 9.5
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-v9-5.yml','scripts/build_v95.py']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Version 9.5
+        run: python scripts/build_v95.py
+      - name: Check complete JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('app-v9-5.html').read_text()
+          js='\n'.join(re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',s,flags=re.S|re.I))
+          Path('/tmp/d12-v95.js').write_text(js)
+          PY
+          node --check /tmp/d12-v95.js
+      - name: Install Chromium test runner
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Responsive browser tests
+        run: |
+          python3 -m http.server 8080 >/tmp/d12-http.log 2>&1 &
+          cat > smoke-v95.js <<'JS'
+          const {chromium}=require('playwright');
+          (async()=>{
+            const b=await chromium.launch({headless:true});
+            const cases=[
+              {name:'mobile',w:390,h:844,cls:'style-crystal device-mobile',minBtn:44,minWidth:.92},
+              {name:'tablet',w:834,h:1112,cls:'style-crystal device-tablet',minBtn:46,minWidth:.85},
+              {name:'pc',w:1440,h:900,cls:'style-crystal device-pc',minBtn:46,minWidth:.75}
+            ];
+            for(const c of cases){
+              const p=await b.newPage({viewport:{width:c.w,height:c.h}});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+              await p.goto('http://127.0.0.1:8080/app-v9-5.html',{waitUntil:'domcontentloaded'});await p.waitForTimeout(700);
+              await p.evaluate(({cls})=>{
+                document.body.className=cls;
+                const a=document.getElementById('app');
+                a.innerHTML='<div class="hero"><div><h2>8-Ball</h2><p>Responsive scoring workspace</p></div></div><div class="grid"><div class="card player"><div class="active-tag is-active">ACTIVE</div><input class="name" value="PLAYER 1"><div class="score">7</div><button class="btn">Add Point</button></div><div class="card player"><div class="active-tag is-idle">ACTIVE</div><input class="name" value="PLAYER 2"><div class="score">5</div><button class="btn">Add Point</button></div></div><div class="card clock d12-main-clock"><h3>Shot Clock</h3><div class="time">30</div><div class="row d12-clock-controls"><button class="btn">Start</button><button class="btn ball-played-btn">Balls - No Motion</button><button class="btn gray">Pause</button><button class="btn orange">Extension</button><button class="btn gray">Reset</button></div></div>';
+                if(window.d12V95ResetLegacyScaling)window.d12V95ResetLegacyScaling();
+              },{cls:c.cls});
+              await p.waitForTimeout(100);
+              const metrics=await p.evaluate(()=>{const a=document.getElementById('app'),btn=document.querySelector('#app .btn'),score=document.querySelector('.score'),cs=getComputedStyle(a);return {appW:a.getBoundingClientRect().width,transform:cs.transform,zoom:cs.zoom,btnH:btn.getBoundingClientRect().height,scoreSize:parseFloat(getComputedStyle(score).fontSize),overflowY:getComputedStyle(document.body).overflowY,scrollW:document.documentElement.scrollWidth,innerW:innerWidth};});
+              console.log(c.name,metrics);
+              if(errs.length)throw new Error(c.name+' runtime: '+errs.join(' | '));
+              if(metrics.transform!=='none')throw new Error(c.name+' app still transformed: '+metrics.transform);
+              if(Number(metrics.zoom)!==1)throw new Error(c.name+' app zoom not 1');
+              if(metrics.appW<c.w*c.minWidth)throw new Error(c.name+' app too narrow: '+metrics.appW);
+              if(metrics.btnH<c.minBtn)throw new Error(c.name+' touch target too small: '+metrics.btnH);
+              if(metrics.scrollW>metrics.innerW+2)throw new Error(c.name+' horizontal overflow');
+              await p.close();
+            }
+            const p=await b.newPage({viewport:{width:390,height:844}});const errs=[];p.on('pageerror',e=>errs.push(e.message));await p.goto('http://127.0.0.1:8080/app-v9-5.html',{waitUntil:'domcontentloaded'});await p.waitForTimeout(1800);const login=await p.locator('#app').innerText();if(!login.trim())throw new Error('Login blank');if(errs.length)throw new Error(errs.join(' | '));await p.close();
+            await b.close();
+          })();
+          JS
+          node smoke-v95.js
+      - name: Update live index
+        shell: python
+        run: |
+          from pathlib import Path
+          Path('index.html').write_text('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"><meta http-equiv="pragma" content="no-cache"><meta http-equiv="expires" content="0"><title>D12 Cuesports Score Board V9.5</title><script>location.replace("app-v9-5.html?v=9500")</script></head><body><p>Loading D12 Cuesports Score Board Version 9.5…</p></body></html>')
+      - name: Commit live Version 9.5
+        run: |
+          git config user.name "D12 Scoreboard Publisher"
+          git config user.email "actions@users.noreply.github.com"
+          git add app-v9-5.html index.html
+          git commit -m "Publish D12 Scoreboard Version 9.5 responsive interface"
+          git push
