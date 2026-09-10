@@ -1,0 +1,56 @@
+name: Publish D12 Scoreboard V9.2 build 9204
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v9-2-9204.yml'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create fresh physical V9.2 build
+        run: |
+          cp app-v9-2.html app-v9-2-9204.html
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('app-v9-2-9204.html')
+          s=p.read_text()
+          s=s.replace('Version 9.2 • Touch-First Context Edition','Version 9.2 • Build 9204 • Touch-First Context Edition')
+          p.write_text(s)
+          PY
+      - name: Verify fresh build JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('app-v9-2-9204.html').read_text()
+          js='\n'.join(re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',s,flags=re.S|re.I))
+          Path('/tmp/v9204.js').write_text(js)
+          PY
+          node --check /tmp/v9204.js
+      - name: Replace root redirect with fresh build
+        run: |
+          cat > index.html <<'HTML'
+          <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D12 Cuesports Score Board V9.2 • Build 9204</title><meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"><meta http-equiv="pragma" content="no-cache"><meta http-equiv="expires" content="0"><meta http-equiv="refresh" content="0; url=./app-v9-2-9204.html?v=9204"><style>body{font-family:Arial,sans-serif;background:#0b0d12;color:white;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center}a{color:#4da3ff}</style></head><body><div><h2>D12 Scoreboard V9.2</h2><p>Loading Build 9204…</p><p><a href="./app-v9-2-9204.html?v=9204">Tap here if it does not open automatically</a></p></div><script>location.replace('./app-v9-2-9204.html?v=9204');</script></body></html>
+          HTML
+      - name: Browser smoke test fresh build
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+          python3 -m http.server 8080 >/tmp/http.log 2>&1 &
+          cat > smoke.js <<'JS'
+          const {chromium}=require('playwright');
+          (async()=>{const b=await chromium.launch({headless:true});const p=await b.newPage({viewport:{width:1700,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message));await p.goto('http://127.0.0.1:8080/app-v9-2-9204.html?v=9204',{waitUntil:'domcontentloaded'});await p.waitForTimeout(11000);const t=await p.locator('#app').innerText();console.log(t.slice(0,300));if(!t.includes('Secure Sign In'))throw new Error('Login did not render');if(errs.length)throw new Error('Runtime errors: '+errs.join(' | '));await b.close()})();
+          JS
+          node smoke.js
+      - name: Commit fresh live build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html app-v9-2-9204.html
+          git commit -m "Publish V9.2 build 9204 with fresh cache-busting filename"
+          git push
