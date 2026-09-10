@@ -1,0 +1,63 @@
+name: Apply D12 Scoreboard Version 9.2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-v9-2.yml'
+      - '.v92/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply-v92:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply Version 9.2 patch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64, json
+
+          payload=''.join(Path(f'.v92/patch_{i:02d}.txt').read_text().strip() for i in range(4))
+          pairs=json.loads(base64.b64decode(payload).decode('utf-8'))
+          p=Path('index.html')
+          text=p.read_text(encoding='utf-8')
+
+          for i,(old,new) in enumerate(pairs):
+              if old:
+                  count=text.count(old)
+                  if count < 1:
+                      raise SystemExit(f'Patch block {i} not found')
+                  text=text.replace(old,new,1)
+              else:
+                  anchor=None
+                  for j in range(i+1,len(pairs)):
+                      if pairs[j][0]:
+                          anchor=pairs[j][0]
+                          break
+                  if not anchor or anchor not in text:
+                      raise SystemExit(f'Insertion anchor for block {i} not found')
+                  text=text.replace(anchor,new+anchor,1)
+
+          if 'D12 Cuesports Score Board V9.2' not in text or 'Version 9.2 • Touch-First Context Edition' not in text:
+              raise SystemExit('Version 9.2 verification failed')
+          p.write_text(text,encoding='utf-8')
+          PY
+      - name: Commit live Version 9.2
+        shell: bash
+        run: |
+          git config user.name "D12 Scoreboard Publisher"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No index.html changes to commit"
+            exit 0
+          fi
+          git commit -m "Publish D12 Scoreboard Version 9.2"
+          git push
