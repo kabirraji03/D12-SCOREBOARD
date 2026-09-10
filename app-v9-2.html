@@ -412,7 +412,7 @@ body.device-tablet .d12-primary-actions{grid-template-columns:repeat(4,minmax(0,
 
 /* Version 9.2 — compact snooker + touch clock */
 .snooker-compact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}.snooker-mini-card{padding:10px;border:1px solid var(--ln);border-radius:16px;background:rgba(255,255,255,.06);text-align:center}.snooker-mini-title{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--mut);margin-bottom:6px}.snooker-red-counter-ball{width:74px;height:74px;border-radius:50%;margin:0 auto;background:radial-gradient(circle at 30% 25%,#ff969b 0 8%,#d92831 35%,#7d1018 100%);box-shadow:inset -6px -7px 12px rgba(0,0,0,.3),0 7px 18px rgba(217,40,49,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:950}.snooker-mini-target{display:flex;align-items:center;justify-content:center;min-height:82px}.snooker-mini-target .snooker-target-red,.snooker-mini-target .snooker-any-color-image{width:74px;height:74px;margin:0;object-fit:contain}.snooker-number-input{display:grid;grid-template-columns:1fr 92px;gap:10px;align-items:end}.snooker-number-input input[type=number]{font-size:20px;font-weight:900;text-align:center}.d12-main-scoring{margin-top:10px}.d12-main-scoring h3{margin:0 0 8px}.clock-player-picks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 10px}.clock-player-btn{min-height:54px;border-radius:15px;border:2px solid var(--ln);background:var(--card);color:var(--tx);font-weight:900;padding:8px}.clock-player-btn.active{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent);background:color-mix(in srgb,var(--accent) 12%,var(--card))}.ball-played-btn{background:linear-gradient(135deg,#34c759,#168a36)!important}.score-player-label{font-weight:950;text-align:center;margin:0 0 8px;color:var(--accent)}@media(max-width:520px){.snooker-number-input{grid-template-columns:1fr}.snooker-red-counter-ball,.snooker-mini-target .snooker-target-red,.snooker-mini-target .snooker-any-color-image{width:62px;height:62px}.snooker-red-counter-ball{font-size:22px}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.2 • Touch-First Context Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
+</style></head><body><header class="head"><div class="brand"><img class="club-logo" src="" alt="D12 Cue Club logo" id="clubLogo"><div><h1>D12 Cuesports Score Board</h1><div class="sub">Version 9.2 • Touch-First Context Edition • Mobile / Tablet / PC • Supabase + Realtime</div><div id="workspaceBar" class="workspace-bar"></div></div></div></header><nav class="tabs" id="tabs"></nav><main id="app"></main><script>
 
 /* ===== D12 SUPABASE CONNECTION =====
    Browser-safe publishable key only.
@@ -432,7 +432,7 @@ function d12BuildSupabaseClient(){
   return null;
 }
 
-function d12LoadExternalScript(src,timeoutMs=12000){
+function d12LoadExternalScript(src,timeoutMs=5000){
   return new Promise((resolve,reject)=>{
     const existing=[...document.scripts].find(x=>x.src===src);
     if(existing && window.supabase && typeof window.supabase.createClient==='function')return resolve(true);
@@ -451,6 +451,8 @@ async function d12EnsureSupabase(){
   if(D12_SUPABASE_LOADING)return D12_SUPABASE_LOADING;
   D12_SUPABASE_LOADING=(async()=>{
     const sources=[
+      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.109.0/dist/umd/supabase.js',
+      'https://unpkg.com/@supabase/supabase-js@2.109.0/dist/umd/supabase.js',
       'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
       'https://unpkg.com/@supabase/supabase-js@2'
     ];
@@ -1003,11 +1005,15 @@ async function d12ApplySession(session){
   void d12StartRealtime(d12CurrentTableId());
 }
 async function d12BootAuth(){
+  try{d12LoginView();d12AuthError('Connecting securely to D12 cloud…');}catch(uiErr){console.error('D12 initial login render error:',uiErr)}
+  const timeout=(ms,label)=>new Promise((_,reject)=>setTimeout(()=>reject(new Error(label)),ms));
   try{
-    const client=await d12EnsureSupabase();
-    const {data,error}=await client.auth.getSession();
+    const client=await Promise.race([d12EnsureSupabase(),timeout(10000,'Supabase connection timed out.')]);
+    const result=await Promise.race([client.auth.getSession(),timeout(10000,'Session check timed out.')]);
+    const {data,error}=result||{};
     if(error)throw error;
-    if(data.session)await d12ApplySession(data.session);else d12LoginView();
+    d12AuthError('');
+    if(data?.session)await d12ApplySession(data.session);else d12LoginView();
     client.auth.onAuthStateChange((_event,session)=>{
       try{
         if(_event==='SIGNED_OUT'){d12RealtimeStop();D12_AUTH.user=null;D12_AUTH.profile=null;D12_AUTH.assignment=null;D12_AUTH.selectedTableId=null;d12LoginView();return}
@@ -1015,8 +1021,11 @@ async function d12BootAuth(){
         if(session && session.user && D12_AUTH.user?.id!==session.user.id){setTimeout(()=>d12ApplySession(session).catch(err=>{console.error('D12 auth state error:',err);d12LoginView();}),0)}
       }catch(err){console.error('D12 auth state error:',err);d12LoginView();}
     });
-  }catch(err){console.error('D12 auth boot error:',err);d12LoginView();d12AuthError((err?.message||'Unable to initialize secure sign in.')+' If you are on mobile, confirm the phone is online and temporarily disable browser content blockers for this page.')}
-  finally{D12_AUTH.booted=true}
+  }catch(err){
+    console.error('D12 auth boot error:',err);
+    d12LoginView();
+    d12AuthError((err?.message||'Unable to initialize secure sign in.')+' The login screen remains available; retry after checking the connection.');
+  } finally {D12_AUTH.booted=true}
 }
 async function d12RefreshAssignment(){
   if(d12IsOperator()&&D12_AUTH.user){await d12LoadAssignment(D12_AUTH.user.id);D12_AUTH.selectedTableId=D12_AUTH.assignment?.table_id||null;d12SetWorkspaceBar();render();void d12StartRealtime(D12_AUTH.selectedTableId);}
@@ -1025,7 +1034,6 @@ function d12CurrentTableId(){return D12_AUTH.selectedTableId||D12_AUTH.assignmen
 function d12CurrentTableName(){return D12_AUTH.assignment?.cue_tables?.table_name||''}
 
 G=['8-Ball','9-Ball','10-Ball','Heyball','Blackball','Duya Legends','Snooker','Players','Settings'],K='D12CueScoreV6';let S={};try{S=JSON.parse(localStorage.getItem(K)||localStorage.getItem('D12CueScoreV5')||localStorage.getItem('D12CueScoreV4')||'{}')||{}}catch(e){console.warn('Saved data was invalid and has been safely reset.',e);S={}}S.set={theme:'light',shot:45,ext:15,n:1,sound:true,vibe:true,independentClock:true,showAggregate:true,showExport:true,...(S.set||{})};S.players=Array.isArray(S.players)?S.players:[];S.matchHistory=S.matchHistory&&typeof S.matchHistory==='object'?S.matchHistory:{};S.games=S.games||{};G.slice(0,7).forEach(g=>S.games[g]={p1:'Player 1',p2:'Player 2',s1:0,s2:0,t:S.set.shot,e:S.set.n,active:1,_undo:[],_redo:[],snookerReds:15,snookerRedsRemaining:15,snookerPhase:'reds',snookerTarget:'red',snookerColorIndex:0,snookerPointsPotted:0,snookerFoulPointsAwarded:0,snookerBreak1:0,snookerBreak2:0,snookerMaxBreak1:0,snookerMaxBreak2:0,snookerFrameComplete:false,clockPlayer:1,...(S.games[g]||{})});let cur='8-Ball',tm=null;const desc={'8-Ball':'','9-Ball':'Fast, touch-friendly 9-ball scoring.','10-Ball':'Professional 10-ball match scoring.','Heyball':'','Blackball':'','Duya Legends':'Special match-point scoring system.','Snooker':'Ball-by-ball scoring and foul penalties.'};const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){console.warn('Unable to save local data',e)}};const esc=x=>String(x).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-g]={p1:'Player 1',p2:'Player 2',s1:0,s2:0,t:S.set.shot,e:S.set.n,active:1,_undo:[],_redo:[],snookerReds:15,snookerRedsRemaining:15,snookerPhase:'reds',snookerTarget:'red',snookerColorIndex:0,snookerPointsPotted:0,snookerFoulPointsAwarded:0,snookerBreak1:0,snookerBreak2:0,snookerMaxBreak1:0,snookerMaxBreak2:0,snookerFrameComplete:false,clockPlayer:1,...(S.games[g]||{})});let cur='8-Ball',tm=null;const desc={'8-Ball':'','9-Ball':'Fast, touch-friendly 9-ball scoring.','10-Ball':'Professional 10-ball match scoring.','Heyball':'','Blackball':'','Duya Legends':'Special match-point scoring system.','Snooker':'Ball-by-ball scoring and foul penalties.'};const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){console.warn('Unable to save local data',e)}};const esc=x=>String(x).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 function tabs(){d12Tabs()};function go(g){if(!D12_AUTH.user||!d12WorkspaceTabs().includes(g))return;stop();cur=g;d12Tabs();render()};function opt(sel){return `<option value="">Select saved player</option>`+S.players.map(p=>`<option ${p==sel?'selected':''} value="${esc(p)}">${esc(p)}</option>`).join('')};
 function snookerRemainingPoints(d){
   // Version 8.8: Remaining Points is derived only from balls/ball opportunities
