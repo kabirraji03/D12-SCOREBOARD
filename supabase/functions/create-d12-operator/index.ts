@@ -140,18 +140,13 @@ export default {
             ? body.full_name.trim().replace(/\s+/g, " ")
             : "";
 
-        const email =
-          typeof body.email === "string"
-            ? body.email.trim().toLowerCase()
-            : "";
-
         const password =
           typeof body.password === "string"
             ? body.password
             : "";
 
         const whatsapp_number = typeof body.whatsapp_number === "string" ? body.whatsapp_number.trim() : "";
-        if (whatsapp_number && !/^[1-9]\d{7,14}$/.test(whatsapp_number)) return Response.json({success:false,error:"Enter a valid WhatsApp number with country code."},{status:400});
+        if (!/^[1-9]\d{7,14}$/.test(whatsapp_number)) return Response.json({success:false,error:"Enter a valid WhatsApp number with country code."},{status:400});
         if (!full_name || full_name.length > 60) {
           return Response.json(
             {
@@ -162,22 +157,13 @@ export default {
           );
         }
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
-          return Response.json(
-            {
-              success: false,
-              error: "Operator email is required."
-            },
-            { status: 400 }
-          );
-        }
 
-        if (!password || password.length < 6) {
+        if (!/^\d{6}$/.test(password)) {
           return Response.json(
             {
               success: false,
               error:
-                "Operator password must be at least 6 characters."
+                "Operator PIN must contain exactly 6 digits."
             },
             { status: 400 }
           );
@@ -187,15 +173,15 @@ export default {
         // 5. Create Supabase Auth user
         // --------------------------------------------------
 
-        console.log("Creating operator Auth account:", email);
+        console.log("Creating phone-based operator Auth account.");
 
         const {
           data: authResult,
           error: authError
         } = await ctx.supabaseAdmin.auth.admin.createUser({
-          email,
+          phone: "+" + whatsapp_number,
           password,
-          email_confirm: true,
+          phone_confirm: true,
           user_metadata: {
             whatsapp_number,
             full_name
@@ -289,7 +275,7 @@ export default {
 
         console.log(
           "D12 operator created successfully:",
-          email
+          newUser.id
         );
 
         return Response.json({
@@ -298,7 +284,7 @@ export default {
           operator: {
             id: newUser.id,
             full_name,
-            email,
+            whatsapp_number,
             role: "operator"
           }
         });
