@@ -19,12 +19,15 @@ Based on the confirmed live V9.6 build at commit `9d944c2`. The live HTML SHA-25
 - Tested all ten tabs at 320×740, 390×844, 768×1024, 1440×900 and 844×390. Checked horizontal overflow and interactive-control bounds, navigation scrolling, settings persistence, and device cards. Reviewed rendered screenshots with local image assets.
 - Tested email-based administrator login and phone-based operator login request routing with an Auth test double, including leading-zero PINs.
 - Backend tests verify authentication/role denial, required phone and exactly-six-digit PIN validation, no email in Auth creation or response, and existing delete safety behavior.
-- Real-network candidate smoke test loaded the Supabase client and assets without runtime errors; all three existing management endpoints reject unauthenticated requests.
+- Real-network candidate smoke test loaded the Supabase client and assets without runtime errors; management endpoints reject unauthenticated requests.
+- End-to-end cloud test passed using temporary QA accounts and a separate table: admin phone/password login and PIN gate, real email-free operator creation, duplicate-phone rejection, assignment, operator phone/PIN login, operator-role denial for account creation, scoring persistence, cross-device realtime score propagation, SMS/OTP denial, operator deletion, and rejection of login after deletion. All temporary users, players, table, assignments, matches and events were removed afterward.
 
-## Deployment gate — not yet cleared
+## Deployment
 
-The real Supabase project currently reports `external.phone: false`. Enable phone/password authentication in the project's Auth settings, then test actual operator creation, sign-in, assigned-table scoring and cleanup before merging/publishing. Do not publish the frontend or replace the live creation function until this gate passes.
+Phone/password authentication is enabled. The Send SMS hook points to `public.d12_reject_sms_login`, which returns HTTP 403 for SMS/OTP requests. The hook uses SECURITY INVOKER, has no table access, and is executable only by Supabase Auth. This supports admin-created, confirmed phone identities with PIN/password login without purchasing or configuring an SMS provider. It does not send messages or silently accept undelivered OTPs. Phone confirmation remains enabled for public signup.
 
-`index.html` will route to `app-v9-6-1.html?v=96101`. `CNAME` remains `scoreboard.d12cueclub.com`. Existing builds are retained. No database schema migration is needed.
+The frontend uses the new `create-d12-operator-v961` function. The existing creation function is retained for older builds. The hook SQL is recorded in `supabase/phone-pin-auth.sql` and was applied through the `d12_phone_pin_auth_without_sms` database migration.
 
-The Supabase security advisor reported existing warnings for older SECURITY DEFINER functions and password protection; this change adds no database grants, policies or functions. See the [advisor documentation](https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable).
+`index.html` routes to `app-v9-6-1.html?v=96101`. `CNAME` remains `scoreboard.d12cueclub.com`. Existing builds are retained. Restoring the previous index restores V9.6; its original creation function remains available.
+
+The Supabase security advisor reported existing warnings for older SECURITY DEFINER functions and password protection, with no warning for the new hook. This change does not modify scoring policies or existing function grants. See the [advisor documentation](https://supabase.com/docs/guides/database/database-linter?lint=0028_anon_security_definer_function_executable).

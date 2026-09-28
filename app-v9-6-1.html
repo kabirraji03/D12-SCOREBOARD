@@ -1459,7 +1459,7 @@ async function d12CreateOperator(){
     }
     D12_CREATE_BUSY=true;showStatus('Creating secure operator account…');
 
-    const {data,error}=await d12Supabase.functions.invoke('create-d12-operator',{
+    const {data,error}=await d12Supabase.functions.invoke('create-d12-operator-v961',{
       body:{full_name,password,whatsapp_number:whatsapp}
     });
 

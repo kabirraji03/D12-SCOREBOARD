@@ -21,7 +21,7 @@ for(const m of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi))new vm.Scrip
  await handlers();
  await page.locator('#d12NewOperatorName').fill('New Operator');assert.equal(await page.locator('#d12NewOperatorEmail').count(),0);await page.locator('#d12NewOperatorWhatsApp').fill('+234 801 234 5678');await page.getByRole('button',{name:'Generate PIN',exact:true}).click();assert.match(await page.locator('#d12NewOperatorPassword').inputValue(),/^\d{6}$/);
  await page.locator('#d12CreateOperatorBtn').click();await page.getByRole('button',{name:'Open WhatsApp Message'}).waitFor();
- assert.equal(await page.evaluate(()=>testCalls.find(c=>c.name==='create-d12-operator').body.whatsapp_number),'2348012345678');assert.equal(await page.evaluate(()=>Object.hasOwn(testCalls.find(c=>c.name==='create-d12-operator').body,'email')),false);
+ assert.equal(await page.evaluate(()=>testCalls.find(c=>c.name==='create-d12-operator-v961').body.whatsapp_number),'2348012345678');assert.equal(await page.evaluate(()=>Object.hasOwn(testCalls.find(c=>c.name==='create-d12-operator-v961').body,'email')),false);
  await page.evaluate(()=>{window.confirm=()=>true;window.alert=()=>{}});await page.getByRole('button',{name:'Delete Operator',exact:true}).click();
  // Dismiss success alert if already open by using a global handler for subsequent actions.
  await page.evaluate(()=>{window.alert=message=>testCalls.push({alert:message})});
